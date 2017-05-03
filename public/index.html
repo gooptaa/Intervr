@@ -1,7 +1,6 @@
 <!doctype html>
 
 <html>
-
 <head>
   <!-- Our js bundle will be in 'bundle.js' -->
   <!-- The 'defer' attribute will ensure that it is run only after the DOM finishes loading -->
@@ -11,10 +10,11 @@
 </head>
 
 <body>
+  <div id="app">
   <!-- We will render our React app into a div with an id of 'app' -->
   <!-- We can grab it off the DOM by saing `document.getElementById('app');` -->
-  <div id="app"></div>
+  </div>
 </body>
-<script src="bundle.js" defer></script>
+<script async defer src="bundle.js"></script>
 
 </html>
