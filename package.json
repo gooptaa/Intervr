@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/main.js",
-    "build-watch": "webpack -w & nodemon ./server/main.js",
+    "start-dev": "webpack -w & nodemon ./server/main.js",
     "build-branch": "bin/build-branch.sh",
     "deploy-heroku": "bin/deploy-heroku.sh"
   },
