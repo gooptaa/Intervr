@@ -2,12 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from './store';
-import '../public/stylesheets/index.scss'
+import '../public/stylesheets/index.scss';
+import {Room} from './browser/room';
 
 ReactDOM.render(
   <Provider store={store}>
-    <div>This is where the stuff and the things go!</div>
-    {/* rest of your app goes here! */}
+   <Router history={browserHistory}>
+    <Route path="/" component={Room} />
+   </Router>
   </Provider>,
   document.getElementById('app')
 );
