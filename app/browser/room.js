@@ -25,11 +25,17 @@ export class Room extends React.Component {
         <a-assets>
           <img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg"/>
           <img id="skyTexture" src="https://cdn.aframe.io/a-painter/images/sky.jpg"/>
+          <img id="speckledSpackle" src="textures/commonwall.jpg"/>
         </a-assets>
 
         <Entity primitive="a-plane" src="#groundTexture" rotation="-90 0 0" height="100" width="100"/>
-        <Entity primitive="a-light" type="ambient" color="#445451"/>
-        <Entity primitive="a-light" type="point" intensity="2" position="2 4 4"/>
+        <Entity primitive="a-plane" src="#groundTexture" position="0 0 -7" rotation="0 0 0" height="100" width="100"/>
+        <Entity primitive="a-plane" src="#groundTexture" position="0 0 7" rotation="0 180 0" height="100" width="100"/>
+        <Entity primitive="a-plane" src="#groundTexture" position="7 0 0" rotation="0 -90 0" height="100" width="100"/>
+        <Entity primitive="a-plane" src="#groundTexture" position="-7 0 0" rotation="0 90 0" height="100" width="100"/>
+        <Entity primitive="a-plane" src="#groundTexture" position="0 10 0" rotation="90 0 0" height="100" width="100"/>
+
+        <Entity primitive="a-light" type="ambient" intensity="2" color="white"/>
         <Entity primitive="a-sky" height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048"/>
         <Entity particle-system={{preset: 'snow', particleCount: 2000}}/>
         <Entity text={{value: 'Hello, A-Frame React!', align: 'center'}} position={{x: 0, y: 2, z: -1}}/>
