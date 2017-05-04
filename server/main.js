@@ -49,7 +49,7 @@ io.sockets.on('connection', function(socket) {
   socket.on('create or join', function(room) {
     log('Received request to create or join room ' + room);
 
-    numClients = io.sockets.adapter.rooms[room] ? io.sockets.adapter.rooms[room].length : 1;
+    numClients = io.sockets.adapter.rooms[room] ? io.sockets.adapter.rooms[room].length + 1 : 1;
 
     if (!io.sockets.adapter.clients[room]) {  // if room hasn't been created, create one
       socket.join(room);
