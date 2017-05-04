@@ -50,8 +50,7 @@ io.sockets.on('connection', function(socket) {
     log('Received request to create or join room ' + room);
 
     numClients = io.sockets.adapter.rooms[room] ? io.sockets.adapter.rooms[room].length + 1 : 1;
-
-    if (!io.sockets.adapter.clients[room]) {  // if room hasn't been created, create one
+    if (numClients === 1) {  // if room hasn't been created, create one
       socket.join(room);
       log('Client ID ' + socket.id + ' created room ' + room);
       socket.emit('created', room, socket.id);
@@ -59,14 +58,15 @@ io.sockets.on('connection', function(socket) {
       log('Client ID ' + socket.id + ' joined room ' + room);
       // io.sockets.in(room).emit('join', room);
       socket.join(room);
-      socket.emit('joined', room, socket.id);
+      socket.broadcast.to(room).emit('joined', room, socket.id);
       io.sockets.in(room).emit('ready', room);
       socket.broadcast.emit('ready', room);
     } else { // max two clients
+      console.log("REACHED!");
       socket.emit('full', room);
     }
 
-    numClients = io.sockets.adapter.rooms[room] ? io.sockets.adapter.rooms[room].length : 1;
+    //numClients = io.sockets.adapter.rooms[room] ? io.sockets.adapter.rooms[room].length : 1;
 
     log('Room ' + room + ' now has ' + numClients + ' client(s)');
 
