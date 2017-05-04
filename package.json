@@ -28,7 +28,10 @@
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "express-session": "^1.15.2",
+    "http": "0.0.0",
     "morgan": "^1.8.1",
+    "node-static": "^0.7.9",
+    "os": "^0.1.1",
     "pg": "^6.1.5",
     "pg-hstore": "^2.3.2",
     "react": "^15.5.4",
@@ -39,6 +42,7 @@
     "redux-logger": "^3.0.1",
     "redux-thunk": "^2.2.0",
     "sequelize": "^3.30.4",
+    "socket.io": "^1.7.3",
     "webrtc-utilities": "^1.0.1"
   },
   "devDependencies": {
