@@ -45,6 +45,10 @@ export class Room extends React.Component {
         <a-plane static-body src="#brick" repeat="2 2" position="-7 0 0" rotation="0 90 0" height="14" width="14"/>
         <a-plane static-body src="#ceiling" repeat="14 14" position="0 7 0" rotation="90 0 0" height="14" width="14"/>
 
+        <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" position="0 0 .5" scale="1.75 1.5 2"/>
+        <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" position="1 0 .5" scale="1.75 1.5 2"/>
+        <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" position="2 0 .5" scale="1.75 1.5 2"/>
+        
         <Entity primitive="a-light" type="ambient" intensity="1" color="white"/>
         <Entity primitive="a-sky" height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048"/>
         <Entity particle-system={{preset: 'snow', particleCount: 2000}}/>
@@ -66,7 +70,6 @@ export class Room extends React.Component {
         <Entity primitive="a-camera">
           <Entity primitive="a-cursor" animation__click={{property: 'scale', startEvents: 'click', from: '0.1 0.1 0.1', to: '1 1 1', dur: 150}}/>
           <a-entity dynamic-body obj-model="obj: #person-obj; mtl: #person-mtl" position="0 -1.6 .5"/>
-         <a-entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" position="0 1 .5"/>
         </Entity>
       </Scene>
     );
