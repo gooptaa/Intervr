@@ -84,10 +84,10 @@ io.sockets.on('connection', function(socket) {
     console.log('received bye');
   });
 
-  socket.on('offer', function(descRoom){
-    console.log("Description: ", descRoom.desc);
-    console.log("Room: ", descRoom.currRoom);
-    
+  socket.on('offer', function(desc, currRoom){
+    console.log("Description: ", desc);
+    console.log("Room: ", currRoom);
+    io.sockets.in(currRoom).broadcast('handshake', desc);
   })
 
 });

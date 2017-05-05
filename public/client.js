@@ -180,7 +180,8 @@ function createPeerConnection(isInitiator, config) {
 }
 
 const sendOffer = (desc) => {
-  socket.emit('offer', {desc, currRoom});
+  //socket.emit('offer', {desc, currRoom});
+  socket.emit('offer', desc, currRoom);
 }
 
 
