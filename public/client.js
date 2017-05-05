@@ -40,13 +40,13 @@ socket.on('ipaddr', function(ipaddr) {
 socket.on('created', function(room, clientId) {
   currRoom = room;
   console.log('Created room', room, '- my client ID is', clientId);
-  isInitiator = true;
+  isInitiator = false;
 });
 
 socket.on('joined', function(room, clientId) {
   currRoom = room;
   console.log('This peer has joined room', room, 'with client ID', clientId);
-  isInitiator = false;
+  isInitiator = true;
   createPeerConnection(isInitiator, configuration);
 });
 
@@ -74,7 +74,7 @@ socket.on('handshake', function(desc){
   console.log("got handshake");
   peerConn.setRemoteDescription(desc);
   peerConn.createAnswer(onLocalSessionCreated, logError);
-  isInitiator = true;
+  isInitiator = false;
 });
 
 // Join a room
@@ -92,6 +92,9 @@ function sendMessage(message) {
   socket.emit('message', message);
 }
 
+function sendAnswer(desc){
+  //socket.emit('')
+}
 
 /****************************************************************************
 * User media (audio)
@@ -100,7 +103,7 @@ function sendMessage(message) {
 function grabAudio() {
   console.log('Getting user media (audio) ...');
   navigator.mediaDevices.getUserMedia({
-    audio: true
+    audio: true, video: false
   })
   .then(gotStream)
   .catch(function(e) {
@@ -115,6 +118,8 @@ function gotStream(stream) {
   audio.src = streamURL;
   audio.muted = true;
 }
+
+
 
 
 /****************************************************************************
@@ -157,8 +162,9 @@ function createPeerConnection(isInitiator, config) {
     const bodyTag = document.getElementsByTagName('body')[0];
     bodyTag.appendChild(remoteAudio);
     //remoteAudio.setAttribute('id', peerId);
-    remoteAudio.setAttribute('autoplay', 'autoplay');
-    console.log(event.stream);
+    remoteAudio.autoplay = true;
+    remoteAudio.muted = false;
+    console.log(event);
     remoteAudio.srcObject = event.stream;
   };
 
@@ -190,12 +196,11 @@ function onLocalSessionCreated(desc) {
   console.log('local session created:', desc);
   peerConn.setLocalDescription(desc, function() {
     console.log('sending local desc:', peerConn.localDescription);
-    //sendMessage(peerConn.localDescription);
+    sendAnswer(peerConn.localDescription);
   }, logError);
 }
 
 const sendOffer = (desc) => {
-  //socket.emit('offer', {desc, currRoom});
   socket.emit('offer', desc, currRoom);
 }
 
