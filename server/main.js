@@ -58,15 +58,13 @@ io.sockets.on('connection', function(socket) {
       log('Client ID ' + socket.id + ' joined room ' + room);
       // io.sockets.in(room).emit('join', room);
       socket.join(room);
-      socket.broadcast.to(room).emit('joined', room, socket.id);
+      socket.emit('joined', room, socket.id);
       io.sockets.in(room).emit('ready', room);
       socket.broadcast.emit('ready', room);
     } else { // max two clients
       console.log("REACHED!");
       socket.emit('full', room);
     }
-
-    //numClients = io.sockets.adapter.rooms[room] ? io.sockets.adapter.rooms[room].length : 1;
 
     log('Room ' + room + ' now has ' + numClients + ' client(s)');
 
