@@ -15,6 +15,7 @@ var configuration = null;
 grabAudio();
 
 var audio = document.querySelector('#local-audio');
+var currRoom;
 
 // Create a random room if not already present in the URL.
 var isInitiator;
@@ -33,15 +34,16 @@ var socket = io.connect();
 
 socket.on('ipaddr', function(ipaddr) {
   console.log('Server IP address is: ' + ipaddr);
-  // updateRoomURL(ipaddr);
 });
 
 socket.on('created', function(room, clientId) {
+  currRoom = room;
   console.log('Created room', room, '- my client ID is', clientId);
   isInitiator = true;
 });
 
 socket.on('joined', function(room, clientId) {
+  currRoom = room;
   console.log('This peer has joined room', room, 'with client ID', clientId);
   isInitiator = false;
   createPeerConnection(isInitiator, configuration);
@@ -140,19 +142,17 @@ function signalingMessageCallback(message) {
 }
 
 function createPeerConnection(isInitiator, config) {
-  console.log('Creating Peer connection as initiator?', isInitiator, 'config:',
-    config);
+  console.log('Creating Peer connection as initiator?', isInitiator, 'config:', config);
   peerConn = new RTCPeerConnection(config);
 
   peerConn.onaddstream = function (event) {
-    console.log("This happened!");
+    console.log("Received Audio feed!");
     console.log('onAddStream', event);
     const remoteAudio = document.createElement('audio');
     const bodyTag = document.getElementsByTagName('body')[0];
     bodyTag.appendChild(remoteAudio);
     remoteAudio.setAttribute('id', peerId);
     remoteAudio.setAttribute('autoplay', 'autoplay');
-    //peerMediaElements[peerId] = remoteAudio; // array of the all peer WebRTC streams
     remoteAudio.srcObject = event.stream;
   };
 
@@ -172,11 +172,15 @@ function createPeerConnection(isInitiator, config) {
   };
 
   if (isInitiator) {
-    peerConn.createOffer(()=>{}, logError);
+    peerConn.createOffer(sendOffer, logError);
   } else {
     peerConn.addStream(window.stream);
   }
 
+}
+
+const sendOffer = (desc) => {
+  socket.emit('offer', {desc, currRoom});
 }
 
 

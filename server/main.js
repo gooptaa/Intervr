@@ -60,7 +60,6 @@ io.sockets.on('connection', function(socket) {
       socket.join(room);
       socket.emit('joined', room, socket.id);
       io.sockets.in(room).emit('ready', room);
-      socket.broadcast.emit('ready', room);
     } else { // max two clients
       console.log("REACHED!");
       socket.emit('full', room);
@@ -84,6 +83,12 @@ io.sockets.on('connection', function(socket) {
   socket.on('bye', function(){
     console.log('received bye');
   });
+
+  socket.on('offer', function(descRoom){
+    console.log("Description: ", descRoom.desc);
+    console.log("Room: ", descRoom.currRoom);
+    
+  })
 
 });
 
