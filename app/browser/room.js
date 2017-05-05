@@ -34,8 +34,8 @@ export class Room extends React.Component {
           <img id="ceiling" src="https://ucarecdn.com/3be112de-62f6-4199-a12f-a0219c78d2eb/"/>
           <a-asset-item id="person-obj" src="objects/person.obj"/>
           <a-asset-item id="person-mtl" src="objects/person.mtl"/>
-
-
+          <a-asset-item id="office-chair-obj" src="objects/office-chair.obj"/>
+          <a-asset-item id="office-chair-mtl" src="objects/office-chair.mtl"/>
         </a-assets>
 
         <a-plane static-body src="#wood" rotation="-90 0 0" height="14" width="14"/>
@@ -66,6 +66,7 @@ export class Room extends React.Component {
         <Entity primitive="a-camera">
           <Entity primitive="a-cursor" animation__click={{property: 'scale', startEvents: 'click', from: '0.1 0.1 0.1', to: '1 1 1', dur: 150}}/>
           <a-entity dynamic-body obj-model="obj: #person-obj; mtl: #person-mtl" position="0 -1.6 .5"/>
+         <a-entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" position="0 1 .5"/>
         </Entity>
       </Scene>
     );
