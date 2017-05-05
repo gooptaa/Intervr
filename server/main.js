@@ -87,7 +87,7 @@ io.sockets.on('connection', function(socket) {
   socket.on('offer', function(desc, currRoom){
     console.log("Description: ", desc);
     console.log("Room: ", currRoom);
-    io.sockets.in(currRoom).broadcast('handshake', desc);
+    socket.broadcast.to(currRoom).emit('handshake', desc);
   })
 
 });

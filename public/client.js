@@ -16,6 +16,7 @@ grabAudio();
 
 var audio = document.querySelector('#local-audio');
 var currRoom;
+var peers = [];
 
 // Create a random room if not already present in the URL.
 var isInitiator;
@@ -66,7 +67,14 @@ socket.on('log', function(array) {
 
 socket.on('message', function(message) {
   console.log('Client received message:', message);
-  signalingMessageCallback(message);
+  //signalingMessageCallback(message);
+});
+
+socket.on('handshake', function(desc){
+  console.log("got handshake");
+  peerConn.setRemoteDescription(desc);
+  peerConn.createAnswer(onLocalSessionCreated, logError);
+  isInitiator = true;
 });
 
 // Join a room
@@ -106,9 +114,6 @@ function gotStream(stream) {
   window.stream = stream; // stream available to console
   audio.src = streamURL;
   audio.muted = true;
-  audio.onloadedmetadata = function() {
-    console.log('pls work');
-  };
 }
 
 
@@ -151,8 +156,9 @@ function createPeerConnection(isInitiator, config) {
     const remoteAudio = document.createElement('audio');
     const bodyTag = document.getElementsByTagName('body')[0];
     bodyTag.appendChild(remoteAudio);
-    remoteAudio.setAttribute('id', peerId);
+    //remoteAudio.setAttribute('id', peerId);
     remoteAudio.setAttribute('autoplay', 'autoplay');
+    console.log(event.stream);
     remoteAudio.srcObject = event.stream;
   };
 
@@ -172,11 +178,20 @@ function createPeerConnection(isInitiator, config) {
   };
 
   if (isInitiator) {
+    peerConn.addStream(window.stream);
     peerConn.createOffer(sendOffer, logError);
   } else {
     peerConn.addStream(window.stream);
   }
 
+}
+
+function onLocalSessionCreated(desc) {
+  console.log('local session created:', desc);
+  peerConn.setLocalDescription(desc, function() {
+    console.log('sending local desc:', peerConn.localDescription);
+    //sendMessage(peerConn.localDescription);
+  }, logError);
 }
 
 const sendOffer = (desc) => {
