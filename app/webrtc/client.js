@@ -7,7 +7,11 @@ export function generateWebRTC(room) {
   });
 
   // we have to wait until it's ready
-  webrtc.on('readyToCall', function () {
+  webrtc.on('readyToCall', () => {
     webrtc.joinRoom(room);
   });
+
+  webrtc.on('channelMessage', (peer, label, data) => {
+    // run update_peer on the store with the event's message
+  })
 };

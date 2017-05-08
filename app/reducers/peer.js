@@ -1,6 +1,6 @@
 /*****
 This will keep track of peer locations.
-Peer object will contain their sdp as their id, and their position and rotation as their values.
+Peer object will contain their peerId as their key, and their position and rotation as their values.
 *****/
 
 const _ = require('lodash');
@@ -8,8 +8,8 @@ const _ = require('lodash');
 const UPDATE_PEER = "UPDATE_PEER";
 const DELETE_PEER = "DELETE_PEER";
 
-const updatePeer = (peer) => {peer, type: UPDATE_PEER};
-const deletePeer = (peerId) => {peerId, type: DELETE_PEER}
+const updatePeer = (peer) => ({peer, type: UPDATE_PEER});
+const deletePeer = (peerId) => ({peerId, type: DELETE_PEER});
 
 export default function peerReducer (state = {}, action) {
   switch(action.type){
