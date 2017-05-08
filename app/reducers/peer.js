@@ -19,6 +19,5 @@ export default function peerReducer (state = {}, action) {
       return _.omit(state, action.peerId);
     default: return state;
   }
-  return state;
 }
 

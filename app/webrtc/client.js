@@ -13,5 +13,8 @@ export function generateWebRTC(room) {
 
   webrtc.on('channelMessage', (peer, label, data) => {
     // run update_peer on the store with the event's message
-  })
+    console.log("Message ", data, " received from ", peer);
+  });
+
+  return webrtc;
 };
