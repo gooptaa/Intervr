@@ -42,6 +42,8 @@ export class Room extends React.Component {
           <a-asset-item id="table-mtl" src="objects/table.mtl"/>
            <a-asset-item id="desk-obj" src="objects/desk.obj"/>
           <a-asset-item id="desk-mtl" src="objects/desk.mtl"/>
+          <a-asset-item id="desktop-computer-obj" src="objects/desktop-computer.obj"/>
+          <a-asset-item id="desktop-computer-mtl" src="objects/desktop-computer.mtl"/>
 
         </a-assets>
 
@@ -52,9 +54,13 @@ export class Room extends React.Component {
         <a-box src="#chantilly" repeat="14 14" position="-7 0 0" rotation="0 90 0" height="14" width="14"/>
         <a-plane src="#ceiling" repeat="14 14" position="0 7 0" rotation="90 0 0" height="14" width="14"/>
 
-        <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" rotation="0 90 .5" position="0.6 0 .7" scale="1.75 1.5 2"/>
-        <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" position="1 0 .8" scale="1.75 1.5 2"/>
-        <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" rotation="0 -90 .5" position="0.7 0 1.2" scale="1.75 1.5 2"/>
+        <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" rotation="0 90 .0" position="0.6 -0.12 .7" scale="1.75 1.5 2"/>
+        <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" rotation="0 -90 0" position="0.7 -0.12 1.2" scale="1.75 1.5 2"/>
+        <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" rotation="0 0 0" position="0.9 -0.12 0.8" scale="1.75 1.5 2"/>
+        <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" rotation="0 0 0" position="-5.27 -0.12 -2.55" scale="1.75 1.5 2"/>
+        <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" rotation="0 180 0" position="-5.68 -0.12 -2.34" scale="1.75 1.5 2"/>
+        <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" rotation="0 -90 0" position="-4.5 -0.12 -2.16" scale="1.75 1.5 2"/>
+
 
         <Entity obj-model="obj: #couch-obj; mtl: #couch-mtl" position="-3 0.14 -6" scale="1 1 1"/>
         <Entity obj-model="obj: #table-obj; mtl: #table-mtl" position="1.8 0.9 0.17" scale="0.002 0.001 0.002"/>
@@ -62,6 +68,11 @@ export class Room extends React.Component {
 
         <Entity obj-model="obj: #desk-obj; mtl: #desk-mtl" position="-5.8 0 -3" scale="1.5 1.6 1.5"/>
         <Entity obj-model="obj: #desk-obj; mtl: #desk-mtl" position="-5.8 0 -1.9" scale="1.5 1.6 1.5"/>
+        <Entity obj-model="obj: #desk-obj; mtl: #desk-mtl" rotation="0 90 0" position="-4 0 -2.35" scale="1.5 1.6 1.5"/>
+
+        <Entity obj-model="obj: #desktop-computer-obj; mtl: #desktop-computer-mtl" rotation="0 90 0" position="-5.6 1.17 -2" scale="0.4 0.3 0.4"/>
+        <Entity obj-model="obj: #desktop-computer-obj; mtl: #desktop-computer-mtl" rotation="0 -90 0" position="-5.6 1.17 -2.75" scale="0.4 0.3 0.4"/>
+        <Entity obj-model="obj: #desktop-computer-obj; mtl: #desktop-computer-mtl" rotation="0 180 0" position="-4.14 1.17 -2.5" scale="0.4 0.3 0.4"/>
 
         <Entity primitive="a-light" type="ambient" intensity="1" color="white"/>
         <Entity primitive="a-sky" height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048"/>
