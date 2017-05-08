@@ -13,6 +13,8 @@ app.use(express.static(path.join(__dirname, './../public')))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//YP/OB: Clean up dead code.
+
 /*
 
 app.use(session({
@@ -28,7 +30,7 @@ app.use(session({
 
 var os = require('os');
 var socketIO = require('socket.io');
-var server = require('http').createServer(app);  
+var server = require('http').createServer(app);
 var io = socketIO.listen(server);
 
 io.sockets.on('connection', function(socket) {

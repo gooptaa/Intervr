@@ -24,6 +24,7 @@ export class Room extends React.Component {
     return (
       <Scene physics="debug: true">
         <a-assets>
+        {/*YP/OB: Slowness might be coming from assets? Isolate and test. */}
           <img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg"/>
           <img id="skyTexture" src="https://cdn.aframe.io/a-painter/images/sky.jpg"/>
           <img id="brick" src="https://ucarecdn.com/9ea05677-13be-42d3-b7a0-6c365b105dab/"/>
@@ -44,7 +45,7 @@ export class Room extends React.Component {
           <a-asset-item id="desk-mtl" src="objects/desk.mtl"/>
 
         </a-assets>
-
+        {/*YP/OB: consider modularizing into separate components. Can also create fence for each wall to make size updating easier */}
         <a-plane src="#wood" rotation="-90 0 0" height="14" width="14"/>
         <a-box src="#chantilly" repeat="14 14" position="0 0 -7" rotation="0 0 0" height="14" width="14"/>
         <a-box src="#chantilly" repeat="14 14" position="0 0 7" rotation="0 180 0" height="14" width="14"/>

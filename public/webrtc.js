@@ -1,3 +1,5 @@
+//YP/OB: Remove if not needed.
+
 // Create a random room if not already present in the URL.
 var room = window.location.hash.substring(1);
 if (!room) {

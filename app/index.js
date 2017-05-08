@@ -8,6 +8,7 @@ import {Router, browserHistory, Route} from 'react-router';
 import {generateWebRTC} from './webrtc/client';
 import {randomToken} from './util';
 
+//YP/OB: Can create a new route that has the random room name in the URL e.g. /newRandomName
 function onRoomEnter(){
   var room = window.location.hash.substring(1);
   if (!room) {
