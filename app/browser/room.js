@@ -29,6 +29,7 @@ export class Room extends React.Component {
           <img id="brick" src="https://ucarecdn.com/9ea05677-13be-42d3-b7a0-6c365b105dab/"/>
           <img id="wood" src="https://ucarecdn.com/6d4846b5-72fa-4014-9676-58188c287274/"/>
           <img id="ceiling" src="https://ucarecdn.com/3be112de-62f6-4199-a12f-a0219c78d2eb/"/>
+          <img id="chantilly" src="https://ucarecdn.com/954adc21-3056-476c-ab04-082153e9c6dd/"/>
           <a-asset-item id="person-obj" src="objects/person.obj"/>
           <a-asset-item id="person-mtl" src="objects/person.mtl"/>
           <a-asset-item id="office-chair-obj" src="objects/office-chair.obj"/>
@@ -40,10 +41,10 @@ export class Room extends React.Component {
         </a-assets>
 
         <a-plane src="#wood" rotation="-90 0 0" height="14" width="14"/>
-        <a-box src="#brick" repeat="2 2" position="0 0 -7" rotation="0 0 0" height="14" width="14"/>
-        <a-box src="#brick" repeat="2 2" position="0 0 7" rotation="0 180 0" height="14" width="14"/>
-        <a-box src="#brick" repeat="2 2" position="7 0 0" rotation="0 -90 0" height="14" width="14"/>
-        <a-box src="#brick" repeat="2 2" position="-7 0 0" rotation="0 90 0" height="14" width="14"/>
+        <a-box static-body src="#chantilly" repeat="14 14" position="0 0 -7" rotation="0 0 0" height="14" width="14"/>
+        <a-box static-body src="#chantilly" repeat="14 14" position="0 0 7" rotation="0 180 0" height="14" width="14"/>
+        <a-box static-body src="#chantilly" repeat="14 14" position="7 0 0" rotation="0 -90 0" height="14" width="14"/>
+        <a-box static-body src="#chantilly" repeat="14 14" position="-7 0 0" rotation="0 90 0" height="14" width="14"/>
         <a-plane src="#ceiling" repeat="14 14" position="0 7 0" rotation="90 0 0" height="14" width="14"/>
 
         <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" position="0 0 .5" scale="1.75 1.5 2"/>
