@@ -76,7 +76,6 @@ export class Room extends React.Component {
 
         <Entity primitive="a-light" type="ambient" intensity="1" color="white"/>
         <Entity primitive="a-sky" height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048"/>
-        <Entity particle-system={{preset: 'snow', particleCount: 2000}}/>
         <Entity text={{value: 'Welcome to InterVR', align: 'center'}} position={{x: 0, y: 2, z: -1}}/>
 
         <Entity id="box"
