@@ -14,11 +14,10 @@
   <!-- We will render our React app into a div with an id of 'app' -->
   <!-- We can grab it off the DOM by saing `document.getElementById('app');` -->
   </div>
-  <audio id="local-audio" autoplay></audio>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
-<script src="http://webrtc.github.io/adapter/adapter-latest.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/adapterjs/0.14.1/adapter.min.js"></script>
 <script async defer src="bundle.js"></script>
-<script async defer src="client.js"></script>
-
+<script async defer src="https://simplewebrtc.com/latest-v2.js"></script>
+<script async defer src="webrtc.js"></script>
 </html>
