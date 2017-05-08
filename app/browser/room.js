@@ -56,9 +56,9 @@ export class Room extends React.Component {
         <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" position="1 0 .8" scale="1.75 1.5 2"/>
         <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" rotation="0 -90 .5" position="0.7 0 1.2" scale="1.75 1.5 2"/>
 
-        <Entity obj-model="obj: #flower-obj; mtl: #flower-mtl" position="3 0 .5" scale="0.01 0.01 0.01"/>
         <Entity obj-model="obj: #couch-obj; mtl: #couch-mtl" position="-3 0.14 -6" scale="1 1 1"/>
         <Entity obj-model="obj: #table-obj; mtl: #table-mtl" position="1.8 0.9 0.17" scale="0.002 0.001 0.002"/>
+        <Entity obj-model="obj: #flower-obj; mtl: #flower-mtl" position="1.1 .7 1.17" scale="0.01 0.01 0.01"/>
 
         <Entity obj-model="obj: #desk-obj; mtl: #desk-mtl" position="-5.8 0 -3" scale="1.5 1.6 1.5"/>
         <Entity obj-model="obj: #desk-obj; mtl: #desk-mtl" position="-5.8 0 -1.9" scale="1.5 1.6 1.5"/>
