@@ -38,6 +38,11 @@ export class Room extends React.Component {
           <a-asset-item id="flower-mtl" src="objects/flower.mtl"/>
           <a-asset-item id="couch-obj" src="objects/couch.obj"/>
           <a-asset-item id="couch-mtl" src="objects/couch.mtl"/>
+          <a-asset-item id="table-obj" src="objects/table.obj"/>
+          <a-asset-item id="table-mtl" src="objects/table.mtl"/>
+           <a-asset-item id="desk-obj" src="objects/desk.obj"/>
+          <a-asset-item id="desk-mtl" src="objects/desk.mtl"/>
+
         </a-assets>
 
         <a-plane src="#wood" rotation="-90 0 0" height="14" width="14"/>
@@ -47,17 +52,21 @@ export class Room extends React.Component {
         <a-box src="#chantilly" repeat="14 14" position="-7 0 0" rotation="0 90 0" height="14" width="14"/>
         <a-plane src="#ceiling" repeat="14 14" position="0 7 0" rotation="90 0 0" height="14" width="14"/>
 
-        <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" position="0 0 .5" scale="1.75 1.5 2"/>
-        <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" position="1 0 .5" scale="1.75 1.5 2"/>
-        <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" position="2 0 .5" scale="1.75 1.5 2"/>
+        <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" rotation="0 90 .5" position="0.6 0 .7" scale="1.75 1.5 2"/>
+        <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" position="1 0 .8" scale="1.75 1.5 2"/>
+        <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" rotation="0 -90 .5" position="0.7 0 1.2" scale="1.75 1.5 2"/>
 
         <Entity obj-model="obj: #flower-obj; mtl: #flower-mtl" position="3 0 .5" scale="0.01 0.01 0.01"/>
         <Entity obj-model="obj: #couch-obj; mtl: #couch-mtl" position="-3 0.14 -6" scale="1 1 1"/>
+        <Entity obj-model="obj: #table-obj; mtl: #table-mtl" position="1.8 0.9 0.17" scale="0.002 0.001 0.002"/>
+
+        <Entity obj-model="obj: #desk-obj; mtl: #desk-mtl" position="-5.8 0 -3" scale="1.5 1.6 1.5"/>
+        <Entity obj-model="obj: #desk-obj; mtl: #desk-mtl" position="-5.8 0 -1.9" scale="1.5 1.6 1.5"/>
 
         <Entity primitive="a-light" type="ambient" intensity="1" color="white"/>
         <Entity primitive="a-sky" height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048"/>
         <Entity particle-system={{preset: 'snow', particleCount: 2000}}/>
-        <Entity text={{value: 'Hello, A-Frame React!', align: 'center'}} position={{x: 0, y: 2, z: -1}}/>
+        <Entity text={{value: 'Welcome to InterVR', align: 'center'}} position={{x: 0, y: 2, z: -1}}/>
 
         <Entity id="box"
           geometry={{primitive: 'box'}}
