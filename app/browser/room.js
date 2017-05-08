@@ -41,10 +41,10 @@ export class Room extends React.Component {
         </a-assets>
 
         <a-plane src="#wood" rotation="-90 0 0" height="14" width="14"/>
-        <a-box static-body src="#chantilly" repeat="14 14" position="0 0 -7" rotation="0 0 0" height="14" width="14"/>
-        <a-box static-body src="#chantilly" repeat="14 14" position="0 0 7" rotation="0 180 0" height="14" width="14"/>
-        <a-box static-body src="#chantilly" repeat="14 14" position="7 0 0" rotation="0 -90 0" height="14" width="14"/>
-        <a-box static-body src="#chantilly" repeat="14 14" position="-7 0 0" rotation="0 90 0" height="14" width="14"/>
+        <a-box src="#chantilly" repeat="14 14" position="0 0 -7" rotation="0 0 0" height="14" width="14"/>
+        <a-box src="#chantilly" repeat="14 14" position="0 0 7" rotation="0 180 0" height="14" width="14"/>
+        <a-box src="#chantilly" repeat="14 14" position="7 0 0" rotation="0 -90 0" height="14" width="14"/>
+        <a-box src="#chantilly" repeat="14 14" position="-7 0 0" rotation="0 90 0" height="14" width="14"/>
         <a-plane src="#ceiling" repeat="14 14" position="0 7 0" rotation="90 0 0" height="14" width="14"/>
 
         <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" position="0 0 .5" scale="1.75 1.5 2"/>
