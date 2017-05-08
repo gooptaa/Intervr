@@ -34,8 +34,12 @@ export class Room extends React.Component {
           <img id="ceiling" src="https://ucarecdn.com/3be112de-62f6-4199-a12f-a0219c78d2eb/"/>
           <a-asset-item id="person-obj" src="objects/person.obj"/>
           <a-asset-item id="person-mtl" src="objects/person.mtl"/>
-
-
+          <a-asset-item id="office-chair-obj" src="objects/office-chair.obj"/>
+          <a-asset-item id="office-chair-mtl" src="objects/office-chair.mtl"/>
+          <a-asset-item id="flower-obj" src="objects/flower.obj"/>
+          <a-asset-item id="flower-mtl" src="objects/flower.mtl"/>
+          <a-asset-item id="couch-obj" src="objects/couch.obj"/>
+          <a-asset-item id="couch-mtl" src="objects/couch.mtl"/>
         </a-assets>
 
         <a-plane static-body src="#wood" rotation="-90 0 0" height="14" width="14"/>
@@ -44,6 +48,13 @@ export class Room extends React.Component {
         <a-plane static-body src="#brick" repeat="2 2" position="7 0 0" rotation="0 -90 0" height="14" width="14"/>
         <a-plane static-body src="#brick" repeat="2 2" position="-7 0 0" rotation="0 90 0" height="14" width="14"/>
         <a-plane static-body src="#ceiling" repeat="14 14" position="0 7 0" rotation="90 0 0" height="14" width="14"/>
+
+        <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" position="0 0 .5" scale="1.75 1.5 2"/>
+        <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" position="1 0 .5" scale="1.75 1.5 2"/>
+        <Entity obj-model="obj: #office-chair-obj; mtl: #office-chair-mtl" position="2 0 .5" scale="1.75 1.5 2"/>
+
+        <Entity obj-model="obj: #flower-obj; mtl: #flower-mtl" position="3 0 .5" scale="0.01 0.01 0.01"/>
+        <Entity obj-model="obj: #couch-obj; mtl: #couch-mtl" position="-3 0.14 -6" scale="1 1 1"/>
 
         <Entity primitive="a-light" type="ambient" intensity="1" color="white"/>
         <Entity primitive="a-sky" height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048"/>
