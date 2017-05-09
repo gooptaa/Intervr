@@ -1,3 +1,6 @@
+import store from '../store';
+import {updatePeer} from '../reducers/peer';
+
 export function generateWebRTC(room) {
   var webrtc = new SimpleWebRTC({
     media: {audio:true, video: false},
@@ -14,6 +17,9 @@ export function generateWebRTC(room) {
   webrtc.on('channelMessage', (peer, label, data) => {
     // run update_peer on the store with the event's message
     console.log("Message ", data, " received from ", peer);
+    let newPeer = {};
+    newPeer[peer.id] = Object.assign({}, store.getState().peer[peer.id], data.payload)
+    store.dispatch(updatePeer(newPeer));
   });
 
   return webrtc;

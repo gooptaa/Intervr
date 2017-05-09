@@ -15,8 +15,12 @@ class RoomComponent extends React.Component {
   }
 
   componentDidMount(){
-    document.querySelector("#camera").addEventListener('componentchanged', function(evt) { 
-      console.log(this.props.webRTC)
+    this.cameraNode.addEventListener('componentchanged', (evt) => { 
+      if(evt.detail.name === 'position'){        
+        this.props.webRTC.sendDirectlyToAll(null, null, {position: evt.detail.newData});
+      } else if (evt.detail.name === 'rotation'){
+        this.props.webRTC.sendDirectlyToAll(null, null, {rotation: evt.detail.newData});
+      }
     });
   }
 
@@ -99,7 +103,7 @@ class RoomComponent extends React.Component {
         </Entity>
 
         <Entity position="0 0 0">
-          <a-camera id="camera" fence="width: 10; depth: 10">
+          <a-camera ref={(cameraNode) => this.cameraNode = cameraNode} id="camera" fence="width: 10; depth: 10">
             <Entity primitive="a-cursor" animation__click={{property: 'scale', startEvents: 'click', from: '0.1 0.1 0.1', to: '1 1 1', dur: 150}}/>
             <a-entity obj-model="obj: #person-obj; mtl: #person-mtl" position="0 -1.6 .5"/>
           </a-camera>
