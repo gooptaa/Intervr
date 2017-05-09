@@ -4,14 +4,24 @@ import aframe from 'aframe';
 import 'aframe-animation-component';
 import 'aframe-particle-system-component';
 import 'babel-polyfill';
-import { Entity, Scene } from 'aframe-react';
+import {Entity, Scene} from 'aframe-react';
 require('aframe-fence-component')
 import {Office} from './office';
 
-export class Room extends React.Component {
+class RoomComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = { color: 'red' };
+  }
+
+  componentDidMount(){
+    this.cameraNode.addEventListener('componentchanged', (evt) => {
+      if(evt.detail.name === 'position'){
+        this.props.webRTC.sendDirectlyToAll(null, null, {position: evt.detail.newData});
+      } else if (evt.detail.name === 'rotation'){
+        this.props.webRTC.sendDirectlyToAll(null, null, {rotation: evt.detail.newData});
+      }
+    });
   }
 
   changeColor() {
@@ -82,30 +92,24 @@ export class Room extends React.Component {
         <Entity obj-model="obj: #desktop-computer-obj; mtl: #desktop-computer-mtl" rotation="0 180 0" position="-4.14 1.17 -2.5" scale="0.4 0.3 0.4" />
 
         <Entity primitive="a-light" type="ambient" intensity="1" color="white" />
-        <Entity primitive="a-sky" height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048" />
-        <Entity particle-system={{ preset: 'snow', particleCount: 2000 }} />
-        <Entity text={{ value: 'Welcome to InterVR', align: 'center' }} position={{ x: 0, y: 2, z: -1 }} />
 
-        <Entity id="box"
-          geometry={{ primitive: 'box' }}
-          material={{ color: this.state.color, opacity: 0.6 }}
-          animation__rotate={{ property: 'rotation', dur: 2000, loop: true, to: '360 360 360' }}
-          animation__scale={{ property: 'scale', dir: 'alternate', dur: 100, loop: true, to: '1.1 1.1 1.1' }}
-          position={{ x: 0, y: 1, z: -3 }}
-          events={{ click: this.changeColor.bind(this) }}>
-          <Entity animation__scale={{ property: 'scale', dir: 'alternate', dur: 100, loop: true, to: '2 2 2' }}
-            geometry={{ primitive: 'box', depth: 0.2, height: 0.2, width: 0.2 }}
-            material={{ color: '#24CAFF' }} />
+        <Entity position="0 0 0">
+          <a-camera ref={(cameraNode) => this.cameraNode = cameraNode} id="camera" fence="width: 10; depth: 10">
+            <Entity primitive="a-cursor" animation__click={{property: 'scale', startEvents: 'click', from: '0.1 0.1 0.1', to: '1 1 1', dur: 150}}/>
+            <a-entity obj-model="obj: #person-obj; mtl: #person-mtl" position="0 -1.6 .5"/>
+          </a-camera>
         </Entity>
 
-        <a-entity position="0 0 0">
-          <a-camera fence="width: 10; depth: 10">
-            <Entity primitive="a-cursor" animation__click={{ property: 'scale', startEvents: 'click', from: '0.1 0.1 0.1', to: '1 1 1', dur: 150 }} />
-            <a-entity obj-model="obj: #person-obj; mtl: #person-mtl" position="0 -1.6 .5" />
-          </a-camera>
-        </a-entity>
+        {Object.keys(this.props.peer).map((key, index) => (
+          <Entity obj-model="obj: #person-obj; mtl: #person-mtl"
+            position={this.props.peer[key].position}
+            rotation={this.props.peer[key].rotation} />
+        ))}
+
       </Scene>
     );
   }
 }
+
+export default connect(({webRTC, peer}) => ({webRTC, peer}), null)(RoomComponent);
 
