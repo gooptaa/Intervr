@@ -6,6 +6,7 @@ import 'aframe-particle-system-component';
 import 'babel-polyfill';
 import {Entity, Scene} from 'aframe-react';
 require('aframe-fence-component')
+import {Office} from './office';
 
 export class Room extends React.Component {
   constructor(props) {
@@ -100,14 +101,4 @@ export class Room extends React.Component {
     );
   }
 }
-
-
-/*
-        <Entity primitive="a-plane" src="#groundTexture" rotation="-90 0 0" height="100" width="100"/>
-        <Entity primitive="a-plane" src="#groundTexture" position="0 0 -7" rotation="0 0 0" height="100" width="100"/>
-        <Entity primitive="a-plane" src="#groundTexture" position="0 0 7" rotation="0 180 0" height="100" width="100"/>
-        <Entity primitive="a-plane" src="#groundTexture" position="7 0 0" rotation="0 -90 0" height="100" width="100"/>
-        <Entity primitive="a-plane" src="#groundTexture" position="-7 0 0" rotation="0 90 0" height="100" width="100"/>
-        <Entity primitive="a-plane" src="#groundTexture" position="0 14 0" rotation="90 0 0" height="100" width="100"/>
- */
 
