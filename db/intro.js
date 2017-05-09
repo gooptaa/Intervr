@@ -12,4 +12,4 @@ const Intro = db.define('intro', {
     }
 });
 
-module.exports = { Intro }
+module.exports = Intro
