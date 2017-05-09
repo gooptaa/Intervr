@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from './store';
 import '../public/stylesheets/index.scss';
-import {Room} from './browser/room';
+import {Room} from './browser/components/Room';
 import {Router, browserHistory, Route} from 'react-router';
 import {generateWebRTC} from './webrtc/client';
 import {randomToken} from './util';
