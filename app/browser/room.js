@@ -6,7 +6,8 @@ import 'aframe-particle-system-component';
 import 'babel-polyfill';
 import {Entity, Scene} from 'aframe-react';
 require('aframe-fence-component')
-import {Office} from './office';
+import { connect } from 'react-redux';
+
 
 class RoomComponent extends React.Component {
   constructor(props) {
