@@ -1,6 +1,8 @@
 
 const Sequelize = require ('sequelize');
-const db = require('./seed');
+const db = new Sequelize('postgres://localhost:5432/intervr', {
+  logging: false
+})
 
 
 const Technical = db.define('technical', {
