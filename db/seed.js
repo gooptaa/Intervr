@@ -2,6 +2,7 @@ const General = require('./general')
 const Intro = require('./intro')
 const Technical = require('./technical')
 
+
 const seeder = function(table, data) {
   let promises = []
   data.forEach(question => {
@@ -46,8 +47,20 @@ const techQ =
   {text: "Explain the difference between classical inheritance and prototypal inheritance."},
   {text: "Explain the differences between one-way data flow and two-way data binding."} ]
 
-seeder(General, genQ)
-seeder(Intro, introQ)
-seeder(Technical, techQ)
+
+General.sync()
+  .then(function(){
+    seeder(General, genQ)
+  })
+
+Intro.sync()
+  .then(function(){
+    seeder(Intro, introQ)
+  })
+
+Technical.sync()
+  .then(function(){
+    seeder(Technical, techQ)
+  })
 
 

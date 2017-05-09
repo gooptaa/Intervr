@@ -12,4 +12,4 @@ const Technical = db.define('technical', {
     }
 });
 
-module.exports = { Technical }
+module.exports = Technical

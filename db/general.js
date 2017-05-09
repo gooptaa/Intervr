@@ -12,5 +12,5 @@ const General = db.define('general', {
     }
 });
 
-module.exports = { General }
+module.exports = General
 
