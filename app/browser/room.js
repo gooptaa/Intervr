@@ -108,12 +108,19 @@ class RoomComponent extends React.Component {
             <a-entity obj-model="obj: #person-obj; mtl: #person-mtl" position="0 -1.6 .5"/>
           </a-camera>
         </Entity>
+
+        {Object.keys(this.props.peer).map((key, index) => (
+          <Entity obj-model="obj: #person-obj; mtl: #person-mtl" 
+            position={this.props.peer[key].position} 
+            rotation={this.props.peer[key].rotation} />
+        ))}
+
       </Scene>
     );
   }
 }
 
-export default connect(({webRTC}) => ({webRTC}), null)(RoomComponent);
+export default connect(({webRTC, peer}) => ({webRTC, peer}), null)(RoomComponent);
 
 
 

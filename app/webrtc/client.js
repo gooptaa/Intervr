@@ -19,6 +19,7 @@ export function generateWebRTC(room) {
     console.log("Message ", data, " received from ", peer);
     let newPeer = {};
     newPeer[peer.id] = Object.assign({}, store.getState().peer[peer.id], data.payload)
+    if(newPeer.position) newPeer.position.y -= 1.6;
     store.dispatch(updatePeer(newPeer));
   });
 
