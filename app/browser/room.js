@@ -5,12 +5,19 @@ import 'aframe-animation-component';
 import 'aframe-particle-system-component';
 import 'babel-polyfill';
 import {Entity, Scene} from 'aframe-react';
+import { connect } from 'react-redux';
 require('aframe-fence-component')
 
-export class Room extends React.Component {
+class RoomComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {color: 'red'};
+  }
+
+  componentDidMount(){
+    document.querySelector("#camera").addEventListener('componentchanged', function(evt) { 
+      console.log(this.props.webRTC)
+    });
   }
 
   changeColor() {
@@ -91,16 +98,19 @@ export class Room extends React.Component {
                   material={{color: '#24CAFF'}}/>
         </Entity>
 
-        <a-entity position="0 0 0">
-          <a-camera fence="width: 10; depth: 10">
+        <Entity position="0 0 0">
+          <a-camera id="camera" fence="width: 10; depth: 10">
             <Entity primitive="a-cursor" animation__click={{property: 'scale', startEvents: 'click', from: '0.1 0.1 0.1', to: '1 1 1', dur: 150}}/>
             <a-entity obj-model="obj: #person-obj; mtl: #person-mtl" position="0 -1.6 .5"/>
           </a-camera>
-        </a-entity>
+        </Entity>
       </Scene>
     );
   }
 }
+
+export default connect(({webRTC}) => ({webRTC}), null)(RoomComponent);
+
 
 
 /*

@@ -8,7 +8,7 @@ const ADD_WEBRTC = "ADD_WEBRTC";
 
 const addWebRTC = (webRTC) => ({webRTC, type: ADD_WEBRTC});
 
-export default function peerReducer (state = {}, action) {
+export default function webRTCReducer (state = {}, action) {
   switch(action.type){
     case ADD_WEBRTC:
       return action.webRTC;

@@ -21,3 +21,6 @@ export default function peerReducer (state = {}, action) {
   }
 }
 
+export const updatePeerLocation = peer => dispatch => {
+  dispatch(updatePeer(peer));
+};
