@@ -6,6 +6,7 @@ import 'aframe-particle-system-component';
 import 'babel-polyfill';
 import { Entity, Scene } from 'aframe-react';
 require('aframe-fence-component')
+import {Office} from './office';
 
 export class Room extends React.Component {
   constructor(props) {
@@ -107,5 +108,4 @@ export class Room extends React.Component {
     );
   }
 }
-
 
