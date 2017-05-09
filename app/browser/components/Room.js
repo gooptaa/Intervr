@@ -49,7 +49,6 @@ export class Room extends React.Component {
           <a-asset-item id="office-chair-mtl" src="objects/office-chair.mtl" />
         </a-assets>
 
-
         {/* Planes */}
         <a-box src="#chantilly" repeat="14 14" position="0 0 -7" rotation="0 0 0" height="14" width="14" />
         <a-box src="#chantilly" repeat="14 14" position="0 0 7" rotation="0 180 0" height="14" width="14" />
