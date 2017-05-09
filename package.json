@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "node server/main.js",
+    "start": "node server/main.js",
+    "build": "webpack",
     "start-dev": "webpack -w & nodemon ./server/main.js",
     "build-branch": "bin/build-branch.sh",
     "deploy-heroku": "bin/deploy-heroku.sh"

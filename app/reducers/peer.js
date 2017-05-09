@@ -9,7 +9,7 @@ const UPDATE_PEER = "UPDATE_PEER";
 const DELETE_PEER = "DELETE_PEER";
 
 export const updatePeer = (peer) => ({peer, type: UPDATE_PEER});
-const deletePeer = (peerId) => ({peerId, type: DELETE_PEER});
+export const deletePeer = (peerId) => ({peerId, type: DELETE_PEER});
 
 export default function peerReducer (state = {}, action) {
   switch(action.type){

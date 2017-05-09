@@ -1,5 +1,5 @@
 import store from '../store';
-import {updatePeer} from '../reducers/peer';
+import {updatePeer, deletePeer} from '../reducers/peer';
 
 export function generateWebRTC(room) {
   var webrtc = new SimpleWebRTC({
@@ -22,6 +22,11 @@ export function generateWebRTC(room) {
     newPeer[peer.id] = Object.assign({}, store.getState().peer[peer.id], data.payload)
     store.dispatch(updatePeer(newPeer));
   });
+
+  webrtc.on('videoRemoved', (video, peer) => {
+    store.dispatch(deletePeer(peer.id));
+    console.log('REACHED');
+  })
 
   return webrtc;
 };
