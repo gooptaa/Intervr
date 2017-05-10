@@ -2,8 +2,6 @@
 This will keep track of the simplewebrtc object.
 *****/
 
-const _ = require('lodash');
-
 const ADD_WEBRTC = "ADD_WEBRTC";
 
 const addWebRTC = (webRTC) => ({webRTC, type: ADD_WEBRTC});
