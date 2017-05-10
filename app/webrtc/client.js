@@ -14,21 +14,26 @@ export function generateWebRTC(room) {
     webrtc.joinRoom(room);
   });
 
+  // channel messages are used for sending peer locations
   webrtc.on('channelMessage', (peer, label, data) => {
-    // run update_peer on the store with the event's message
-    console.log("Message ", data, " received from ", peer);
+    // console.log("Message ", data, " received from ", peer);
     let newPeer = {};
     if(data.payload.position) data.payload.position.y -= 1.6;
     newPeer[peer.id] = Object.assign({}, store.getState().peer[peer.id], data.payload);
     store.dispatch(updatePeer(newPeer));
   });
 
+  // remove the model when user disconnects
   webrtc.on('videoRemoved', (video, peer) => {
     store.dispatch(deletePeer(peer.id));
-    console.log('REACHED');
   });
 
-  // webrtc.on('peer')
+  // when datachannel opens, send each other's locations
+  webrtc.on('channelOpen', peer => {
+    console.log("REACHED");
+    webrtc.sendDirectlyToAll(null, null, {position: store.getState().camera.position});
+    webrtc.sendDirectlyToAll(null, null, {rotation: store.getState().camera.rotation});
+  });
 
   return webrtc;
 };
