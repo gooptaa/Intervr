@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, './../public')))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/api', require('./routes')) // matches all requests to /api
+app.use('/api', require('./apiRoutes')) // matches all requests to /api
 
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, './../public/index.html'))
