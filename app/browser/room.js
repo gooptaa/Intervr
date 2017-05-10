@@ -7,6 +7,7 @@ import 'babel-polyfill';
 import {Entity, Scene} from 'aframe-react';
 require('aframe-fence-component')
 import { connect } from 'react-redux';
+import say from 'say'
 
 
 class RoomComponent extends React.Component {
