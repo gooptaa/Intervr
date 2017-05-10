@@ -12,15 +12,17 @@ import { connect } from 'react-redux';
 class RoomComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { color: 'red' };
+    this.state = { color: 'red', cameraPosition: {x: 0, y: -1.6, z: .5}, cameraRotation: {x: 0, y: 0, z: 0} };
   }
 
   componentDidMount(){
     this.cameraNode.addEventListener('componentchanged', (evt) => {
       if(evt.detail.name === 'position'){
         this.props.webRTC.sendDirectlyToAll(null, null, {position: evt.detail.newData});
+        this.setState({cameraPosition: evt.detail.newData});
       } else if (evt.detail.name === 'rotation'){
         this.props.webRTC.sendDirectlyToAll(null, null, {rotation: evt.detail.newData});
+        this.setState({cameraRotation: evt.detail.newData});
       }
     });
   }

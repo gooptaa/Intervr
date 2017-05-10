@@ -19,14 +19,16 @@ export function generateWebRTC(room) {
     console.log("Message ", data, " received from ", peer);
     let newPeer = {};
     if(data.payload.position) data.payload.position.y -= 1.6;
-    newPeer[peer.id] = Object.assign({}, store.getState().peer[peer.id], data.payload)
+    newPeer[peer.id] = Object.assign({}, store.getState().peer[peer.id], data.payload);
     store.dispatch(updatePeer(newPeer));
   });
 
   webrtc.on('videoRemoved', (video, peer) => {
     store.dispatch(deletePeer(peer.id));
     console.log('REACHED');
-  })
+  });
+
+  // webrtc.on('peer')
 
   return webrtc;
 };
