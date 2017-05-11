@@ -37,6 +37,6 @@ export const getAllQuestions= () => dispatch => {
   .catch(next)
 
   Promise.all([general, intro, technical])
-  .then((resolved) => )
+  .spread((general, intro, technical) => dispatch(getQuestions({general, intro, technical})));
 }
 
