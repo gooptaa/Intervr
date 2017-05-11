@@ -1,7 +1,7 @@
 import Speak from './web-speech';
 
 export default class Bot {
-  constructor(username = '', soundLevel = 100, threshold = 30){
+  constructor(username = '', soundLevel = 100, threshold = 20){
     this.soundLevel = soundLevel
     this.threshold = threshold
     this.waitCount = 0
@@ -14,7 +14,7 @@ export default class Bot {
     this.intervalID = null
   }
 
-  setup(questions, fftsize = 2048, smoother = .5){
+  setup(questions, fftsize = 2048, smoother = 0.8){
     this.questions = questions
     this.analyzer.fftsize = fftsize
     this.analyzer.smoothingTimeConstant = smoother
@@ -40,6 +40,7 @@ export default class Bot {
   }
 
   monitor(avg){
+    console.log(avg)
     if (this.waitCount > this.threshold){
       this.waitCount = 0
       this.polling = false
