@@ -7,7 +7,7 @@ import Room from './browser/room';
 import Home from './browser/home';
 import {Router, browserHistory, Route} from 'react-router';
 import {generateWebRTC} from './webrtc/client';
-import {randomToken} from './util';
+import {randomToken} from '../util';
 import {setWebRTC} from './reducers/webrtc';
 
 const RoutesComponent = ({onRoomEnter}) => (
