@@ -35,9 +35,8 @@ class RoomComponent extends React.Component {
           <img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg" />
           <img id="skyTexture" src="https://cdn.aframe.io/a-painter/images/sky.jpg" />
           <img id="brick" src="https://ucarecdn.com/9ea05677-13be-42d3-b7a0-6c365b105dab/" />
-          <img id="floor" src="https://ucarecdn.com/b8a76bd8-e7d2-4cab-9422-c941956cf592/" />
-          <img id="chantilly" src="https://ucarecdn.com/954adc21-3056-476c-ab04-082153e9c6dd/" />
-          <img id="sofatext" src="https://ucarecdn.com/98e4cfe9-c590-4f91-8147-78c251920890/" />
+
+          <img id="floor" src="https://ucarecdn.com/df577b67-1d2b-49d8-885c-13ca40216737/" />
           <a-asset-item id="person-obj" src="objects/person.obj" />
           <a-asset-item id="person-mtl" src="objects/person.mtl" />
 
@@ -105,7 +104,7 @@ class RoomComponent extends React.Component {
         <Entity obj-model="obj: #tv-obj; mtl: #tv-mtl" rotation="0 90 0" position="3.4 1.55 0" scale="0.8 0.4 1.2" />
         <Entity obj-model="obj: #paintings-obj; mtl: #paintings-mtl" rotation="0 180 0" position="-2 2.7 6.45" scale="0.5 0.4 0.8"/>
 
-        <Entity primitive="a-light" type="ambient" intensity="1" color="white" />
+        <Entity primitive="a-light" type="point" intensity="1.4" color="white" position="-1.3 7.7 0"/>
 
         <Entity>
           <a-camera
@@ -114,7 +113,7 @@ class RoomComponent extends React.Component {
             id="camera"
             fence="width: 10; depth: 10">
             <Entity primitive="a-cursor" animation__click={{ property: 'scale', startEvents: 'click', from: '0.1 0.1 0.1', to: '1 1 1', dur: 150 }} />
-            <a-entity obj-model="obj: #person-obj; mtl: #person-mtl" position="0 -1.6 .5" />
+            <a-entity obj-model="obj: #person-obj; mtl: #person-mtl"  position="0 -1.6 .5"/>
           </a-camera>
         </Entity>
 
