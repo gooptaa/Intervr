@@ -17,8 +17,7 @@ class BotRoomComponent extends React.Component {
  componentDidMount() {
    console.log(this.props)
    const interviewer = new Bot();
-   this.props.getAllQuestions()
-    .then(() => interviewer.setup(this.props.bot))
+   interviewer.setup(this.props.bot)
   }
 
   render() {

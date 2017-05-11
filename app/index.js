@@ -10,12 +10,13 @@ import {generateWebRTC} from './webrtc/client';
 import {randomToken} from './util';
 import {setWebRTC} from './reducers/webrtc';
 import BotRoom from './browser/bot-room';
+import {getAllQuestions} from './reducers/bot'
 
-const RoutesComponent = ({onRoomEnter}) => (
+const RoutesComponent = ({onRoomEnter, onBotRoomEnter}) => (
   <Router history={browserHistory}>
     <Route path="/" component={Home} />
     <Route path="/peer-room" component={Room} onEnter={onRoomEnter}/>
-    <Route path="/bot-room" component={BotRoom} />
+    <Route path="/bot-room" component={BotRoom} onEnter={onBotRoomEnter}/>
   </Router>
 )
 
@@ -27,6 +28,9 @@ const mapDispatch = (dispatch, ownProps) => ({
       room = window.location.hash = randomToken();
     }
     dispatch(setWebRTC(generateWebRTC(room)));
+  },
+  onBotRoomEnter: () => {
+    dispatch(getAllQuestions())
   }
 });
 
