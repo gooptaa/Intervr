@@ -35,7 +35,7 @@ class RoomComponent extends React.Component {
           <img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg" />
           <img id="skyTexture" src="https://cdn.aframe.io/a-painter/images/sky.jpg" />
           <img id="brick" src="https://ucarecdn.com/9ea05677-13be-42d3-b7a0-6c365b105dab/" />
-          <img id="floor" src="https://ucarecdn.com/b8a76bd8-e7d2-4cab-9422-c941956cf592/" />
+          <img id="floor" src="https://ucarecdn.com/df577b67-1d2b-49d8-885c-13ca40216737/" />
           <img id="chantilly" src="https://ucarecdn.com/954adc21-3056-476c-ab04-082153e9c6dd/" />
           <img id="sofatext" src="https://ucarecdn.com/98e4cfe9-c590-4f91-8147-78c251920890/" />
           <a-asset-item id="person-obj" src="objects/person.obj" />
