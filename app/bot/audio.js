@@ -1,3 +1,5 @@
+import monitor from './monitor.js'
+
 var audioCtx = new (window.AudioContext)()
 
 var analyzer = audioCtx.createAnalyser()
@@ -12,34 +14,20 @@ var poller = function(milli = 200) { // milli should be <= 200)
   }, milli)
 }
 
-// this function could be prettier. also need to expand to include other functionalities
-var counter = 0
-var monitor = function(avg){
-  if (avg > 100){
-    if (counter > 9) {console.log("Done talking?")}
-    counter++}
-  else {
-    console.log(avg)
-    counter = 0
-  }
-}
-
 navigator.getUserMedia (
   // constraints - only audio needed for this app
   {
     audio: true
   },
-
   // Success callback
   function(stream) {
     var source = audioCtx.createMediaStreamSource(stream);
     source.connect(analyzer);
     analyzer.connect(audioCtx.destination); // connecting the different audio graph nodes together
   },
-
   // Error callback
   function(err) {
     console.log('The following gUM error occured: ' + err);
   }
-);
+)
 
