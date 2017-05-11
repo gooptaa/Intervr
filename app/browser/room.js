@@ -132,7 +132,7 @@ class RoomComponent extends React.Component {
 import { setRotationStore, setPositionStore } from '../reducers/camera';
 
 export default connect(
-  ({ webRTC, peer, camera }) => ({ webRTC, peer }),
+  ({ webRTC, peer, camera }) => ({ webRTC, peer, camera }),
   ({ setRotationStore, setPositionStore }))
   (RoomComponent);
 
