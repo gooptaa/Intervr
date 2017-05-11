@@ -17,6 +17,10 @@ class HomeComponent extends React.Component {
     browserHistory.push('/peer-room');
   }
 
+  goToBotRoom(){
+    browserHistory.push('/bot-room');
+  }
+
   render() {
     return (
         <Scene>
@@ -49,14 +53,14 @@ class HomeComponent extends React.Component {
               height=".5"
               position={{x: 2, y: 0, z: 0}}
               rotation={{x: 0, y: -90, z: 0}}
-              events={{click: ()=>{}}}>
+              events={{click: this.goToBotRoom}}>
             <a-animation begin="mouseenter" end="mouseleave" fill="forwards" repeat="0"
              direction="normal" attribute="scale" from="1 1 1"
              to="2.5 2.5 1.5" dur="1000"></a-animation>
             <a-animation begin="mouseleave" end="mouseenter" repeat="0" fill="forwards"
               direction="normal" attribute="scale"
               to="1 1 1" dur="1000"></a-animation>
-            <Entity text={{value: 'UNDER CONSTRUCTION', align: 'center', color: 'blue'}} position={{x: 0, y: .1, z: 1}} />
+            <Entity text={{value: 'Bot Room', align: 'center', color: 'blue'}} position={{x: 0, y: .1, z: 1}} />
           </Entity>
 
           <Entity primitive="a-sky" src="#skyTexture" rotation="0 -130 0" />
