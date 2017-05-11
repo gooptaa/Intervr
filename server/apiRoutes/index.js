@@ -9,30 +9,30 @@ router.use(function (req, res, next) {
   next(err);
 });
 
-//Get random general question from our database
+//Get random general questions from our database
 router.get('/general', (req, res, next) => {
   console.log('in the general route')
-  General.findById(Math.ceil(Math.random() * (10)))
-  .then((question) => {
-    res.json(question);
+  General.findAll()
+  .then((questions) => {
+    res.json(questions);
   })
   .catch(next);
 });
-//Get random technical question from our database
+//Get random technical questions from our database
 router.get('/technical', (req, res, next) => {
   console.log('in the technical route')
-  Technical.findById(Math.ceil(Math.random() * (6)))
-  .then((question) => {
-    res.json(question);
+  Technical.findAll()
+  .then((questions) => {
+    res.json(questions);
   })
   .catch(next);
 });
-//Get random intro question from our database
+//Get random intro questions from our database
 router.get('/intro', (req, res, next) => {
   console.log('in the intro route')
-  Intro.findById(Math.ceil(Math.random() * (6)))
-  .then((question) => {
-    res.json(question);
+  Intro.findAll()
+  .then((questions) => {
+    res.json(questions);
   })
   .catch(next);
 });
