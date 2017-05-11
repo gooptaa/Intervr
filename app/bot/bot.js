@@ -92,7 +92,8 @@ export default class Bot {
   getQuestion(type){
     let randomInd = Math.floor(Math.random() * this.questions[type].length)
     let question = this.questions[type].splice(randomInd, 1)
-    return question[0]
+    question = question[0].text
+    return question
   }
 }
 
