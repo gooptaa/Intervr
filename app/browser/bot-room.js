@@ -19,10 +19,12 @@ class BotRoomComponent extends React.Component {
 
           <a-assets>
             <img id="skyTexture" src="images/bot-room.jpg"/>
+            <a-asset-item id="person-obj" src="objects/person.obj" />
+            <a-asset-item id="person-mtl" src="objects/person.mtl" />
           </a-assets>
 
           <Entity primitive="a-sky" src="#skyTexture" rotation="0 -130 0" />
-
+          <a-entity obj-model="obj: #person-obj; mtl: #person-mtl" position="9 -5 -5" rotation="0 -45 0" scale="2 2 2" />
           <a-entity camera mouse-cursor look-controls rotation="0 -40 0">
             <a-cursor color="black"/>
           </a-entity>
