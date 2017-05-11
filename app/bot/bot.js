@@ -1,3 +1,4 @@
+import Speak from './web-speech';
 
 export default class Bot {
   constructor(username = '', soundLevel = 100, threshold = 10){
@@ -21,7 +22,7 @@ export default class Bot {
     }, (stream) => {
       const source = this.audioCtx.createMediaStreamSource(stream)
       source.connect(this.analyzer)
-      this.analyzer.connect(this.audioCtx.destination)
+      // this.analyzer.connect(this.audioCtx.destination)
     }, (err) => {
       console.error("Hmm, there was an issue setting up your room: ", err)
     })
@@ -62,25 +63,29 @@ export default class Bot {
 
   next(){ //introduce, ask questions, end interview
     if (this.questionsAsked === 0){
-      let question = this.getQuestion(intro)
-      return `Hello ${this.username}! Let's begin the interview. ${question}.`
+      let question = this.getQuestion('intro')
+      Speak(`Hello ${this.username}! Let's begin the interview. ${question}.`)
+      this.next()
     }
     else if (this.questionsAsked < 2){
-      let question = this.getQuestion(intro)
-      return `Great! ${question}`
+      let question = this.getQuestion('intro')
+      Speak(`Great! ${question}`)
+      this.next()
     }
     else if (this.questionsAsked < 6){
-      let question = this.getQuestion(general)
-      return `Great! ${question}`
+      let question = this.getQuestion('general')
+      Speak(`Great! ${question}`)
+      this.next()
     }
     else {
-      return 'Great! That concludes the interview. Feel free to exit and reenter the app to practice some more.'
+      Speak('Great! That concludes the interview. Feel free to exit and reenter the app to practice some more.')
+      this.next()
     }
   }
 
   getQuestion(type){
-    let randomInd = Math.floor(Math.random() * this.questions.type.length)
-    let question = this.questions.type.splice(randomInd)
+    let randomInd = Math.floor(Math.random() * this.questions[type].length)
+    let question = this.questions[type].splice(randomInd, 1)
     return question
   }
 }

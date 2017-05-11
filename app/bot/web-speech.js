@@ -4,7 +4,7 @@ export default function speak(text){
   if (text !== ''){
     const utterThis = new SpeechSynthesisUtterance(text);
     const selectedOption = 'Alex';
-    for (i = 0; i < speechSynthesis.getVoices().length ; i++) {
+    for (let i = 0; i < speechSynthesis.getVoices().length ; i++) {
       if (speechSynthesis.getVoices()[i].name === selectedOption) {
         utterThis.voice = speechSynthesis.getVoices()[i];
       }

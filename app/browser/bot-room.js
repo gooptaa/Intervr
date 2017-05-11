@@ -7,10 +7,17 @@ import 'babel-polyfill';
 import {Entity, Scene} from 'aframe-react';
 import { connect } from 'react-redux';
 import {browserHistory} from 'react-router'
+import Bot from '../bot/bot';
 
 class BotRoomComponent extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+ componentDidMount() {
+   this.props.getAllQuestions()
+   const interviewer = new Bot();
+   interviewer.setup(this.props.bot)
   }
 
   render() {
@@ -44,4 +51,7 @@ class BotRoomComponent extends React.Component {
   }
 }
 
-export default connect(null, null)(BotRoomComponent);
+
+import {getAllQuestions} from '../reducers/bot';
+
+export default connect(({bot}) => ({bot}), ({getAllQuestions}))(BotRoomComponent);
