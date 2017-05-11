@@ -35,7 +35,7 @@ class HomeComponent extends React.Component {
               events={{click: this.goToPeerRoom}}>
             <a-animation begin="mouseenter" end="mouseleave" fill="forwards" repeat="0"
              direction="normal" attribute="scale" from="1 1 1"
-             to="1.5 1.5 1.5" dur="1000"></a-animation>
+             to="2.5 2.5 1.5" dur="1000"></a-animation>
             <a-animation begin="mouseleave" end="mouseenter" repeat="0" fill="forwards"
               direction="normal" attribute="scale"
               to="1 1 1" dur="1000"></a-animation>
@@ -52,7 +52,7 @@ class HomeComponent extends React.Component {
               events={{click: ()=>{}}}>
             <a-animation begin="mouseenter" end="mouseleave" fill="forwards" repeat="0"
              direction="normal" attribute="scale" from="1 1 1"
-             to="1.5 1.5 1.5" dur="1000"></a-animation>
+             to="2.5 2.5 1.5" dur="1000"></a-animation>
             <a-animation begin="mouseleave" end="mouseenter" repeat="0" fill="forwards"
               direction="normal" attribute="scale"
               to="1 1 1" dur="1000"></a-animation>
