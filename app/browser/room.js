@@ -71,7 +71,7 @@ class RoomComponent extends React.Component {
         {/* Single Objects */}
         <Entity obj-model="obj: #couch-obj; mtl: #couch-mtl" position="-3 0.14 -6" scale="1 1 1" />
         <Entity obj-model="obj: #table-obj; mtl: #table-mtl" position="2 0.9 -1.5" scale="0.003 0.001 0.005" />
-        <Entity obj-model="obj: #flower-obj; mtl: #flower-mtl" position="1.1 .7 1.17" scale="0.01 0.01 0.02" />
+        <Entity obj-model="obj: #flower-obj; mtl: #flower-mtl" position="1.1 .7 1.17" scale="0.01 0.01 0.01" />
 
         {/* Desks */}
         <Entity obj-model="obj: #desk-obj; mtl: #desk-mtl" position="-5.8 0 -3" scale="1.5 1.6 1.5" />
