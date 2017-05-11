@@ -65,21 +65,21 @@ export default class Bot {
     if (this.questionsAsked === 0){
       let question = this.getQuestion('intro')
       Speak(`Hello ${this.username}! Let's begin the interview. ${question}.`)
-      this.next()
+      this.poll()
     }
     else if (this.questionsAsked < 2){
       let question = this.getQuestion('intro')
       Speak(`Great! ${question}`)
-      this.next()
+      this.poll()
     }
     else if (this.questionsAsked < 6){
       let question = this.getQuestion('general')
       Speak(`Great! ${question}`)
-      this.next()
+      this.poll()
     }
     else {
       Speak('Great! That concludes the interview. Feel free to exit and reenter the app to practice some more.')
-      this.next()
+      this.poll()
     }
   }
 
