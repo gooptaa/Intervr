@@ -7,6 +7,7 @@ import 'babel-polyfill';
 import {Entity, Scene} from 'aframe-react';
 import { connect } from 'react-redux';
 import {browserHistory} from 'react-router'
+import Sound from 'react-sound';
 
 class HomeComponent extends React.Component {
   constructor(props) {
@@ -68,6 +69,10 @@ class HomeComponent extends React.Component {
           <a-entity camera mouse-cursor look-controls rotation="0 -40 0">
             <a-cursor color="black"/>
           </a-entity>
+          <Sound 
+            url="/music/lobby-music.mp3"
+            playStatus={Sound.status.PLAYING}
+          />
         </Scene>
       )
   }
