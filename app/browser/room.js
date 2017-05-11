@@ -111,7 +111,7 @@ class RoomComponent extends React.Component {
             ref={(cameraNode) => this.cameraNode = cameraNode}
             position={this.camera && this.props.camera.position} rotation={this.camera && this.props.camera.rotation}
             id="camera"
-            fence="width: 10; depth: 10">
+            fence="width: 6; depth: 10">
             <Entity primitive="a-cursor" animation__click={{ property: 'scale', startEvents: 'click', from: '0.1 0.1 0.1', to: '1 1 1', dur: 150 }} />
             <a-entity obj-model="obj: #person-obj; mtl: #person-mtl"  position="0 -1.6 .5"/>
           </a-camera>
