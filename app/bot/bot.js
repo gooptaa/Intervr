@@ -1,7 +1,7 @@
 import Speak from './web-speech';
 
 export default class Bot {
-  constructor(username = '', soundLevel = 100, threshold = 10){
+  constructor(username = '', soundLevel = 100, threshold = 30){
     this.soundLevel = soundLevel
     this.threshold = threshold
     this.waitCount = 0
@@ -11,6 +11,7 @@ export default class Bot {
     this.questionsAsked = 0
     this.username = username
     this.questions = {}
+    this.intervalID = null
   }
 
   setup(questions, fftsize = 2048, smoother = .5){
@@ -31,17 +32,18 @@ export default class Bot {
 
   poll(freq = 200){
     this.polling = true
-    setInterval( () => {
-      if (this.polling){
+    this.intervalID = setInterval( () => {
         let data = new Float32Array(this.analyzer.frequencyBinCount)
         this.analyzer.getFloatFrequencyData(data)
         this.monitor(Math.abs(data.reduce((a, b) => (a + b))) / data.length)
-      }
     }, freq)
   }
 
   monitor(avg){
     if (this.waitCount > this.threshold){
+      this.waitCount = 0
+      this.polling = false
+      clearInterval(this.intervalID)
       this.next()
     }
     else if (avg > this.soundLevel){
@@ -55,6 +57,7 @@ export default class Bot {
   pause(){
     if (this.polling){
       this.polling = false
+      clearInterval(this.intervalID)
     }
     else {
       this.poll()
@@ -65,28 +68,30 @@ export default class Bot {
     if (this.questionsAsked === 0){
       let question = this.getQuestion('intro')
       Speak(`Hello ${this.username}! Let's begin the interview. ${question}.`)
+      this.questionsAsked++
       this.poll()
     }
     else if (this.questionsAsked < 2){
       let question = this.getQuestion('intro')
       Speak(`Great! ${question}`)
+      this.questionsAsked++
       this.poll()
     }
     else if (this.questionsAsked < 6){
       let question = this.getQuestion('general')
       Speak(`Great! ${question}`)
+      this.questionsAsked++
       this.poll()
     }
     else {
       Speak('Great! That concludes the interview. Feel free to exit and reenter the app to practice some more.')
-      this.poll()
     }
   }
 
   getQuestion(type){
     let randomInd = Math.floor(Math.random() * this.questions[type].length)
     let question = this.questions[type].splice(randomInd, 1)
-    return question
+    return question[0]
   }
 }
 
