@@ -8,7 +8,12 @@ import Promise from 'bluebird'
 const GET_QUESTIONS = "GET_QUESTIONS";
 
 /* ---------------<   ACTION CREATORS   >------------------- */
-const getQuestions = (questions) => ({questions, type: GET_QUESTIONS});
+const getQuestions = (questions) => ({
+  type: GET_QUESTIONS,
+  general: questions.general,
+  intro: questions.intro,
+  technical: questions.technical
+});
 
 /* -------------------<   REDUCERS   >--------------------- */
 const initialState = {
@@ -27,14 +32,17 @@ export default function botReducer (state = initialState, action) {
 
 /* ------------------<   DISPATCHERS   >-------------------- */
 export const getAllQuestions= () => dispatch => {
-  let general = axios.get('/general')
+  let general = axios.get('api/general')
   .then((res) => res.data)
-  let intro = axios.get('/intro')
+  // .then((question) => console.log('general',question))
+  let intro = axios.get('api/intro')
   .then((res) => res.data)
-  let technical = axios.get('/technical')
+  // .then((question) => console.log('intro',question))
+  let technical = axios.get('api/technical')
   .then((res) => res.data)
+  // .then((question) => console.log('technical',question))
 
   Promise.all([general, intro, technical])
-  .spread((general, intro, technical) => dispatch(getQuestions({general, intro, technical})));
+  .spread((general, intro, technical) => dispatch(getQuestions({general, intro, technical})))
 }
 

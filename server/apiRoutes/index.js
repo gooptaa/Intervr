@@ -3,11 +3,6 @@ const General = require('../../db/general');
 const Technical = require('../../db/technical');
 const Intro = require('../../db/intro');
 
-router.use(function (req, res, next) {
-  const err = new Error('Not found.');
-  err.status = 404;
-  next(err);
-});
 
 //Get random general questions from our database
 router.get('/general', (req, res, next) => {
@@ -38,4 +33,9 @@ router.get('/intro', (req, res, next) => {
 });
 
 
+router.use(function (req, res, next) {
+  const err = new Error('Not found.');
+  err.status = 404;
+  next(err);
+});
 module.exports = router;
