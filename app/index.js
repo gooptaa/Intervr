@@ -9,11 +9,13 @@ import {Router, browserHistory, Route} from 'react-router';
 import {generateWebRTC} from './webrtc/client';
 import {randomToken} from './util';
 import {setWebRTC} from './reducers/webrtc';
+import BotRoom from './browser/bot-room';
 
 const RoutesComponent = ({onRoomEnter}) => (
   <Router history={browserHistory}>
     <Route path="/" component={Home} />
     <Route path="/peer-room" component={Room} onEnter={onRoomEnter}/>
+    <Route path="/bot-room" component={BotRoom} />
   </Router>
 )
 
