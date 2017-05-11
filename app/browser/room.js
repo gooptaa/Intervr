@@ -59,8 +59,8 @@ class RoomComponent extends React.Component {
           <a-asset-item id="bag-chair-mtl" src="objects/bag-chair.mtl" />
           <a-asset-item id="tv-obj" src="objects/tv.obj" />
           <a-asset-item id="tv-mtl" src="objects/tv.mtl" />
-          <a-asset-item id="sofa-obj" src="objects/sofa.obj" />
-          <a-asset-item id="sofa-mtl" src="objects/sofa.mtl" />
+          <a-asset-item id="paintings-obj" src="objects/oil-paintings-with-frame.obj" />
+          <a-asset-item id="paintings-mtl" src="objects/oil-paintings-with-frame.mtl" />
 
         </a-assets>
 
@@ -106,8 +106,8 @@ class RoomComponent extends React.Component {
         <Entity obj-model="obj: #desktop-computer-obj; mtl: #desktop-computer-mtl" rotation="0 180 0" position="-5.8 1.17 1.66" scale="0.4 0.3 0.4" />
 
         <Entity obj-model="obj: #bag-chair-obj; mtl: #bag-chair-mtl" rotation="0 180 0" />
-        <Entity obj-model="obj: #tv-obj; mtl: #tv-mtl" rotation="0 90 0" position="3.4 1.55 0" scale="1 0.6 1.2" />
-        <Entity obj-model="obj: #sofa-obj; mtl: #sofa-mtl" scale="0.8 0.4 1" position="1 0 -6"/>
+        <Entity obj-model="obj: #tv-obj; mtl: #tv-mtl" rotation="0 90 0" position="3.4 1.55 0" scale="0.8 0.4 1.2" />
+        <Entity obj-model="obj: #paintings-obj; mtl: #paintings-mtl" rotation="0 180 0" position="-2 2.7 6.45" scale="0.5 0.4 0.8"/>
 
 
         <Entity primitive="a-light" type="ambient" intensity="1" color="white" />
