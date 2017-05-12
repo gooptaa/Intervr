@@ -14,11 +14,12 @@ import Promise from 'bluebird'
 class BotRoomComponent extends React.Component {
   constructor(props) {
     super(props);
+    this.interviewer = null
   }
 
  componentDidMount() {
    console.log(this.props)
-   const interviewer = new Bot();
+   this.interviewer = new Bot();
 
   let general = axios.get('api/general')
   .then((res) => res.data)
@@ -31,12 +32,18 @@ class BotRoomComponent extends React.Component {
   // .then((question) => console.log('technical',question))
 
   Promise.all([general, intro, technical])
-  .spread((general, intro, technical) => interviewer.setup({
+  .spread((general, intro, technical) => this.interviewer.setup({
     general: general,
     intro: intro,
     technical: technical,
   }))
 }
+
+  componentWillUnmount() {
+    if(this.interviewer) {
+      this.interviewer.end();
+    }
+  }
 
   render() {
     return (
