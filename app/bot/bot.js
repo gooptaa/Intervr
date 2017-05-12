@@ -3,9 +3,9 @@ import Speak from './web-speech';
 /* NB: glossary below */
 
 export default class Bot {
-  constructor(interviewee = '', soundLevel = 100, threshold = 30){
-    this.soundLevel = soundLevel
-    this.threshold = threshold
+  constructor(interviewee = ''){
+    this.soundLevel = null
+    this.threshold = null
     this.waitCount = 0
     this.audioCtx = new (window.AudioContext)()
     this.analyzer = this.audioCtx.createAnalyser()
@@ -18,10 +18,12 @@ export default class Bot {
     this.Speaker = new Speak()
   }
 
-  setup(questions, fftsize = 4096, smoother = 0.65){
+  setup(questions, fftsize = 4096, smoother = 0.65, soundLevel = 100, threshold = 30){
     this.questions = questions
     this.analyzer.fftsize = fftsize
     this.analyzer.smoothingTimeConstant = smoother
+    this.soundLevel = soundLevel
+    this.threshold = threshold
     window.navigator.getUserMedia({
       audio: true
     }, (stream) => {
@@ -105,8 +107,8 @@ export default class Bot {
     this.next = null
     this.getQuestion = null
     this.source = null
-    this.audioCtx.close()
     this.Speaker.cancel()
+    this.audioCtx.close()
   }
 }
 
