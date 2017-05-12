@@ -15,6 +15,7 @@ class BotRoomComponent extends React.Component {
   constructor(props) {
     super(props);
     this.interviewer = null
+    this.onClick = this.onClick.bind(this)
   }
 
  componentDidMount() {
@@ -45,6 +46,10 @@ class BotRoomComponent extends React.Component {
     }
   }
 
+  onClick(){
+    this.interviewer.next()
+  }
+
   render() {
     return (
         <Scene>
@@ -66,7 +71,7 @@ class BotRoomComponent extends React.Component {
               position={{x: 4.389, y: -0.807, z: -1.332}}
               rotation="0 -45 0"
               scale=".5 .5 1"
-              events={{click: console.log('clicked')}}>
+              events={{click: this.onClick}}>
           </Entity>
           <a-entity camera mouse-cursor look-controls rotation="-5 -60 0">
             <a-cursor color="black"/>

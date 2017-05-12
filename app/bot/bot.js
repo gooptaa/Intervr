@@ -17,7 +17,7 @@ export default class Bot {
     this.Speaker = new Speak()
   }
 
-  setup(questions, fftsize = 4096, smoother = 0.65, soundLevel = 100, threshold = 30){
+  setup(questions, fftsize = 4096, smoother = 0.65, soundLevel = 100, threshold = 20){
     this.questions = questions
     this.analyzer.fftsize = fftsize
     this.analyzer.smoothingTimeConstant = smoother
@@ -31,7 +31,7 @@ export default class Bot {
     }, (err) => {
       console.error("Hmm, there was an issue setting up your room: ", err)
     })
-    setTimeout(this.next("greet"), 5000)
+    setTimeout(this.next("greet"), 2000)
   }
 
   poll(freq = 100){
@@ -74,21 +74,18 @@ export default class Bot {
     }
     else if (this.questionsAsked === 0){
       let question = this.getQuestion('intro')
-      this.Speaker.on(`Great, let's begin. ${question}.`)
+      this.Speaker.on(`Great, let's begin. ${question}.`, this.poll())
       this.questionsAsked++
-      this.poll()
     }
     else if (this.questionsAsked < 2){
       let question = this.getQuestion('intro')
-      this.Speaker.on(`Great! ${question}`)
+      this.Speaker.on(`Great! ${question}`, this.poll())
       this.questionsAsked++
-      this.poll()
     }
     else if (this.questionsAsked < 6){
       let question = this.getQuestion('general')
-      this.Speaker.on(`Great! ${question}`)
+      this.Speaker.on(`Great! ${question}`, this.poll())
       this.questionsAsked++
-      this.poll()
     }
     else {
       this.Speaker.on('Great! That concludes the interview. Feel free to exit and reenter the app to practice some more.')
