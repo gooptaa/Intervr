@@ -28,6 +28,6 @@ class LaunchComponent extends React.Component {
 }
 
 import { connect } from 'react-redux';
-import updateHandle from '../reducers/self';
+import { updateHandle } from '../reducers/self';
 
 export default connect(null, ({updateHandle}))(LaunchComponent);

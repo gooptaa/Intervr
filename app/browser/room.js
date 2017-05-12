@@ -105,6 +105,7 @@ class RoomComponent extends React.Component {
         <Entity obj-model="obj: #paintings-obj; mtl: #paintings-mtl" rotation="0 180 0" position="-2 2.7 6.45" scale="0.5 0.4 0.8"/>
 
         <Entity primitive="a-light" type="point" intensity="1.4" color="white" position="-1.3 7.7 0"/>
+        <Entity primitive="a-light" type="ambient" intensity="0.1" color="white" position="-1.3 7.7 0"/>
 
         <Entity>
           <a-camera
@@ -120,7 +121,9 @@ class RoomComponent extends React.Component {
         {Object.keys(this.props.peer).map((key, index) => (
           <Entity obj-model="obj: #person-obj; mtl: #person-mtl"
             position={this.props.peer[key].position}
-            rotation={this.props.peer[key].rotation} />
+            rotation={this.props.peer[key].rotation}>
+            <Entity text={{ value: `${this.props.peer[key].handle}`, align: 'center', color: 'blue' }} position={{ x: 0, y: 1.8, z: -0.1 }} />
+          </Entity>
         ))}
 
       </Scene>
