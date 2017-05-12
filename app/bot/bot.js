@@ -3,7 +3,7 @@ import Speak from './web-speech';
 /* NB: glossary below */
 
 export default class Bot {
-  constructor(username = '', soundLevel = 100, threshold = 30){
+  constructor(interviewee = '', soundLevel = 100, threshold = 30){
     this.soundLevel = soundLevel
     this.threshold = threshold
     this.waitCount = 0
@@ -11,7 +11,7 @@ export default class Bot {
     this.analyzer = this.audioCtx.createAnalyser()
     this.polling = false
     this.questionsAsked = 0
-    this.username = username
+    this.interviewee = interviewee
     this.questions = {}
     this.intervalID = null
     this.source = null
@@ -27,7 +27,6 @@ export default class Bot {
     }, (stream) => {
       this.source = this.audioCtx.createMediaStreamSource(stream)
       this.source.connect(this.analyzer)
-      // this.analyzer.connect(this.audioCtx.destination)
     }, (err) => {
       console.error("Hmm, there was an issue setting up your room: ", err)
     })
@@ -72,7 +71,7 @@ export default class Bot {
   next(){
     if (this.questionsAsked === 0){
       let question = this.getQuestion('intro')
-      this.Speaker.on(`Hello ${this.username}! Let's begin the interview. ${question}.`)
+      this.Speaker.on(`Hello ${this.interviewee}! Let's begin the interview. ${question}.`)
       this.questionsAsked++
       this.poll()
     }
@@ -131,7 +130,8 @@ polling: boolean indicating whether bot is actively
       polling
 
 questions: local store (passed from redux props) with
-      interview questions of format: Obj{arr[{text: }, etc], etc}
+      interview questions of following format:
+      Obj{ arr[ {text: }, etc], etc}
 
 questionsAsked: running tally of questions asked
 
@@ -148,8 +148,6 @@ source: audio node capturing media stream
 Speaker: TTS constructor with on(text) and pause() methods
 
 threshold: number of consecutive polls above {soundLevel} at {freq}
-
-username: user's name (this one's for you, Edward)
 
 waitCount: current tally of consecutive polls above {soundLevel}
 
