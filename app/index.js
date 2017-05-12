@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider, connect } from 'react-redux';
 import store from './store';
-import '../public/stylesheets/index.scss';
 import Room from './browser/room';
 import Home from './browser/home';
 import {Router, browserHistory, Route} from 'react-router';

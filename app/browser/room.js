@@ -1,8 +1,9 @@
-import React from 'react'
-import { Link } from 'react-router'
-import aframe from 'aframe';
+import 'aframe';
 import 'aframe-animation-component';
 import 'aframe-particle-system-component';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Link } from 'react-router';
 import 'babel-polyfill';
 import { Entity, Scene } from 'aframe-react';
 require('aframe-fence-component')
@@ -29,7 +30,7 @@ class RoomComponent extends React.Component {
 
   render() {
     return (
-      <Scene physics="debug: true">
+      <Scene >
         <a-assets>
           {/* Textures */}
           <img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg" />
