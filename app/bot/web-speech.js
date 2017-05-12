@@ -6,7 +6,7 @@ export default class Speak {
     this.selectedOption = 'Alex';
   }
 //this will invoke the speak function from speech synthesis
-  on(text){
+  on(text, cb){
     this.utterThis = new SpeechSynthesisUtterance(text);
     for (let i = 0; i < speechSynthesis.getVoices().length ; i++) {
       if (speechSynthesis.getVoices()[i].name === this.selectedOption) {
@@ -15,12 +15,15 @@ export default class Speak {
     }
     this.utterThis.pitch = 1;
     this.utterThis.rate = 1;
+    this.utterThis.onend = cb
     speechSynthesis.speak(this.utterThis);
   }
+
 //this will cancel the speak function from speech synthesis
   cancel(){
     if(this.utterThis) {
       speechSynthesis.cancel(this.utterThis)
+      this.utterThis = null
     }
   }
 //this will get the voices that are available and console.log it.
