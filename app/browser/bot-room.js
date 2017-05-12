@@ -8,6 +8,8 @@ import {Entity, Scene} from 'aframe-react';
 import { connect } from 'react-redux';
 import {browserHistory} from 'react-router'
 import Bot from '../bot/bot';
+import axios from 'axios';
+import Promise from 'bluebird'
 
 class BotRoomComponent extends React.Component {
   constructor(props) {
@@ -17,8 +19,24 @@ class BotRoomComponent extends React.Component {
  componentDidMount() {
    console.log(this.props)
    const interviewer = new Bot();
-   interviewer.setup(this.props.bot)
-  }
+
+  let general = axios.get('api/general')
+  .then((res) => res.data)
+  // .then((question) => console.log('general',question))
+  let intro = axios.get('api/intro')
+  .then((res) => res.data)
+  // .then((question) => console.log('intro',question))
+  let technical = axios.get('api/technical')
+  .then((res) => res.data)
+  // .then((question) => console.log('technical',question))
+
+  Promise.all([general, intro, technical])
+  .spread((general, intro, technical) => interviewer.setup({
+    general: general,
+    intro: intro,
+    technical: technical,
+  }))
+}
 
   render() {
     return (
