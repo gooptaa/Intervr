@@ -9,7 +9,6 @@ export default class Bot {
     this.waitCount = 0
     this.audioCtx = new (window.AudioContext)()
     this.analyzer = this.audioCtx.createAnalyser()
-    this.polling = false
     this.questionsAsked = 0
     this.interviewee = interviewee
     this.questions = {}
@@ -32,11 +31,10 @@ export default class Bot {
     }, (err) => {
       console.error("Hmm, there was an issue setting up your room: ", err)
     })
-    setTimeout(this.next(), 5000)
+    setTimeout(this.next("greet"), 5000)
   }
 
   poll(freq = 100){
-    this.polling = true
     this.intervalID = setInterval( () => {
         let data = new Float32Array(this.analyzer.frequencyBinCount)
         this.analyzer.getFloatFrequencyData(data)
@@ -48,8 +46,8 @@ export default class Bot {
     console.log(avg)
     if (this.waitCount > this.threshold){
       this.waitCount = 0
-      this.polling = false
       clearInterval(this.intervalID)
+      this.intervalID = null
       this.next()
     }
     else if (avg > this.soundLevel){
@@ -61,19 +59,22 @@ export default class Bot {
   }
 
   pause(){
-    if (this.polling){
-      this.polling = false
+    if (this.intervalID){
       clearInterval(this.intervalID)
+      this.intervalID = null
     }
     else {
       this.poll()
     }
   }
 
-  next(){
-    if (this.questionsAsked === 0){
+  next(type){
+    if (type === "greet"){
+      this.Speaker.on(`Welcome, ${this.interviewee}! When you're ready to begin the interview, please press the start button.`)
+    }
+    else if (this.questionsAsked === 0){
       let question = this.getQuestion('intro')
-      this.Speaker.on(`Hello ${this.interviewee}! Let's begin the interview. ${question}.`)
+      this.Speaker.on(`Great, let's begin. ${question}.`)
       this.questionsAsked++
       this.poll()
     }
@@ -103,6 +104,7 @@ export default class Bot {
 
   end(){
     clearInterval(this.intervalID)
+    this.intervalID = null
     this.poll = null
     this.next = null
     this.getQuestion = null
@@ -148,16 +150,13 @@ poll(): once called, recurring function that takes average
       average to monitor(). stores this.intervalID for pausing/
       ending events
 
-polling: boolean indicating whether bot is actively
-      polling
-
 questions: local store (passed from redux props) with
       interview questions of following format:
       Obj{ arr[ {text: }, etc], etc}
 
 questionsAsked: running tally of questions asked
 
-setup(): sets starting values, turns on microphone, and triggers first question + intro
+setup(): sets starting values, turns on microphone, and triggers intro
 
 smoother: value between 0 and 1 that "smooths out" polled
       amplitude values from poll to poll. 0.65 seems optimal

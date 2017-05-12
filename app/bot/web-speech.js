@@ -16,11 +16,21 @@ export default class Speak {
     this.utterThis.pitch = 1;
     this.utterThis.rate = 1;
     speechSynthesis.speak(this.utterThis);
+    this.utterThis = null
+  }
+  onEnd(fn){
+    if (this.utterThis){
+      this.utterThis.onend(fn)
+    }
+    else {
+      console.error("Utterance has not been set yet.")
+    }
   }
 //this will cancel the speak function from speech synthesis
   cancel(){
     if(this.utterThis) {
       speechSynthesis.cancel(this.utterThis)
+      this.utterThis = null
     }
   }
 //this will get the voices that are available and console.log it.
