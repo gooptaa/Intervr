@@ -1,6 +1,6 @@
 import Speak from './web-speech';
 
-/* See below: Glossary */
+/* NB: glossary below */
 
 export default class Bot {
   constructor(username = '', soundLevel = 100, threshold = 30){
@@ -69,7 +69,7 @@ export default class Bot {
     }
   }
 
-  next(){ //introduce, ask questions, end interview
+  next(){
     if (this.questionsAsked === 0){
       let question = this.getQuestion('intro')
       this.Speaker.on(`Hello ${this.username}! Let's begin the interview. ${question}.`)
@@ -112,18 +112,45 @@ export default class Bot {
 }
 
 /*
+GLOSSARY
 
 analyzer: audio node responsible for monitoring amplitude
+
 audioCtx: audio node setting context for all other nodes
-interval: 
-polling
-questions
-questionsAsked
-soundLevel
-source
-Speaker
-threshold
-username
-waitCount
+
+fftsize: "fast fourier transform" samples per channel.
+      should be > 2048 and exponent of 2
+
+freq: period (in ms) between calls to analyzer to poll
+      amplitude. should be <200
+
+intervalID: captures setInterval ID for poller so that
+      process can be interrupted later
+
+polling: boolean indicating whether bot is actively
+      polling
+
+questions: local store (passed from redux props) with
+      interview questions of format: Obj{arr[{text: }, etc], etc}
+
+questionsAsked: running tally of questions asked
+
+smoother: value between 0 and 1 that "smooths out" polled
+      amplitude values from poll to poll. 0.65 seems optimal
+      for this use case; 0.8 is default.
+
+soundLevel: relative amplitude threshold distinguishing
+      silence from talking. VERY PICKY. optimal value varies,
+      but should probably be between 90 and 110
+
+source: audio node capturing media stream
+
+Speaker: TTS constructor with on(text) and pause() methods
+
+threshold: number of consecutive polls above {soundLevel} at {freq}
+
+username: user's name (this one's for you, Edward)
+
+waitCount: current tally of consecutive polls above {soundLevel}
 
  */
