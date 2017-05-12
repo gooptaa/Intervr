@@ -119,14 +119,31 @@ analyzer: audio node responsible for monitoring amplitude
 
 audioCtx: audio node setting context for all other nodes
 
+end(): kills the bot, closes the audio context, and interrupts
+      any queued utterances
+
 fftsize: "fast fourier transform" samples per channel.
       should be > 2048 and exponent of 2
 
 freq: period (in ms) between calls to analyzer to poll
       amplitude. should be <200
 
+getQuestion(type): draws a question of type {type} at random,
+      removes that question from local state, and returns that
+      question (usually to next())
+
 intervalID: captures setInterval ID for poller so that
       process can be interrupted later
+
+monitor(avg): receives average amplitude ({avg}) from poll(),
+      and reacts appropriately (incrementing waitCount if
+      soundLevel met, etc)
+
+next(): triggers a question event based on current conditions
+
+pause(): pauses the bot
+
+poll():
 
 polling: boolean indicating whether bot is actively
       polling
@@ -136,6 +153,8 @@ questions: local store (passed from redux props) with
       Obj{ arr[ {text: }, etc], etc}
 
 questionsAsked: running tally of questions asked
+
+setup:
 
 smoother: value between 0 and 1 that "smooths out" polled
       amplitude values from poll to poll. 0.65 seems optimal
