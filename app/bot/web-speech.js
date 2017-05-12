@@ -17,16 +17,8 @@ export default class Speak {
     this.utterThis.rate = 1;
     this.utterThis.onend = cb
     speechSynthesis.speak(this.utterThis);
-    this.utterThis = null
   }
-  // onEnd(fn){
-  //   if (this.utterThis){
-  //     this.utterThis.onend(fn)
-  //   }
-  //   else {
-  //     console.error("Utterance has not been set yet.")
-  //   }
-  // }
+
 //this will cancel the speak function from speech synthesis
   cancel(){
     if(this.utterThis) {

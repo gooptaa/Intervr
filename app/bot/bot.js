@@ -15,6 +15,7 @@ export default class Bot {
     this.intervalID = null
     this.source = null
     this.Speaker = new Speak()
+
   }
 
   setup(questions, fftsize = 4096, smoother = 0.65, soundLevel = 100, threshold = 20){
@@ -35,12 +36,20 @@ export default class Bot {
   }
 
   poll(freq = 100){
+    console.log("outside set interval: ", this)
     this.intervalID = setInterval( () => {
+        console.log("and inside: ", this)
         let data = new Float32Array(this.analyzer.frequencyBinCount)
         this.analyzer.getFloatFrequencyData(data)
         this.monitor(Math.abs(data.reduce((a, b) => (a + b))) / data.length)
     }, freq)
   }
+
+  // checker(){
+  //   let data = new Float32Array(this.analyzer.frequencyBinCount)
+  //   this.analyzer.getFloatFrequencyData(data)
+  //   this.monitor(Math.abs(data.reduce((a, b) => (a + b))) / data.length)
+  // }
 
   monitor(avg){
     console.log(avg)
@@ -74,17 +83,26 @@ export default class Bot {
     }
     else if (this.questionsAsked === 0){
       let question = this.getQuestion('intro')
-      this.Speaker.on(`Great, let's begin. ${question}.`, this.poll())
+      let askQ = new Promise( (res) => {
+        this.Speaker.on(`Great, let's begin. ${question}.`, res)
+      })
+      askQ.then(() => this.poll())
       this.questionsAsked++
     }
     else if (this.questionsAsked < 2){
       let question = this.getQuestion('intro')
-      this.Speaker.on(`Great! ${question}`, this.poll())
+      let askQ = new Promise( (res) => {
+        this.Speaker.on(`Great! ${question}.`, res)
+      })
+      askQ.then(() => this.poll())
       this.questionsAsked++
     }
     else if (this.questionsAsked < 6){
       let question = this.getQuestion('general')
-      this.Speaker.on(`Great! ${question}`, this.poll())
+      let askQ = new Promise( (res) => {
+        this.Speaker.on(`Great! ${question}.`, res)
+      })
+      askQ.then(() => this.poll())
       this.questionsAsked++
     }
     else {
