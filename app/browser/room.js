@@ -122,7 +122,7 @@ class RoomComponent extends React.Component {
           <Entity obj-model="obj: #person-obj; mtl: #person-mtl"
             position={this.props.peer[key].position}
             rotation={this.props.peer[key].rotation}>
-            <Entity text={{ value: `${this.props.peer[key].handle}`, align: 'center', color: 'blue' }} position={{ x: 0, y: 1.8, z: -0.1 }} />
+            <a-entity text={`value: ${this.props.peer[key].handle}; align: center; color: blue;`} position="0 3.5 0" wrap-count="30" />
           </Entity>
         ))}
 
