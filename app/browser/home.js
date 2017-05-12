@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
-import aframe from 'aframe';
+import 'aframe';
 import 'aframe-animation-component';
 import 'aframe-particle-system-component';
 import 'babel-polyfill';
@@ -24,7 +24,7 @@ class HomeComponent extends React.Component {
 
   render() {
     return (
-      <Scene>
+      <Scene vr-mode-ui="enabled: true">
 
         <a-assets>
           <img id="peerRoomTexture" src="images/peer-room.png" />

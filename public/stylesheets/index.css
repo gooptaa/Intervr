@@ -1,0 +1,16 @@
+/*.a-enter-vr {
+    pointer-events: none;
+   position: absolute;
+    top: 0;
+    left: 0; 
+    z-index: 9999;
+    height: 40px;
+}*/
+
+.a-enter-vr-button {
+   position: absolute;
+    top: 20px;
+    right: 10px; 
+    z-index: 9999;
+    height: 40px;
+}
