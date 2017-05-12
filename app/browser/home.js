@@ -24,7 +24,7 @@ class HomeComponent extends React.Component {
 
   render() {
     return (
-      <Scene vr-mode-ui="enabled: true">
+      <Scene>
 
         <a-assets>
           <img id="peerRoomTexture" src="images/peer-room.png" />
