@@ -1,7 +1,7 @@
 import Speak from './web-speech';
 
 export default class Bot {
-  constructor(username = '', soundLevel = 100, threshold = 20){
+  constructor(username = '', soundLevel = 100, threshold = 15){
     this.soundLevel = soundLevel
     this.threshold = threshold
     this.waitCount = 0
@@ -27,7 +27,7 @@ export default class Bot {
     }, (err) => {
       console.error("Hmm, there was an issue setting up your room: ", err)
     })
-    setTimeout(this.next(), 2000)
+    setTimeout(this.next(), 5000)
   }
 
   poll(freq = 200){
