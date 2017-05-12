@@ -47,7 +47,7 @@ class BotRoomComponent extends React.Component {
   }
 
   onClick(){
-    this.interviewer.next()
+    this.interviewer.next(this.interviewer.getNextType())
   }
 
   render() {
