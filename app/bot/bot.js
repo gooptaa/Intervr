@@ -27,7 +27,7 @@ export default class Bot {
     }, (err) => {
       console.error("Hmm, there was an issue setting up your room: ", err)
     })
-    this.next()
+    setTimeout(this.next(), 2000)
   }
 
   poll(freq = 200){
@@ -94,6 +94,13 @@ export default class Bot {
     let question = this.questions[type].splice(randomInd, 1)
     question = question[0].text
     return question
+  }
+
+  end(){
+    clearInterval(this.intervalID)
+    this.poll = null
+    this.next = null
+    this.getQuestion = null
   }
 }
 
