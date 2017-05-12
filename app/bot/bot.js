@@ -1,5 +1,7 @@
 import Speak from './web-speech';
 
+/* See below: Glossary */
+
 export default class Bot {
   constructor(username = '', soundLevel = 100, threshold = 30){
     this.soundLevel = soundLevel
@@ -105,7 +107,15 @@ export default class Bot {
     this.getQuestion = null
     this.source = null
     this.audioCtx.close()
-    this.Speaker.pause()
+    this.Speaker.cancel()
   }
 }
 
+/*
+
+soundLevel
+threshold
+username
+waitCount
+
+ */
