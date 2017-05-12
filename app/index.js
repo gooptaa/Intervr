@@ -24,11 +24,11 @@ const RoutesComponent = ({onRoomEnter}) => (
 const mapProps = null;
 const mapDispatch = (dispatch, ownProps) => ({
   onRoomEnter: (nextRouterState) => {
-    var room = window.location.hash.substring(1);
-    if (!room) {
-      room = window.location.hash = randomToken();
-    }
-    dispatch(setWebRTC(generateWebRTC(room)));
+    // var room = window.location.hash.substring(1);
+    // if (!room) {
+    //   room = window.location.hash = randomToken();
+    // }
+    dispatch(setWebRTC(generateWebRTC('room')));
   }
 });
 
