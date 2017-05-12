@@ -113,7 +113,15 @@ export default class Bot {
 
 /*
 
+analyzer: audio node responsible for monitoring amplitude
+audioCtx: audio node setting context for all other nodes
+interval: 
+polling
+questions
+questionsAsked
 soundLevel
+source
+Speaker
 threshold
 username
 waitCount
