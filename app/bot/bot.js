@@ -143,7 +143,10 @@ next(): triggers a question event based on current conditions
 
 pause(): pauses the bot
 
-poll():
+poll(): once called, recurring function that takes average
+      amplitude of all samples across channels and sends
+      average to monitor(). stores this.intervalID for pausing/
+      ending events
 
 polling: boolean indicating whether bot is actively
       polling
@@ -154,7 +157,7 @@ questions: local store (passed from redux props) with
 
 questionsAsked: running tally of questions asked
 
-setup:
+setup(): sets starting values, turns on microphone, and triggers first question + intro
 
 smoother: value between 0 and 1 that "smooths out" polled
       amplitude values from poll to poll. 0.65 seems optimal
