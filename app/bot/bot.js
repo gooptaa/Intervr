@@ -18,7 +18,7 @@ export default class Bot {
 
   }
 
-  setup(questions, fftsize = 4096, smoother = 0.65, soundLevel = 100, threshold = 20){
+  setup(questions, fftsize = 4096, smoother = 0.65, soundLevel = 100, threshold = 30){
     this.questions = questions
     this.analyzer.fftsize = fftsize
     this.analyzer.smoothingTimeConstant = smoother
@@ -32,24 +32,16 @@ export default class Bot {
     }, (err) => {
       console.error("Hmm, there was an issue setting up your room: ", err)
     })
-    setTimeout(this.next("greet"), 2000)
+    setTimeout(this.next("greet"), 3000)
   }
 
   poll(freq = 100){
-    console.log("outside set interval: ", this)
     this.intervalID = setInterval( () => {
-        console.log("and inside: ", this)
         let data = new Float32Array(this.analyzer.frequencyBinCount)
         this.analyzer.getFloatFrequencyData(data)
         this.monitor(Math.abs(data.reduce((a, b) => (a + b))) / data.length)
     }, freq)
   }
-
-  // checker(){
-  //   let data = new Float32Array(this.analyzer.frequencyBinCount)
-  //   this.analyzer.getFloatFrequencyData(data)
-  //   this.monitor(Math.abs(data.reduce((a, b) => (a + b))) / data.length)
-  // }
 
   monitor(avg){
     console.log(avg)
