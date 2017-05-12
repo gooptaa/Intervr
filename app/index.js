@@ -11,6 +11,7 @@ import Room from './browser/room';
 import Home from './browser/home';
 import BotRoom from './browser/bot-room';
 import Launch from './browser/launch';
+import { updateHandle } from './reducers/self';
 
 const RoutesComponent = ({onRoomEnter}) => (
   <Router history={browserHistory}>
@@ -28,6 +29,7 @@ const mapDispatch = (dispatch, ownProps) => ({
     // if (!room) {
     //   room = window.location.hash = randomToken();
     // }
+    if(!store.getState().self.handle) dispatch(updateHandle("random name"));
     dispatch(setWebRTC(generateWebRTC('room')));
   }
 });
