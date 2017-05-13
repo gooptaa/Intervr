@@ -5,7 +5,6 @@ import store from './store';
 import '../public/stylesheets/index.scss';
 import {Router, browserHistory, Route} from 'react-router';
 import {generateWebRTC} from './webrtc/client';
-import {randomToken} from './util';
 import {setWebRTC} from './reducers/webrtc';
 import Room from './browser/room';
 import Home from './browser/home';
@@ -25,12 +24,7 @@ const RoutesComponent = ({onRoomEnter}) => (
 const mapProps = null;
 const mapDispatch = (dispatch, ownProps) => ({
   onRoomEnter: (nextRouterState) => {
-    // var room = window.location.hash.substring(1);
-    // if (!room) {
-    //   room = window.location.hash = randomToken();
-    // }
-    if(!store.getState().self.handle) dispatch(updateHandle("random name"));
-    dispatch(setWebRTC(generateWebRTC('room')));
+    dispatch(setWebRTC(generateWebRTC(store.getState().self.room)));
   }
 });
 

@@ -1,4 +1,9 @@
+import generateWords from 'random-words';
+
 export function randomToken() {
- // return Math.floor((1 + Math.random()) * 1e16).toString(16).substring(1);
- return 'the-room';
+ return generateWords({exactly: 2, join: '-'});
+}
+
+export function randomName() {
+ return generateWords({min: 1, max: 3, join: ' '});
 }

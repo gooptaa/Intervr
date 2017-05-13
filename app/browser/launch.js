@@ -5,21 +5,24 @@ import { browserHistory } from 'react-router'
 class LaunchComponent extends React.Component {
   constructor(props){
     super(props);
-    this.onSubmitName = this.onSubmitName.bind(this);
+    this.onSubmitForm = this.onSubmitForm.bind(this);
   }
 
-  onSubmitName(evt){
+  onSubmitForm(evt){
     evt.preventDefault();
     this.props.updateHandle(evt.target.name.value);
+    if(evt.target.room.value) this.props.updateRoom(evt.target.room.value);
     browserHistory.push('/lobby');
   }
 
   render(){
     return (
       <div>
-        <form onSubmit={this.onSubmitName}>
+        <form onSubmit={this.onSubmitForm}>
           <label>Name: </label>
           <input name="name" required />
+          <label>Peer Room: </label>
+          <input name="room" />
           <button>Enter Lobby</button>
         </form>
       </div>
@@ -29,5 +32,6 @@ class LaunchComponent extends React.Component {
 
 import { connect } from 'react-redux';
 import { updateHandle } from '../reducers/self';
+import { updateRoom } from '../reducers/self';
 
-export default connect(null, ({updateHandle}))(LaunchComponent);
+export default connect(null, ({updateHandle, updateRoom}))(LaunchComponent);
