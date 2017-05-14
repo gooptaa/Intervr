@@ -7,3 +7,14 @@ export function randomToken() {
 export function randomName() {
  return generateWords({min: 1, max: 3, join: ' '});
 }
+
+import { browserHistory } from 'react-router';
+
+export function toLobby() {
+  browserHistory.push('/lobby');
+}
+
+/*
+4787146
+18003866624
+*/

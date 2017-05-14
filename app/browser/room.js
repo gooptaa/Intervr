@@ -9,12 +9,13 @@ import { Entity, Scene } from 'aframe-react';
 require('aframe-fence-component')
 import { connect } from 'react-redux';
 
+import { toLobby } from '../util';
+
 
 class RoomComponent extends React.Component {
   constructor(props) {
     super(props);
   }
-
   componentDidMount() {
     // add listener to camera
     this.cameraNode.addEventListener('componentchanged', (evt) => {
@@ -40,6 +41,8 @@ class RoomComponent extends React.Component {
           <img id="floor" src="https://ucarecdn.com/df577b67-1d2b-49d8-885c-13ca40216737/" />
           <a-asset-item id="person-obj" src="objects/person.obj" />
           <a-asset-item id="person-mtl" src="objects/person.mtl" />
+
+          <img id="exit" src="https://ucarecdn.com/16957305-3e65-412d-83f7-87e3a5d54fa9/" />
 
           {/* Other Objects */}
           <a-asset-item id="flower-obj" src="objects/flower.obj" />
@@ -107,6 +110,22 @@ class RoomComponent extends React.Component {
 
         <Entity primitive="a-light" type="point" intensity="1.4" color="white" position="-1.3 7.7 0"/>
         <Entity primitive="a-light" type="ambient" intensity="0.1" color="white" position="-1.3 7.7 0"/>
+
+        <Entity
+          primitive="a-plane"
+          src="#exit"
+          width=".5"
+          height=".25"
+          position={{ x: 2, y: 4, z: -6.49 }}
+          rotation={{ x: 0, y: 0, z: 0 }}
+          events={{ click: toLobby }}>
+          <a-animation begin="mouseenter" end="mouseleave" fill="forwards" repeat="0"
+            direction="normal" attribute="scale" from="1 1 1"
+            to="1.2 1.2 1.2" dur="1000"></a-animation>
+          <a-animation begin="mouseleave" end="mouseenter" repeat="0" fill="forwards"
+            direction="normal" attribute="scale"
+            to="1 1 1" dur="1000"></a-animation>
+        </Entity>
 
         <Entity>
           <a-camera
