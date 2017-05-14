@@ -130,7 +130,7 @@ class BotRoomComponent extends React.Component {
               scale="1 1 1"
               events={{click: this.onClick}}>
           </Entity>
-          <a-entity camera mouse-cursor look-controls rotation="0 -90 0" position=".43 1.45 0.3">
+          <a-entity camera mouse-cursor look-controls rotation="0 -90 0" position="-1.10 1.00 0">
             <a-cursor color="black"/>
           </a-entity>
         </Scene>
