@@ -1,5 +1,5 @@
 import Speak from './web-speech';
-import MediaStreamRecorder from 'msr'
+
 
 /* NB: glossary below */
 
@@ -46,12 +46,8 @@ export default class Bot {
         this.source = this.audioCtx.createMediaStreamSource(stream)
         this.source.connect(this.analyzer)
         this.analyzer.connect(this.dest)
-        this.recorderNode = new MediaStreamRecorder(this.dest.stream)
-        this.recorderNode.mimeType = 'audio/wav'
-        this.recorderNode.ondataavailable = (blob) => {
-          let blobURL = URL.createObjectURL(blob)
-          document.write('<a href="' + blobURL + '">' + blobURL + '</a>')
-        }
+        this.recorderNode = new MediaRecorder(this.dest.stream)
+        this.recorderNode.ondataavailable = (e) => this.record.push(e.data)
       })
       .then( () => {
         setTimeout( () => {this.next(`greet`)}, 3000)
@@ -93,6 +89,15 @@ export default class Bot {
     else if (type === `last`){
       this.Speaker.on('Great. That concludes the interview. Feel free to exit and reenter the app to practice some more.')
       this.recorderNode.stop()
+      let buff = new Blob(this.record, {type: 'audio/webm'})
+      let audioURL = window.URL.createObjectURL(buff)
+      let demo = document.createElement('demo');
+      document.body.appendChild(demo);
+      demo.style = 'display: none';
+      demo.href = audioURL;
+      demo.download = 'demo.wav';
+      demo.click();
+      //window.URL.revokeObjectURL(audioURL);
     }
     else {
       let question = this.getQuestion(type)
@@ -136,7 +141,6 @@ export default class Bot {
   }
 
   end(){
-
     clearInterval(this.intervalID)
     this.intervalID = null
     this.poll = null
