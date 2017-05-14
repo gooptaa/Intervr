@@ -2,31 +2,43 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider, connect } from 'react-redux';
 import store from './store';
+import {Router, browserHistory, Route, Redirect} from 'react-router';
+
 import Room from './browser/room';
 import Home from './browser/home';
-import {Router, browserHistory, Route} from 'react-router';
-import {generateWebRTC} from './webrtc/client';
-import {randomToken} from './util';
-import {setWebRTC} from './reducers/webrtc';
 import BotRoom from './browser/bot-room';
+import Launch from './browser/launch';
+
+import {generateWebRTC} from './webrtc/client';
+import {setWebRTC} from './reducers/webrtc';
+import {updateRoom} from './reducers/self';
 import {getAllQuestions} from './reducers/bot'
 
-const RoutesComponent = ({onRoomEnter, onBotRoomEnter}) => (
+
+const RoutesComponent = ({onRoomEnter, onPeerRoomEnter, onBotRoomEnter}) => (
   <Router history={browserHistory}>
-    <Route path="/" component={Home} />
-    <Route path="/peer-room" component={Room} onEnter={onRoomEnter}/>
-    <Route path="/bot-room" component={BotRoom} onEnter={onBotRoomEnter}/>
+    <Route path="/" component={Launch} />
+    <Route path="/lobby" component={Home} />
+    {/*<Redirect path="/peer-room" to={`/peer-room/${store.getState().self.room}`} />
+    <Route path="/peer-room/:roomName" component={Room} onEnter={onRoomEnter}/>*/}
+    <Route path="/peer-room" component={Room} onEnter={onPeerRoomEnter} />
+    <Route path="/bot-room" component={BotRoom} onEnter={onBotRoomEnter} />
   </Router>
 )
 
 const mapProps = null;
 const mapDispatch = (dispatch, ownProps) => ({
   onRoomEnter: (nextRouterState) => {
+    dispatch(setWebRTC(generateWebRTC(nextRouterState.params.roomName)));
+  },
+  onPeerRoomEnter: (nextRouterState) => {
     var room = window.location.hash.substring(1);
     if (!room) {
-      room = window.location.hash = randomToken();
+      window.location.hash = store.getState().self.room;
+    } else {
+      dispatch(updateRoom(room));
+      dispatch(setWebRTC(generateWebRTC(room)));
     }
-    dispatch(setWebRTC(generateWebRTC(room)));
   },
   onBotRoomEnter: () => {
     dispatch(getAllQuestions())
