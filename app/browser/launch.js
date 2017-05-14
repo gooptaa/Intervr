@@ -31,7 +31,6 @@ class LaunchComponent extends React.Component {
 }
 
 import { connect } from 'react-redux';
-import { updateHandle } from '../reducers/self';
-import { updateRoom } from '../reducers/self';
+import { updateHandle, updateRoom } from '../reducers/self';
 
 export default connect(null, ({updateHandle, updateRoom}))(LaunchComponent);
