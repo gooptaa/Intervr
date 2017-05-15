@@ -4,7 +4,7 @@ import aframe from 'aframe';
 import 'aframe-animation-component';
 import 'aframe-particle-system-component';
 import 'babel-polyfill';
-import {Entity, Scene} from 'aframe-react';
+import { Entity, Scene } from 'aframe-react';
 import { connect } from 'react-redux';
 import Bot from '../bot/bot';
 import axios from 'axios';
@@ -19,49 +19,58 @@ class BotRoomComponent extends React.Component {
     this.onClick = this.onClick.bind(this)
   }
 
- componentDidMount() {
-   console.log(this.props)
-   this.interviewer = new Bot();
+  componentDidMount() {
+    console.log(this.props)
+    this.interviewer = new Bot();
 
-  let general = axios.get('api/general')
-  .then((res) => res.data)
-  // .then((question) => console.log('general',question))
-  let intro = axios.get('api/intro')
-  .then((res) => res.data)
-  // .then((question) => console.log('intro',question))
-  let technical = axios.get('api/technical')
-  .then((res) => res.data)
-  // .then((question) => console.log('technical',question))
+    let general = axios.get('api/general')
+      .then((res) => res.data)
+    // .then((question) => console.log('general',question))
+    let intro = axios.get('api/intro')
+      .then((res) => res.data)
+    // .then((question) => console.log('intro',question))
+    let technical = axios.get('api/technical')
+      .then((res) => res.data)
+    // .then((question) => console.log('technical',question))
 
-  Promise.all([general, intro, technical])
-  .spread((general, intro, technical) => this.interviewer.setup({
-    general: general,
-    intro: intro,
-    technical: technical,
-  }))
-}
+    Promise.all([general, intro, technical])
+      .spread((general, intro, technical) => this.interviewer.setup({
+        general: general,
+        intro: intro,
+        technical: technical,
+      }))
+  }
 
   componentWillUnmount() {
-    if(this.interviewer) {
+    if (this.interviewer) {
       this.interviewer.end();
     }
   }
 
-  onClick(){
+  onClick() {
     this.interviewer.next(this.interviewer.getNextType())
   }
 
   render() {
     return (
-        <Scene>
-          <Assets/>
+      <Scene>
+        <Assets />
 
-          {/* Planes */}
+        {/* Cups */}
+        <Entity obj-model="obj: #cup-obj; mtl: #cup-mtl" position="1.5 0.85 -0.34" scale="0.08 0.08 0.08" rotation="0 90 0"/>
+        <Entity obj-model="obj: #cup-obj; mtl: #cup-mtl" position="1 0.85 0.6" scale="0.08 0.08 0.08" rotation="0 -90 0"/>
+
+        {/* Resume */}
+        <a-box color="navy" depth="0.74" height="0.12" width="0.4" position="1.55 0.7 0.15"></a-box>
+        <a-box color="white" depth="0.35" height="0.13" width="0.37" position="1.55 0.7 -0.03"></a-box>
+        <a-box color="white" depth="0.35" height="0.13" width="0.37" position="1.55 0.7 0.335"></a-box>
+
+        {/* Planes */}
         <a-box color="#66CCFF" repeat="14 14" position="-1.45 0 -7" rotation="0 0 0" height="10" width="14" scale="0.8 1 1" />
         <a-box color="#66CCFF" repeat="14 14" position="-1.7 0.12 7" rotation="0 180 0" height="10" width="14" scale="0.8 1 1" />
         <a-box color="#66CCFF" repeat="14 14" position="4 0 0" rotation="0 -90 0" height="10" width="14" />
         <a-box color="#66CCFF" repeat="14 14" position="-7 0 -0.35" rotation="0 90 0" height="10" width="14" scale="1 1 1" />
-        <a-plane src="#floor" repeat="14 14" position="-1.3 5 0.2" rotation="90 0 0" height="10" width="14" scale="0.9 1.4 0.9"/>
+        <a-plane src="#floor" repeat="14 14" position="-1.3 5 0.2" rotation="90 0 0" height="10" width="14" scale="0.9 1.4 0.9" />
         <a-plane src="#floor" rotation="-90 0 0" position="-1.5 0 0" height="14" width="14" scale="0.85 1 0.8" />
 
         {/* Single Objects */}
@@ -139,6 +148,6 @@ class BotRoomComponent extends React.Component {
 }
 
 
-import {getAllQuestions} from '../reducers/bot';
+import { getAllQuestions } from '../reducers/bot';
 
-export default connect(({bot}) => ({bot}), ({getAllQuestions}))(BotRoomComponent);
+export default connect(({ bot }) => ({ bot }), ({ getAllQuestions }))(BotRoomComponent);

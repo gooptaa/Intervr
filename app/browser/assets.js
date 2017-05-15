@@ -33,6 +33,8 @@ export default () => (
   <a-asset-item id="office-chair-mtl" src="objects/office-chair.mtl" />
   <a-asset-item id="tv-obj" src="objects/tv.obj" />
   <a-asset-item id="tv-mtl" src="objects/tv.mtl" />
+  <a-asset-item id="cup-obj" src="objects/cup.obj" />
+  <a-asset-item id="cup-mtl" src="objects/cup.mtl" />
   <a-asset-item id="paintings-obj" src="objects/oil-paintings-with-frame.obj" />
   <a-asset-item id="paintings-mtl" src="objects/oil-paintings-with-frame.mtl" />
 </a-assets>
