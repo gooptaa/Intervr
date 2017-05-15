@@ -11,9 +11,10 @@ export default class Bot {
     this.intervalID = null
     this.source = null
     this.recorderNode = null
-    this.speakerIsActive = false
+    this.isActive = true;
     this.record = []
     this.questions = {}
+    this.currentQuestion = null
     this.waitCount = 0
     this.questionsAsked = 0
     this.getNextType = this.getNextType.bind(this)
@@ -31,7 +32,6 @@ export default class Bot {
       intro: `Great. `,
       general: `Great. `,
     }
-    this.isPause = false;
   }
 
   setup(questions, fftsize = 4096, smoother = 0.65, soundLevel = 100, threshold = 30) {
@@ -77,8 +77,8 @@ export default class Bot {
     if (type === `first`) { type = `intro` }
     let randomInd = Math.floor(Math.random() * this.questions[type].length)
     let question = this.questions[type].splice(randomInd, 1)
-    question = question[0].text
-    return question
+    this.currentQuestion = question[0].text
+    return this.currentQuestion
   }
 
 
@@ -87,6 +87,7 @@ export default class Bot {
     return new Promise( (res) => {
       this.Speaker.on(`${this.utterances[type]} ${question}`, res)
     }).then( () => {
+      this.currentQuestion = null
       this.emit('notTalking')
       this.poll()
     })
@@ -117,7 +118,6 @@ export default class Bot {
           demo.download = 'demo.wav';
           demo.click();
         })
-      //window.URL.revokeObjectURL(audioURL);
     }
     else {
       let question = this.getQuestion(type)
@@ -127,14 +127,11 @@ export default class Bot {
   }
 
   poll(freq = 100) {
-    console.log("we're here", this.intervalID, freq)
     this.intervalID = setInterval(() => {
-      console.log("inside set interval")
       let data = new Float32Array(this.analyzer.frequencyBinCount)
       this.analyzer.getFloatFrequencyData(data)
       this.monitor(Math.abs(data.reduce((a, b) => (a + b))) / data.length)
     }, freq)
-    console.log("more stuff", this.intervalID, freq)
   }
 
   monitor(avg) {
@@ -155,42 +152,42 @@ export default class Bot {
 
   pause() {
     console.log('hitting pause')
-    if (this.isPause) {
-      if (this.speakerIsActive){
+    if (this.isActive) {
+      if (this.currentQuestion) {
+        this.Speaker.cancel()
+        this.isActive = false
+        clearInterval(this.intervalID)
+        this.intervalID = null
+      } else {
+        clearInterval(this.intervalID)
+        this.intervalID = null
+        this.isActive = true
+      }
+    }
+    else {
+      if (this.currentQuestion){
       console.log("speaker is paused?")
-      this.Speaker.resume()
-      this.isPause = false
-      this.speakerIsActive = false
+      this.askQuestion('general', this.currentQuestion)
+      this.isActive = false
     }
       else {
       console.log("resuming")
       this.poll()
       console.log(this.intervalID)
-      this.isPause = false
-      }
-    }
-    if (!this.isPause) {
-      if (!this.intervalID) {
-        this.isPause = true
-        this.Speaker.pause()
-        this.speakerIsActive = true
-      } else {
-        clearInterval(this.intervalID)
-        this.intervalID = null
-        this.isPause = true
+      this.isActive = false
       }
     }
 }
 
 end() {
+  this.Speaker.cancel()
   clearInterval(this.intervalID)
+  this.audioCtx.close()
   this.intervalID = null
   this.poll = null
   this.next = null
   this.getQuestion = null
   this.source = null
-  this.Speaker.cancel()
-  this.audioCtx.close()
 }
 
 
