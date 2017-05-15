@@ -10,6 +10,9 @@
     "build-branch": "bin/build-branch.sh",
     "deploy-heroku": "bin/deploy-heroku.sh"
   },
+  "engines": {
+    "node": ">= 7.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fullstack1702-group-a/vr-interview-prep.git"
