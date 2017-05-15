@@ -27,6 +27,7 @@ export default class Bot {
       intro: `Great. `,
       general: `Great. `,
     }
+    this.isPause = false;
   }
 
   setup(questions, fftsize = 4096, smoother = 0.65, soundLevel = 100, threshold = 30) {
@@ -83,7 +84,6 @@ export default class Bot {
   }
 
   next(type) {
-    this.Speaker.resume()
     if (type === `greet`) {
       this.Speaker.on(`Welcome, ${this.interviewee}! When you're ready to begin the interview, please press the start button.`)
     }
@@ -133,33 +133,40 @@ export default class Bot {
 
   pause() {
     console.log('hitting pause')
-    let isPause = false
-    if (this.intervalID) {
-      clearInterval(this.intervalID)
-      this.intervalID = null
-    }
-    else {
-      this.poll()
-    }
-    if(isPause){
+    if (this.isPause) {
+      if(this.Speaker.isPause){
       this.Speaker.resume()
-      isPause = false
-    } else {
-      this.Speaker.pause()
-      isPause = true
+      this.isPause = false
+      this.Speaker.isPause = false
+      } else {
+      this.poll()
+      this.isPause = false
+      }
     }
-  }
 
-  end() {
-    clearInterval(this.intervalID)
-    this.intervalID = null
-    this.poll = null
-    this.next = null
-    this.getQuestion = null
-    this.source = null
-    this.Speaker.cancel()
-    this.audioCtx.close()
-  }
+    if (!this.isPause) {
+      if (!this.intervalID) {
+        this.isPause = true
+        this.Speaker.pause()
+        this.Speaker.isPause = true
+      } else {
+        clearInterval(this.intervalID)
+        this.intervalID = null
+        this.isPause = true
+      }
+    }
+}
+
+end() {
+  clearInterval(this.intervalID)
+  this.intervalID = null
+  this.poll = null
+  this.next = null
+  this.getQuestion = null
+  this.source = null
+  this.Speaker.cancel()
+  this.audioCtx.close()
+}
 }
 
 /*
