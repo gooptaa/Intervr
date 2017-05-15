@@ -132,12 +132,21 @@ export default class Bot {
   }
 
   pause() {
+    console.log('hitting pause')
+    let isPause = false
     if (this.intervalID) {
       clearInterval(this.intervalID)
       this.intervalID = null
     }
     else {
       this.poll()
+    }
+    if(isPause){
+      this.Speaker.resume()
+      isPause = false
+    } else {
+      this.Speaker.pause()
+      isPause = true
     }
   }
 

@@ -55,7 +55,6 @@ class BotRoomComponent extends React.Component {
   }
 
   onPause(){
-    console.log('hit pause')
     this.interviewer.pause();
   }
 
