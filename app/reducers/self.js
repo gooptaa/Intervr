@@ -5,11 +5,17 @@
 
 import {randomToken, randomName} from '../util';
 
+/* -------------------<   ACTIONS   >--------------------- */
+
 const SET_HANDLE = "SET_HANDLE";
 const SET_ROOM = "SET_ROOM";
 
+/* ---------------<   ACTION CREATORS   >------------------- */
+
 const setHandle = handle => ({handle, type: SET_HANDLE});
 const setRoom = room => ({room, type: SET_ROOM});
+
+/* -------------------<   REDUCERS   >--------------------- */
 
 export default function selfReducer (state = {handle: randomName(), room: randomToken()}, action) {
   switch(action.type){
@@ -20,6 +26,8 @@ export default function selfReducer (state = {handle: randomName(), room: random
     default: return state;
   }
 }
+
+/* ------------------<   DISPATCHERS   >-------------------- */
 
 export const updateHandle = handle => dispatch => dispatch(setHandle(handle));
 export const updateRoom = room => dispatch => dispatch(setRoom(room));
