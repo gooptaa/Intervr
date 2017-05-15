@@ -26,6 +26,15 @@ export default class Speak {
       this.utterThis = null
     }
   }
+//this will pause the speak function
+  pause(){
+      speechSynthesis.pause()
+  }
+//this will resume the speak function
+   resume(){
+      speechSynthesis.resume()
+  }
+
 //this will get the voices that are available and console.log it.
   getVoices(){
     const synth = window.speechSynthesis;

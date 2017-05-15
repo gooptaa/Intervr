@@ -29,35 +29,36 @@ export default class Bot {
       intro: `Great. `,
       general: `Great. `,
     }
+    this.isPause = false;
   }
 
-  setup(questions, fftsize = 4096, smoother = 0.65, soundLevel = 100, threshold = 30){
+  setup(questions, fftsize = 4096, smoother = 0.65, soundLevel = 100, threshold = 30) {
     this.questions = questions
     this.analyzer.fftsize = fftsize
     this.analyzer.smoothingTimeConstant = smoother
     this.soundLevel = soundLevel
     this.threshold = threshold
-    return new Promise( (res) => {
+    return new Promise((res) => {
       window.navigator.getUserMedia({
         audio: true
       }, (stream) => {
         res(stream)
       })
     })
-      .then( (stream) => {
+      .then((stream) => {
         this.source = this.audioCtx.createMediaStreamSource(stream)
         this.source.connect(this.analyzer)
         this.analyzer.connect(this.dest)
         this.recorderNode = new MediaRecorder(this.dest.stream)
         this.recorderNode.ondataavailable = (e) => this.record.push(e.data)
       })
-      .then( () => {
-        setTimeout( () => {this.next(`greet`)}, 3000)
+      .then(() => {
+        setTimeout(() => { this.next(`greet`) }, 3000)
       })
   }
 
-  getNextType(){
-    switch (true){
+  getNextType() {
+    switch (true) {
       case this.questionsAsked === 0:
         this.recorderNode.start()
         return `first`
@@ -70,13 +71,14 @@ export default class Bot {
     }
   }
 
-  getQuestion(type){
-    if (type === `first`){type = `intro`}
+  getQuestion(type) {
+    if (type === `first`) { type = `intro` }
     let randomInd = Math.floor(Math.random() * this.questions[type].length)
     let question = this.questions[type].splice(randomInd, 1)
     question = question[0].text
     return question
   }
+
 
   askQuestion(type, question = ''){
     this.emit('talking')
@@ -120,23 +122,23 @@ export default class Bot {
     }
   }
 
-  poll(freq = 100){
-    this.intervalID = setInterval( () => {
-        let data = new Float32Array(this.analyzer.frequencyBinCount)
-        this.analyzer.getFloatFrequencyData(data)
-        this.monitor(Math.abs(data.reduce((a, b) => (a + b))) / data.length)
+  poll(freq = 100) {
+    this.intervalID = setInterval(() => {
+      let data = new Float32Array(this.analyzer.frequencyBinCount)
+      this.analyzer.getFloatFrequencyData(data)
+      this.monitor(Math.abs(data.reduce((a, b) => (a + b))) / data.length)
     }, freq)
   }
 
-  monitor(avg){
+  monitor(avg) {
     console.log(avg)
-    if (this.waitCount > this.threshold){
+    if (this.waitCount > this.threshold) {
       this.waitCount = 0
       clearInterval(this.intervalID)
       this.intervalID = null
       this.next(this.getNextType())
     }
-    else if (avg > this.soundLevel){
+    else if (avg > this.soundLevel) {
       this.waitCount++
     }
     else {
@@ -144,26 +146,42 @@ export default class Bot {
     }
   }
 
-  pause(){
-    if (this.intervalID){
-      clearInterval(this.intervalID)
-      this.intervalID = null
-    }
-    else {
+  pause() {
+    console.log('hitting pause')
+    if (this.isPause) {
+      if(this.Speaker.isPause){
+      this.Speaker.resume()
+      this.isPause = false
+      this.Speaker.isPause = false
+      } else {
       this.poll()
+      this.isPause = false
+      }
     }
-  }
+    if (!this.isPause) {
+      if (!this.intervalID) {
+        this.isPause = true
+        this.Speaker.pause()
+        this.Speaker.isPause = true
+      } else {
+        clearInterval(this.intervalID)
+        this.intervalID = null
+        this.isPause = true
+      }
+    }
+}
 
-  end(){
-    clearInterval(this.intervalID)
-    this.intervalID = null
-    this.poll = null
-    this.next = null
-    this.getQuestion = null
-    this.source = null
-    this.Speaker.cancel()
-    this.audioCtx.close()
-  }
+end() {
+  clearInterval(this.intervalID)
+  this.intervalID = null
+  this.poll = null
+  this.next = null
+  this.getQuestion = null
+  this.source = null
+  this.Speaker.cancel()
+  this.audioCtx.close()
+}
+
 
   emit(eventName){
     console.log(eventName)
