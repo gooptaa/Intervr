@@ -14,7 +14,3 @@ export function toLobby() {
   browserHistory.push('/lobby');
 }
 
-/*
-4787146
-18003866624
-*/
