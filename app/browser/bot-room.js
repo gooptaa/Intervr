@@ -21,7 +21,7 @@ class BotRoomComponent extends React.Component {
 
   componentDidMount() {
     console.log(this.props)
-    this.interviewer = new Bot();
+    this.interviewer = new Bot('', document);
 
     let general = axios.get('api/general')
       .then((res) => res.data)
@@ -57,8 +57,8 @@ class BotRoomComponent extends React.Component {
         <Assets />
 
         {/* Cups */}
-        <Entity obj-model="obj: #cup-obj; mtl: #cup-mtl" position="1.5 0.85 -0.34" scale="0.08 0.08 0.08" rotation="0 90 0"/>
-        <Entity obj-model="obj: #cup-obj; mtl: #cup-mtl" position="1 0.85 0.6" scale="0.08 0.08 0.08" rotation="0 -90 0"/>
+        <Entity obj-model="obj: #cup-obj; mtl: #cup-mtl" position="1.5 0.85 -0.34" scale="0.08 0.08 0.08" rotation="0 90 0" />
+        <Entity obj-model="obj: #cup-obj; mtl: #cup-mtl" position="1 0.85 0.6" scale="0.08 0.08 0.08" rotation="0 -90 0" />
 
         {/* Resume */}
         <a-box color="navy" depth="0.74" height="0.12" width="0.4" position="1.55 0.7 0.15"></a-box>
@@ -107,9 +107,9 @@ class BotRoomComponent extends React.Component {
         <Entity obj-model="obj: #desktop-computer-obj; mtl: #desktop-computer-mtl" rotation="0 180 0" position="-5.8 1.17 1.66" scale="0.4 0.3 0.4" />
 
         <Entity obj-model="obj: #tv-obj; mtl: #tv-mtl" rotation="0 90 0" position="3.4 1.55 0" scale="0.8 0.4 1.2" />
-        <Entity obj-model="obj: #paintings-obj; mtl: #paintings-mtl" rotation="0 180 0" position="-2 2.7 6.45" scale="0.5 0.4 0.8"/>
+        <Entity obj-model="obj: #paintings-obj; mtl: #paintings-mtl" rotation="0 180 0" position="-2 2.7 6.45" scale="0.5 0.4 0.8" />
 
-        <Entity primitive="a-light" type="point" intensity="1.4" color="white" position="-1.3 7.7 0"/>
+        <Entity primitive="a-light" type="point" intensity="1.4" color="white" position="-1.3 7.7 0" />
 
         <Entity
           primitive="a-plane"
@@ -127,23 +127,38 @@ class BotRoomComponent extends React.Component {
             to="1 1 1" dur="1000"></a-animation>
         </Entity>
 
-          <a-entity obj-model="obj: #person-obj; mtl: #person-mtl" position="2.040 -0.025 0.298" rotation="0 -90 0" scale=".5 .5 .5" />
-          <Entity text={{value: 'Start', align: 'center', color: 'black' }} position={{x: 2.040, y: 1.02, z: .712}} scale="3 3 3" rotation="0 -90 0"/>
-           <Entity
-              primitive="a-plane"
-              color="red"
-              width=".30"
-              height=".21"
-              position={{x: 2.040, y: 1.02, z: .712}}
-              rotation="0 -90 0"
-              scale="1 1 1"
-              events={{click: this.onClick}}>
-          </Entity>
-          <a-entity camera mouse-cursor look-controls rotation="0 -90 0" position="-1.10 1.00 0">
-            <a-cursor color="black"/>
-          </a-entity>
-        </Scene>
-      )
+        <a-entity obj-model="obj: #person-obj; mtl: #person-mtl" position="2.040 -0.02 -0.02" rotation="0 90 0" scale=".5 .5 .5" >
+          <a-box rotation="0 0 45" scale="0.1 0.1 0.1" position="-0.11 2.6 -0.48">
+            <a-animation attribute="material.color" from="black" to="green" dur="500" begin="talking" />
+            <a-animation attribute="material.color" from="green" to="black" dur="500" begin="notTalking" />
+          </a-box>
+
+          <a-box rotation="0 0 45" scale="0.1 0.1 0.1" position="-0.52 2.6 -0.47">
+            <a-animation attribute="material.color" from="black" to="green" dur="500" begin="talking" />
+            <a-animation attribute="material.color" from="green" to="black" dur="500" begin="notTalking" />
+          </a-box>
+
+          <a-cone id="boxbot" rotation="0 90 90" scale=".02 .2 .12" radius-bottom="2" radius-top="0.9" position="-0.33 2.2 -0.43" color="white">
+            <a-animation attribute="scale" from="0.02 0.2 0.12" to="0.07 0.2 0.12" dur="250" repeat="indefinite" begin="talking" end="notTalking" />
+            <a-animation attribute="scale" from="0.07 0.2 0.12" to="0.02 0.2 0.12" dur="500" begin="notTalking" />
+          </a-cone>
+        </a-entity>
+        <Entity text={{ value: 'Start', align: 'center', color: 'black' }} position={{ x: 2.040, y: 1.02, z: .712 }} scale="3 3 3" rotation="0 -90 0" />
+        <Entity
+          primitive="a-plane"
+          color="red"
+          width=".30"
+          height=".21"
+          position={{ x: 2.040, y: 1.02, z: .712 }}
+          rotation="0 -90 0"
+          scale="1 1 1"
+          events={{ click: this.onClick }}>
+        </Entity>
+        <a-entity camera mouse-cursor look-controls rotation="0 -90 0" position="-1.10 1.00 0">
+          <a-cursor color="black" />
+        </a-entity>
+      </Scene>
+    )
   }
 }
 
