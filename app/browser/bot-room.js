@@ -4,9 +4,9 @@ import aframe from 'aframe';
 import 'aframe-animation-component';
 import 'aframe-particle-system-component';
 import 'babel-polyfill';
-import {Entity, Scene} from 'aframe-react';
+import { Entity, Scene } from 'aframe-react';
 import { connect } from 'react-redux';
-import {browserHistory} from 'react-router'
+import { browserHistory } from 'react-router'
 import Bot from '../bot/bot';
 import axios from 'axios';
 import Promise from 'bluebird'
@@ -19,49 +19,54 @@ class BotRoomComponent extends React.Component {
     this.onClick = this.onClick.bind(this)
   }
 
- componentDidMount() {
-   console.log(this.props)
-   this.interviewer = new Bot();
+  componentDidMount() {
+    console.log(this.props)
+    this.interviewer = new Bot();
 
-  let general = axios.get('api/general')
-  .then((res) => res.data)
-  // .then((question) => console.log('general',question))
-  let intro = axios.get('api/intro')
-  .then((res) => res.data)
-  // .then((question) => console.log('intro',question))
-  let technical = axios.get('api/technical')
-  .then((res) => res.data)
-  // .then((question) => console.log('technical',question))
+    let general = axios.get('api/general')
+      .then((res) => res.data)
+    // .then((question) => console.log('general',question))
+    let intro = axios.get('api/intro')
+      .then((res) => res.data)
+    // .then((question) => console.log('intro',question))
+    let technical = axios.get('api/technical')
+      .then((res) => res.data)
+    // .then((question) => console.log('technical',question))
 
-  Promise.all([general, intro, technical])
-  .spread((general, intro, technical) => this.interviewer.setup({
-    general: general,
-    intro: intro,
-    technical: technical,
-  }))
-}
+    Promise.all([general, intro, technical])
+      .spread((general, intro, technical) => this.interviewer.setup({
+        general: general,
+        intro: intro,
+        technical: technical,
+      }))
+  }
 
   componentWillUnmount() {
-    if(this.interviewer) {
+    if (this.interviewer) {
       this.interviewer.end();
     }
   }
 
-  onClick(){
+  onClick() {
     this.interviewer.next(this.interviewer.getNextType())
   }
 
   render() {
     return (
-        <Scene>
-          <Assets/>
+      <Scene>
+        <Assets />
 
-          {/* Planes */}
+        {/* Resume */}
+        <a-box color="navy" depth="0.74" height="0.12" width="0.4" position="1.55 0.7 0.15"></a-box>
+        <a-box color="white" depth="0.35" height="0.13" width="0.37" position="1.55 0.7 -0.03"></a-box>
+        <a-box color="white" depth="0.35" height="0.13" width="0.37" position="1.55 0.7 0.335"></a-box>
+
+        {/* Planes */}
         <a-box color="#66CCFF" repeat="14 14" position="-1.45 0 -7" rotation="0 0 0" height="10" width="14" scale="0.8 1 1" />
         <a-box color="#66CCFF" repeat="14 14" position="-1.7 0.12 7" rotation="0 180 0" height="10" width="14" scale="0.8 1 1" />
         <a-box color="#66CCFF" repeat="14 14" position="4 0 0" rotation="0 -90 0" height="10" width="14" />
         <a-box color="#66CCFF" repeat="14 14" position="-7 0 -0.35" rotation="0 90 0" height="10" width="14" scale="1 1 1" />
-        <a-plane src="#floor" repeat="14 14" position="-1.3 5 0.2" rotation="90 0 0" height="10" width="14" scale="0.9 1.4 0.9"/>
+        <a-plane src="#floor" repeat="14 14" position="-1.3 5 0.2" rotation="90 0 0" height="10" width="14" scale="0.9 1.4 0.9" />
         <a-plane src="#floor" rotation="-90 0 0" position="-1.5 0 0" height="14" width="14" scale="0.85 1 0.8" />
 
         {/* Single Objects */}
@@ -98,31 +103,31 @@ class BotRoomComponent extends React.Component {
         <Entity obj-model="obj: #desktop-computer-obj; mtl: #desktop-computer-mtl" rotation="0 180 0" position="-5.8 1.17 1.66" scale="0.4 0.3 0.4" />
 
         <Entity obj-model="obj: #tv-obj; mtl: #tv-mtl" rotation="0 90 0" position="3.4 1.55 0" scale="0.8 0.4 1.2" />
-        <Entity obj-model="obj: #paintings-obj; mtl: #paintings-mtl" rotation="0 180 0" position="-2 2.7 6.45" scale="0.5 0.4 0.8"/>
+        <Entity obj-model="obj: #paintings-obj; mtl: #paintings-mtl" rotation="0 180 0" position="-2 2.7 6.45" scale="0.5 0.4 0.8" />
 
-        <Entity primitive="a-light" type="point" intensity="1.4" color="white" position="-1.3 7.7 0"/>
+        <Entity primitive="a-light" type="point" intensity="1.4" color="white" position="-1.3 7.7 0" />
 
-          <a-entity obj-model="obj: #person-obj; mtl: #person-mtl" position="2.040 -0.025 0.298" rotation="0 -90 0" scale=".5 .5 .5" />
-          <Entity text={{value: 'Start', align: 'center', color: 'black' }} position={{x: 2.040, y: 1.02, z: .712}} scale="3 3 3" rotation="0 -90 0"/>
-           <Entity
-              primitive="a-plane"
-              color="red"
-              width=".30"
-              height=".21"
-              position={{x: 2.040, y: 1.02, z: .712}}
-              rotation="0 -90 0"
-              scale="1 1 1"
-              events={{click: this.onClick}}>
-          </Entity>
-          <a-entity camera mouse-cursor look-controls rotation="0 -90 0" position=".43 1.45 0.3">
-            <a-cursor color="black"/>
-          </a-entity>
-        </Scene>
-      )
+        <a-entity obj-model="obj: #person-obj; mtl: #person-mtl" position="2.040 -0.025 0.298" rotation="0 -90 0" scale=".5 .5 .5" />
+        <Entity text={{ value: 'Start', align: 'center', color: 'black' }} position={{ x: 2.040, y: 1.02, z: .712 }} scale="3 3 3" rotation="0 -90 0" />
+        <Entity
+          primitive="a-plane"
+          color="red"
+          width=".30"
+          height=".21"
+          position={{ x: 2.040, y: 1.02, z: .712 }}
+          rotation="0 -90 0"
+          scale="1 1 1"
+          events={{ click: this.onClick }}>
+        </Entity>
+        <a-entity camera mouse-cursor look-controls rotation="0 -90 0" position=".43 1.45 0.3">
+          <a-cursor color="black" />
+        </a-entity>
+      </Scene>
+    )
   }
 }
 
 
-import {getAllQuestions} from '../reducers/bot';
+import { getAllQuestions } from '../reducers/bot';
 
-export default connect(({bot}) => ({bot}), ({getAllQuestions}))(BotRoomComponent);
+export default connect(({ bot }) => ({ bot }), ({ getAllQuestions }))(BotRoomComponent);
