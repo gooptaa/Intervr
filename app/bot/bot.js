@@ -11,11 +11,13 @@ export default class Bot {
     this.intervalID = null
     this.source = null
     this.recorderNode = null
+    this.speakerIsActive = false
     this.record = []
     this.questions = {}
     this.waitCount = 0
     this.questionsAsked = 0
     this.getNextType = this.getNextType.bind(this)
+    this.poll = this.poll.bind(this)
     this.emit = this.emit.bind(this)
     this.next = this.next.bind(this)
     this.end = this.end.bind(this)
@@ -95,7 +97,9 @@ export default class Bot {
       this.emit('talking')
       return new Promise ( (res) => {
         this.Speaker.on(`Welcome, ${this.interviewee}! When you're ready to begin the interview, please press the start button.`, res)
-      }).then( () => this.emit('notTalking'))
+      }).then( () => {
+        this.emit('notTalking')
+      })
     }
     else if (type === `last`){
       this.emit('talking')
@@ -123,11 +127,14 @@ export default class Bot {
   }
 
   poll(freq = 100) {
+    console.log("we're here", this.intervalID, freq)
     this.intervalID = setInterval(() => {
+      console.log("inside set interval")
       let data = new Float32Array(this.analyzer.frequencyBinCount)
       this.analyzer.getFloatFrequencyData(data)
       this.monitor(Math.abs(data.reduce((a, b) => (a + b))) / data.length)
     }, freq)
+    console.log("more stuff", this.intervalID, freq)
   }
 
   monitor(avg) {
@@ -149,12 +156,16 @@ export default class Bot {
   pause() {
     console.log('hitting pause')
     if (this.isPause) {
-      if(this.Speaker.isPause){
+      if (this.speakerIsActive){
+      console.log("speaker is paused?")
       this.Speaker.resume()
       this.isPause = false
-      this.Speaker.isPause = false
-      } else {
+      this.speakerIsActive = false
+    }
+      else {
+      console.log("resuming")
       this.poll()
+      console.log(this.intervalID)
       this.isPause = false
       }
     }
@@ -162,7 +173,7 @@ export default class Bot {
       if (!this.intervalID) {
         this.isPause = true
         this.Speaker.pause()
-        this.Speaker.isPause = true
+        this.speakerIsActive = true
       } else {
         clearInterval(this.intervalID)
         this.intervalID = null

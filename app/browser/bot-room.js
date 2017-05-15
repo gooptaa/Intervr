@@ -15,7 +15,7 @@ import { toLobby } from '../util';
 class BotRoomComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.state ={
+    this.state = {
     }
     this.interviewer = null
     this.onClick = this.onClick.bind(this)
@@ -54,7 +54,7 @@ class BotRoomComponent extends React.Component {
     this.interviewer.next(this.interviewer.getNextType())
   }
 
-  onPause(){
+  onPause() {
     this.interviewer.pause();
   }
 
@@ -134,33 +134,31 @@ class BotRoomComponent extends React.Component {
             to="1 1 1" dur="1000"></a-animation>
         </Entity>
 
-          <Entity text={{value: 'start', align: 'center', color: 'black' }} position={{x: 2.040, y: 1.02, z: -.75}} scale="3 3 3" rotation="0 -90 0"/> :
-           <Entity
-              primitive="a-plane"
-              color="red"
-              width=".30"
-              height=".21"
-              position={{x: 2.040, y: 1.02, z: -.75}}
-              rotation="0 -90 0"
-              scale="1 1 1"
-              events={{click: this.onClick}}>
+        <Entity text={{ value: 'start', align: 'center', color: 'black' }} position={{ x: 2.040, y: 1.02, z: -.75 }} scale="3 3 3" rotation="0 -90 0" /> :
+          <Entity
+          primitive="a-plane"
+          color="red"
+          width=".30"
+          height=".21"
+          position={{ x: 2.040, y: 1.02, z: -.75 }}
+          rotation="0 -90 0"
+          scale="1 1 1"
+          events={{ click: this.onClick }}>
           </Entity>
-          <Entity text={{value: 'pause', align: 'center', color: 'black' }} position={{x: 2.040, y: 1.02, z: .712}} scale="3 3 3" rotation="0 -90 0"/> :
+        <Entity text={{ value: 'pause', align: 'center', color: 'black' }} position={{ x: 2.040, y: 1.02, z: .712 }} scale="3 3 3" rotation="0 -90 0" /> :
            <Entity
-              primitive="a-plane"
-              color="red"
-              width=".50"
-              height=".21"
-              position={{x: 2.040, y: 1.02, z: .712}}
-              rotation="0 -90 0"
-              scale="1 1 1"
-              events={{click: this.onPause}}>
+          primitive="a-plane"
+          color="red"
+          width=".50"
+          height=".21"
+          position={{ x: 2.040, y: 1.02, z: .712 }}
+          rotation="0 -90 0"
+          scale="1 1 1"
+          events={{ click: this.onPause }}>
           </Entity>
-          <a-entity camera mouse-cursor look-controls rotation="0 -90 0" position="-1.10 1.00 0">
-            <a-cursor color="black"/>
-          </a-entity>
-        </Scene>
-      )
+        <a-entity camera mouse-cursor look-controls rotation="0 -90 0" position="-1.10 1.00 0">
+          <a-cursor color="black" />
+        </a-entity>
         <a-entity obj-model="obj: #person-obj; mtl: #person-mtl" position="2.040 -0.02 -0.02" rotation="0 90 0" scale=".5 .5 .5" >
           <a-box rotation="0 0 45" scale="0.1 0.1 0.1" position="-0.11 2.6 -0.48">
             <a-animation attribute="material.color" from="black" to="green" dur="500" begin="talking" />
@@ -177,8 +175,8 @@ class BotRoomComponent extends React.Component {
             <a-animation attribute="scale" from="0.07 0.2 0.12" to="0.02 0.2 0.12" dur="500" begin="notTalking" />
           </a-cone>
         </a-entity>
-
-  }
+      </Scene>
+    )}
 }
 
 
