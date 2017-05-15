@@ -119,8 +119,6 @@ class RoomComponent extends React.Component {
           </a-camera>
         </Entity>
 
-
-
         {/* Each person */}
         {Object.keys(this.props.peer).map((key, index) => (
           <Entity obj-model="obj: #person-obj; mtl: #person-mtl"
