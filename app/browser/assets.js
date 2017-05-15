@@ -12,6 +12,7 @@ export default () => (
   <img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg" />
   <img id="skyTexture" src="https://cdn.aframe.io/a-painter/images/sky.jpg" />
   <img id="brick" src="https://ucarecdn.com/9ea05677-13be-42d3-b7a0-6c365b105dab/" />
+  <img id="exit" src="https://ucarecdn.com/16957305-3e65-412d-83f7-87e3a5d54fa9/" />
 
   <img id="floor" src="https://ucarecdn.com/df577b67-1d2b-49d8-885c-13ca40216737/" />
   <a-asset-item id="person-obj" src="objects/person.obj" />
