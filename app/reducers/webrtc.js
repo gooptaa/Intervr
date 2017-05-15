@@ -8,7 +8,7 @@ const ADD_WEBRTC = "ADD_WEBRTC";
 
 /* ---------------<   ACTION CREATORS   >------------------- */
 
-const addWebRTC = (webRTC) => ({webRTC, type: ADD_WEBRTC});
+const setWebRTC = (webRTC) => ({webRTC, type: ADD_WEBRTC});
 
 /* -------------------<   REDUCERS   >--------------------- */
 
@@ -22,6 +22,6 @@ export default function webRTCReducer (state = {}, action) {
 
 /* ------------------<   DISPATCHERS   >-------------------- */
 
-export const setWebRTC = webRTC => dispatch => {
-  dispatch(addWebRTC(webRTC));
+export const updateWebRTC = webRTC => dispatch => {
+  dispatch(setWebRTC(webRTC));
 }

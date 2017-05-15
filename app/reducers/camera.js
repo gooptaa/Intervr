@@ -26,10 +26,10 @@ export default function cameraReducer (state = {position: {x:-2.7, y: -1.7, z: 1
 
 /* ------------------<   DISPATCHERS   >-------------------- */
 
-export const setRotationStore = data => dispatch => {
+export const updateRotation = data => dispatch => {
   dispatch(setRotation(data));
 }
 
-export const setPositionStore = data => dispatch => {
+export const updatePosition = data => dispatch => {
   dispatch(setPosition(data));
 }

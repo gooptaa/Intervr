@@ -21,10 +21,10 @@ class RoomComponent extends React.Component {
     this.cameraNode.addEventListener('componentchanged', (evt) => {
       if (evt.detail.name === 'position') {
         this.props.webRTC.sendDirectlyToAll(null, null, { position: evt.detail.newData });
-        this.props.setPositionStore(evt.detail.newData);
+        this.props.updatePosition(evt.detail.newData);
       } else if (evt.detail.name === 'rotation') {
         this.props.webRTC.sendDirectlyToAll(null, null, { rotation: evt.detail.newData });
-        this.props.setRotationStore(evt.detail.newData);
+        this.props.updateRotation(evt.detail.newData);
       }
     });
   }
@@ -137,10 +137,10 @@ class RoomComponent extends React.Component {
   }
 }
 
-import { setRotationStore, setPositionStore } from '../reducers/camera';
+import { updateRotation, updatePosition } from '../reducers/camera';
 
 export default connect(
   ({ webRTC, peer, camera }) => ({ webRTC, peer, camera }),
-  ({ setRotationStore, setPositionStore }))
+  ({ updateRotation, updatePosition }))
   (RoomComponent);
 
