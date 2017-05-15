@@ -18,15 +18,16 @@ class LaunchComponent extends React.Component {
   render(){
     return (
     <div className="login-bg">
-    <div className="valign-wrapper" style={{width:'100%',height:'100%',position: 'absolute'}}>
+    <div className="valign-wrapper" style={{width:'100%',height:'100%', position: 'absolute'}}>
       <div className="valign" style={{width:'100%'}}>
         <div className="container">
           <div className="row">
             <div className="col s12 m8 offset-m2 l6 offset-l3">
-              <div className="card hoverable lighten-5">
+              <div className="card hoverable" style={{background: 'rgba(0, 0, 0, 0.75)'}}>
                 <div className="card-image">
                   <img  className="poster" 
-                        src="https://image.freepik.com/free-icon/apple-logo_318-40184.jpg" />
+                        src="images/logo.png"
+                        style={{width: "100%"}} />
                 </div>
                 <form onSubmit={this.onSubmitForm}>
                   <div className="card-content">
