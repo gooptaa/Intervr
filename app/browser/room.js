@@ -1,19 +1,21 @@
-import React from 'react'
-import { Link } from 'react-router'
-import aframe from 'aframe';
+import 'aframe';
 import 'aframe-animation-component';
 import 'aframe-particle-system-component';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Link } from 'react-router';
 import 'babel-polyfill';
 import { Entity, Scene } from 'aframe-react';
 require('aframe-fence-component')
 import { connect } from 'react-redux';
+import { toLobby } from '../util';
+import Assets from './assets';
 
 
 class RoomComponent extends React.Component {
   constructor(props) {
     super(props);
   }
-
   componentDidMount() {
     // add listener to camera
     this.cameraNode.addEventListener('componentchanged', (evt) => {
@@ -29,43 +31,15 @@ class RoomComponent extends React.Component {
 
   render() {
     return (
-      <Scene physics="debug: true">
-        <a-assets>
-          {/* Textures */}
-          <img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg" />
-          <img id="skyTexture" src="https://cdn.aframe.io/a-painter/images/sky.jpg" />
-          <img id="brick" src="https://ucarecdn.com/9ea05677-13be-42d3-b7a0-6c365b105dab/" />
-
-          <img id="floor" src="https://ucarecdn.com/df577b67-1d2b-49d8-885c-13ca40216737/" />
-          <a-asset-item id="person-obj" src="objects/person.obj" />
-          <a-asset-item id="person-mtl" src="objects/person.mtl" />
-
-          {/* Other Objects */}
-          <a-asset-item id="flower-obj" src="objects/flower.obj" />
-          <a-asset-item id="flower-mtl" src="objects/flower.mtl" />
-          <a-asset-item id="couch-obj" src="objects/couch.obj" />
-          <a-asset-item id="couch-mtl" src="objects/couch.mtl" />
-          <a-asset-item id="table-obj" src="objects/table.obj" />
-          <a-asset-item id="table-mtl" src="objects/table.mtl" />
-          <a-asset-item id="desk-obj" src="objects/desk.obj" />
-          <a-asset-item id="desk-mtl" src="objects/desk.mtl" />
-          <a-asset-item id="desktop-computer-obj" src="objects/desktop-computer.obj" />
-          <a-asset-item id="desktop-computer-mtl" src="objects/desktop-computer.mtl" />
-          <a-asset-item id="office-chair-obj" src="objects/office-chair.obj" />
-          <a-asset-item id="office-chair-mtl" src="objects/office-chair.mtl" />
-          <a-asset-item id="tv-obj" src="objects/tv.obj" />
-          <a-asset-item id="tv-mtl" src="objects/tv.mtl" />
-          <a-asset-item id="paintings-obj" src="objects/oil-paintings-with-frame.obj" />
-          <a-asset-item id="paintings-mtl" src="objects/oil-paintings-with-frame.mtl" />
-
-        </a-assets>
+      <Scene >
+        <Assets />
 
         {/* Planes */}
         <a-box color="#fff" repeat="14 14" position="-1.45 0 -7" rotation="0 0 0" height="10" width="14" scale="0.8 1 1" />
         <a-box color="#fff" repeat="14 14" position="-1.7 0.12 7" rotation="0 180 0" height="10" width="14" scale="0.8 1 1" />
         <a-box color="#fff" repeat="14 14" position="4 0 0" rotation="0 -90 0" height="10" width="14" />
         <a-box color="#fff" repeat="14 14" position="-7 0 -0.35" rotation="0 90 0" height="10" width="14" scale="1 1 1" />
-        <a-plane src="#floor" repeat="14 14" position="-1.3 5 0.2" rotation="90 0 0" height="10" width="14" scale="0.9 1.4 0.9"/>
+        <a-plane src="#floor" repeat="14 14" position="-1.3 5 0.2" rotation="90 0 0" height="10" width="14" scale="0.9 1.4 0.9" />
         <a-plane src="#floor" rotation="-90 0 0" position="-1.5 0 0" height="14" width="14" scale="0.85 1 0.8" />
 
         {/* Single Objects */}
@@ -102,9 +76,26 @@ class RoomComponent extends React.Component {
         <Entity obj-model="obj: #desktop-computer-obj; mtl: #desktop-computer-mtl" rotation="0 180 0" position="-5.8 1.17 1.66" scale="0.4 0.3 0.4" />
 
         <Entity obj-model="obj: #tv-obj; mtl: #tv-mtl" rotation="0 90 0" position="3.4 1.55 0" scale="0.8 0.4 1.2" />
-        <Entity obj-model="obj: #paintings-obj; mtl: #paintings-mtl" rotation="0 180 0" position="-2 2.7 6.45" scale="0.5 0.4 0.8"/>
+        <Entity obj-model="obj: #paintings-obj; mtl: #paintings-mtl" rotation="0 180 0" position="-2 2.7 6.45" scale="0.5 0.4 0.8" />
 
-        <Entity primitive="a-light" type="point" intensity="1.4" color="white" position="-1.3 7.7 0"/>
+        <Entity primitive="a-light" type="point" intensity="1.4" color="white" position="-1.3 7.7 0" />
+        <Entity primitive="a-light" type="ambient" intensity="0.1" color="white" position="-1.3 7.7 0" />
+
+        <Entity
+          primitive="a-plane"
+          src="#exit"
+          width=".5"
+          height=".25"
+          position={{ x: 2, y: 4, z: -6.49 }}
+          rotation={{ x: 0, y: 0, z: 0 }}
+          events={{ click: toLobby }}>
+          <a-animation begin="mouseenter" end="mouseleave" fill="forwards" repeat="0"
+            direction="normal" attribute="scale" from="1 1 1"
+            to="1.2 1.2 1.2" dur="1000"></a-animation>
+          <a-animation begin="mouseleave" end="mouseenter" repeat="0" fill="forwards"
+            direction="normal" attribute="scale"
+            to="1 1 1" dur="1000"></a-animation>
+        </Entity>
 
         <Entity>
           <a-camera
@@ -113,14 +104,32 @@ class RoomComponent extends React.Component {
             id="camera"
             fence="width: 6; depth: 10">
             <Entity primitive="a-cursor" animation__click={{ property: 'scale', startEvents: 'click', from: '0.1 0.1 0.1', to: '1 1 1', dur: 150 }} />
-            <a-entity obj-model="obj: #person-obj; mtl: #person-mtl"  position="0 -1.6 .5"/>
+            <a-entity obj-model="obj: #person-obj; mtl: #person-mtl" position="0 -1.6 .5" />
           </a-camera>
         </Entity>
 
+        {/* Each person */}
         {Object.keys(this.props.peer).map((key, index) => (
           <Entity obj-model="obj: #person-obj; mtl: #person-mtl"
             position={this.props.peer[key].position}
-            rotation={this.props.peer[key].rotation} />
+            rotation={this.props.peer[key].rotation}>
+            <a-entity text={`value: ${this.props.peer[key].handle}; align: center; color: blue;`} position="-0.5 3.5 0" scale="8 8 8" rotation="0 180 0" />
+            
+            <a-box rotation="0 0 45" scale="0.1 0.1 0.1" position="-0.11 2.6 -0.48">
+              <a-animation attribute="material.color" from="black" to="green" dur="10000" >
+              </a-animation>
+            </a-box>
+
+            <a-box rotation="0 0 45" scale="0.1 0.1 0.1" position="-0.52 2.6 -0.47">
+              <a-animation attribute="material.color" from="black" to="green" dur="10000" >
+              </a-animation>
+            </a-box>
+            
+            <a-cone rotation="0 90 90" radius-bottom="2" radius-top="0.9" position="-0.33 2.2 -0.43" color="white">
+              <a-animation attribute="scale" from="0.02 0.2 0.12" to="0.07 0.2 0.12" dur="10000" >
+              </a-animation>
+            </a-cone>
+          </Entity>
         ))}
 
       </Scene>

@@ -1,3 +1,22 @@
+import generateWords from 'random-words';
+import animal from 'node-animal';
+
 export function randomToken() {
-  return Math.floor((1 + Math.random()) * 1e16).toString(16).substring(1);
+ return generateWords({exactly: 2, join: '-'});
 }
+
+// export function randomName() {
+//  return generateWords({min: 1, max: 3, join: ' '});
+// }
+
+export function randomName() {
+ return animal.rand();
+ //return generateWords({min: 1, max: 3, join: ' '});
+}
+
+import { browserHistory } from 'react-router';
+
+export function toLobby() {
+  browserHistory.push('/lobby');
+}
+

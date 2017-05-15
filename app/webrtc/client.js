@@ -30,9 +30,9 @@ export function generateWebRTC(room) {
 
   // when datachannel opens, send each other's locations
   webrtc.on('channelOpen', peer => {
-    console.log("REACHED");
     webrtc.sendDirectlyToAll(null, null, {position: store.getState().camera.position});
     webrtc.sendDirectlyToAll(null, null, {rotation: store.getState().camera.rotation});
+    webrtc.sendDirectlyToAll(null, null, {handle: store.getState().self.handle});
   });
 
   return webrtc;
