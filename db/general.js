@@ -13,4 +13,3 @@ const General = db.define('general', {
 });
 
 module.exports = General
-
