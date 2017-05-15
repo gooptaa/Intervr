@@ -1,21 +1,32 @@
 import Speak from './web-speech';
 
+
 /* NB: glossary below */
 
 export default class Bot {
   constructor(interviewee = ''){
     this.soundLevel = null
     this.threshold = null
-    this.waitCount = 0
-    this.audioCtx = new (window.AudioContext)()
-    this.analyzer = this.audioCtx.createAnalyser()
-    this.questionsAsked = 0
-    this.interviewee = interviewee
-    this.questions = {}
     this.intervalID = null
     this.source = null
+    this.recorderNode = null
+    this.record = []
+    this.questions = {}
+    this.waitCount = 0
+    this.questionsAsked = 0
+    this.getNextType = this.getNextType.bind(this)
+    this.next = this.next.bind(this)
+    this.end = this.end.bind(this)
+    this.audioCtx = new (window.AudioContext)()
+    this.analyzer = this.audioCtx.createAnalyser()
+    this.dest = this.audioCtx.createMediaStreamDestination()
+    this.interviewee = interviewee
     this.Speaker = new Speak()
-
+    this.utterances = {
+      first: `Great, let's begin. `,
+      intro: `Great. `,
+      general: `Great. `,
+    }
   }
 
   setup(questions, fftsize = 4096, smoother = 0.65, soundLevel = 100, threshold = 30){
@@ -24,15 +35,75 @@ export default class Bot {
     this.analyzer.smoothingTimeConstant = smoother
     this.soundLevel = soundLevel
     this.threshold = threshold
-    window.navigator.getUserMedia({
-      audio: true
-    }, (stream) => {
-      this.source = this.audioCtx.createMediaStreamSource(stream)
-      this.source.connect(this.analyzer)
-    }, (err) => {
-      console.error("Hmm, there was an issue setting up your room: ", err)
+    return new Promise( (res) => {
+      window.navigator.getUserMedia({
+        audio: true
+      }, (stream) => {
+        res(stream)
+      })
     })
-    setTimeout(this.next("greet"), 3000)
+      .then( (stream) => {
+        this.source = this.audioCtx.createMediaStreamSource(stream)
+        this.source.connect(this.analyzer)
+        this.analyzer.connect(this.dest)
+        this.recorderNode = new MediaRecorder(this.dest.stream)
+        this.recorderNode.ondataavailable = (e) => this.record.push(e.data)
+      })
+      .then( () => {
+        setTimeout( () => {this.next(`greet`)}, 3000)
+      })
+  }
+
+  getNextType(){
+    switch (true){
+      case this.questionsAsked === 0:
+        this.recorderNode.start()
+        return `first`
+      case this.questionsAsked === 1:
+        return `intro`
+      case this.questionsAsked < 6:
+        return `general`
+      default:
+        return `last`
+    }
+  }
+
+  getQuestion(type){
+    if (type === `first`){type = `intro`}
+    let randomInd = Math.floor(Math.random() * this.questions[type].length)
+    let question = this.questions[type].splice(randomInd, 1)
+    question = question[0].text
+    return question
+  }
+
+  askQuestion(type, question = ''){
+    return new Promise( (res) => {
+      this.Speaker.on(`${this.utterances[type]} ${question}`, res)
+    }).then( () => this.poll())
+  }
+
+  next(type){
+    if (type === `greet`){
+      this.Speaker.on(`Welcome, ${this.interviewee}! When you're ready to begin the interview, please press the start button.`)
+    }
+    else if (type === `last`){
+      this.Speaker.on('Great. That concludes the interview. Feel free to exit and reenter the app to practice some more.')
+      this.recorderNode.stop()
+      let buff = new Blob(this.record, {type: 'audio/webm'})
+      let audioURL = window.URL.createObjectURL(buff)
+      let demo = document.createElement('demo');
+      document.body.appendChild(demo);
+      demo.style = 'display: none';
+      demo.href = audioURL;
+      demo.download = 'demo.wav';
+      demo.click();
+      //window.URL.revokeObjectURL(audioURL);
+    }
+    else {
+      let question = this.getQuestion(type)
+      this.questionsAsked++
+      return this.askQuestion(type, question)
+    }
   }
 
   poll(freq = 100){
@@ -49,7 +120,7 @@ export default class Bot {
       this.waitCount = 0
       clearInterval(this.intervalID)
       this.intervalID = null
-      this.next()
+      this.next(this.getNextType())
     }
     else if (avg > this.soundLevel){
       this.waitCount++
@@ -69,46 +140,6 @@ export default class Bot {
     }
   }
 
-  next(type){
-    if (type === "greet"){
-      this.Speaker.on(`Welcome, ${this.interviewee}! When you're ready to begin the interview, please press the start button.`)
-    }
-    else if (this.questionsAsked === 0){
-      let question = this.getQuestion('intro')
-      let askQ = new Promise( (res) => {
-        this.Speaker.on(`Great, let's begin. ${question}.`, res)
-      })
-      askQ.then(() => this.poll())
-      this.questionsAsked++
-    }
-    else if (this.questionsAsked < 2){
-      let question = this.getQuestion('intro')
-      let askQ = new Promise( (res) => {
-        this.Speaker.on(`Great! ${question}.`, res)
-      })
-      askQ.then(() => this.poll())
-      this.questionsAsked++
-    }
-    else if (this.questionsAsked < 6){
-      let question = this.getQuestion('general')
-      let askQ = new Promise( (res) => {
-        this.Speaker.on(`Great! ${question}.`, res)
-      })
-      askQ.then(() => this.poll())
-      this.questionsAsked++
-    }
-    else {
-      this.Speaker.on('Great! That concludes the interview. Feel free to exit and reenter the app to practice some more.')
-    }
-  }
-
-  getQuestion(type){
-    let randomInd = Math.floor(Math.random() * this.questions[type].length)
-    let question = this.questions[type].splice(randomInd, 1)
-    question = question[0].text
-    return question
-  }
-
   end(){
     clearInterval(this.intervalID)
     this.intervalID = null
@@ -126,6 +157,9 @@ GLOSSARY
 
 analyzer: audio node responsible for monitoring amplitude
 
+askQuestion(): sends utterance and question to Speaker, then
+      asynchronously runs this.poll()
+
 audioCtx: audio node setting context for all other nodes
 
 end(): kills the bot, closes the audio context, and interrupts
@@ -140,6 +174,9 @@ freq: period (in ms) between calls to analyzer to poll
 getQuestion(type): draws a question of type {type} at random,
       removes that question from local state, and returns that
       question (usually to next())
+
+getNextType(): determines next question category (type) based
+      on {questionsAsked} value
 
 intervalID: captures setInterval ID for poller so that
       process can be interrupted later
@@ -178,6 +215,8 @@ source: audio node capturing media stream
 Speaker: TTS constructor with on(text) and pause() methods
 
 threshold: number of consecutive polls above {soundLevel} at {freq}
+
+utterances: stock phrases for bot (consolidated for DRYness)
 
 waitCount: current tally of consecutive polls above {soundLevel}
 
