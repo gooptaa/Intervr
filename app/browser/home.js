@@ -1,25 +1,18 @@
-import React from 'react'
-import { Link } from 'react-router'
+import React from 'react';
+import { Link } from 'react-router';
 import 'aframe';
 import 'aframe-animation-component';
 import 'aframe-particle-system-component';
 import 'babel-polyfill';
 import { Entity, Scene } from 'aframe-react';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router'
+import { browserHistory } from 'react-router';
 import Sound from 'react-sound';
+import { toPeerRoom, toBotRoom } from '../util';
 
 class HomeComponent extends React.Component {
   constructor(props) {
     super(props);
-  }
-
-  goToPeerRoom() {
-    browserHistory.push('/peer-room');
-  }
-
-  goToBotRoom() {
-    browserHistory.push('/bot-room');
   }
 
   render() {
@@ -38,7 +31,7 @@ class HomeComponent extends React.Component {
           width="1"
           height=".5"
           position={{ x: 0, y: 0, z: -2 }}
-          events={{ click: this.goToPeerRoom }}>
+          events={{ click: toPeerRoom }}>
           <a-animation begin="mouseenter" end="mouseleave" fill="forwards" repeat="0"
             direction="normal" attribute="scale" from="1 1 1"
             to="2.5 2.5 1.5" dur="1000"></a-animation>
@@ -55,7 +48,7 @@ class HomeComponent extends React.Component {
           height=".5"
           position={{ x: 2, y: 0, z: 0 }}
           rotation={{ x: 0, y: -90, z: 0 }}
-          events={{ click: this.goToBotRoom }}>
+          events={{ click: toBotRoom }}>
           <a-animation begin="mouseenter" end="mouseleave" fill="forwards" repeat="0"
             direction="normal" attribute="scale" from="1 1 1"
             to="2.5 2.5 1.5" dur="1000"></a-animation>

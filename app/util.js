@@ -5,10 +5,6 @@ export function randomToken() {
  return generateWords({exactly: 2, join: '-'});
 }
 
-// export function randomName() {
-//  return generateWords({min: 1, max: 3, join: ' '});
-// }
-
 export function randomName() {
  return animal.rand();
  //return generateWords({min: 1, max: 3, join: ' '});
@@ -20,3 +16,10 @@ export function toLobby() {
   browserHistory.push('/lobby');
 }
 
+export function toPeerRoom(){
+  browserHistory.push('/peer-room');
+}
+
+export function toBotRoom(){
+  browserHistory.push('/bot-room');
+}
