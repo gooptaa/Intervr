@@ -15,6 +15,9 @@ import { toLobby } from '../util';
 class BotRoomComponent extends React.Component {
   constructor(props) {
     super(props);
+    this.state ={
+      isStarted: true
+    }
     this.interviewer = null
     this.onClick = this.onClick.bind(this)
   }
@@ -47,9 +50,13 @@ class BotRoomComponent extends React.Component {
     }
   }
 
-  onClick() {
+  onClick(evt) {
+    console.log(evt)
     this.interviewer.next(this.interviewer.getNextType())
+    this.setState({isStarted: !this.state.isStarted});
   }
+
+
 
   render() {
     return (
@@ -128,7 +135,8 @@ class BotRoomComponent extends React.Component {
         </Entity>
 
           <a-entity obj-model="obj: #person-obj; mtl: #person-mtl" position="2.040 -0.025 0.298" rotation="0 -90 0" scale=".5 .5 .5" />
-          <Entity text={{value: 'Start', align: 'center', color: 'black' }} position={{x: 2.040, y: 1.02, z: .712}} scale="3 3 3" rotation="0 -90 0"/>
+        {this.state.isStarted ? <Entity text={{value: 'start', align: 'center', color: 'black' }} position={{x: 2.040, y: 1.02, z: .712}} scale="3 3 3" rotation="0 -90 0"/> :
+        <Entity text={{value: 'pause', align: 'center', color: 'black' }} position={{x: 2.040, y: 1.02, z: .712}} scale="3 3 3" rotation="0 -90 0"/>}
            <Entity
               primitive="a-plane"
               color="red"
