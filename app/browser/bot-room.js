@@ -56,6 +56,10 @@ class BotRoomComponent extends React.Component {
       <Scene>
         <Assets />
 
+        {/* Cups */}
+        <Entity obj-model="obj: #cup-obj; mtl: #cup-mtl" position="1.5 0.85 -0.34" scale="0.08 0.08 0.08" rotation="0 90 0"/>
+        <Entity obj-model="obj: #cup-obj; mtl: #cup-mtl" position="1 0.85 0.6" scale="0.08 0.08 0.08" rotation="0 -90 0"/>
+
         {/* Resume */}
         <a-box color="navy" depth="0.74" height="0.12" width="0.4" position="1.55 0.7 0.15"></a-box>
         <a-box color="white" depth="0.35" height="0.13" width="0.37" position="1.55 0.7 -0.03"></a-box>
