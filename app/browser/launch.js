@@ -33,10 +33,14 @@ class LaunchComponent extends React.Component {
                 <div className="card-content">
                   <form onSubmit={this.onSubmitForm}>
                     <div className="card-content">
-                          <label htmlFor="name">Name</label>
-                          <input className="validate white-text" name="name" required />
-                          <label htmlFor="room">Peer Room Name</label>
-                          <input className="validate white-text" name="room" />
+                      <div className="input-field">
+                        <input id="name" type="text" className="validate" required/>
+                        <label htmlFor="name">First Name</label>
+                      </div>
+                      <div className="input-field">
+                        <input id="room" type="text" className="validate"/>
+                        <label htmlFor="room">Last Name</label>
+                      </div>
                     </div>
                     <div className="card-action right-align">
                       <a className="activator">Need Help?</a>

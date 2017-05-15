@@ -65,7 +65,6 @@ class HomeComponent extends React.Component {
           <Entity text={{ value: 'Bot Room', align: 'center', color: 'blue' }} position={{ x: 0, y: .1, z: 1 }} />
         </Entity>
 
-        <Entity primitive="a-sky" src="#skyTexture" rotation="0 -130 0" />
 
         <a-entity camera mouse-cursor look-controls rotation="0 -40 0">
           <a-cursor color="black" />
