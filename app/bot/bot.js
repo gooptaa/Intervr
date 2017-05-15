@@ -4,8 +4,9 @@ import Speak from './web-speech';
 /* NB: glossary below */
 
 export default class Bot {
-  constructor(interviewee = '') {
+  constructor(interviewee = '', doc = null){
     this.soundLevel = null
+    this.document = doc
     this.threshold = null
     this.intervalID = null
     this.source = null
@@ -15,6 +16,7 @@ export default class Bot {
     this.waitCount = 0
     this.questionsAsked = 0
     this.getNextType = this.getNextType.bind(this)
+    this.emit = this.emit.bind(this)
     this.next = this.next.bind(this)
     this.end = this.end.bind(this)
     this.audioCtx = new (window.AudioContext)()
@@ -77,27 +79,40 @@ export default class Bot {
     return question
   }
 
-  askQuestion(type, question = '') {
-    return new Promise((res) => {
+
+  askQuestion(type, question = ''){
+    this.emit('talking')
+    return new Promise( (res) => {
       this.Speaker.on(`${this.utterances[type]} ${question}`, res)
-    }).then(() => this.poll())
+    }).then( () => {
+      this.emit('notTalking')
+      this.poll()
+    })
   }
 
-  next(type) {
-    if (type === `greet`) {
-      this.Speaker.on(`Welcome, ${this.interviewee}! When you're ready to begin the interview, please press the start button.`)
+  next(type){
+    if (type === `greet`){
+      this.emit('talking')
+      return new Promise ( (res) => {
+        this.Speaker.on(`Welcome, ${this.interviewee}! When you're ready to begin the interview, please press the start button.`, res)
+      }).then( () => this.emit('notTalking'))
     }
-    else if (type === `last`) {
-      this.Speaker.on('Great. That concludes the interview. Feel free to exit and reenter the app to practice some more.')
-      this.recorderNode.stop()
-      let buff = new Blob(this.record, { type: 'audio/webm' })
-      let audioURL = window.URL.createObjectURL(buff)
-      let demo = document.createElement('demo');
-      document.body.appendChild(demo);
-      demo.style = 'display: none';
-      demo.href = audioURL;
-      demo.download = 'demo.wav';
-      demo.click();
+    else if (type === `last`){
+      this.emit('talking')
+      return new Promise( (res) => {
+        this.Speaker.on('Great. That concludes the interview. Feel free to exit and reenter the app to practice some more.', res)
+      }).then( () => this.emit('notTalking'))
+        .then( () => {
+          this.recorderNode.stop()
+          let buff = new Blob(this.record, {type: 'audio/webm'})
+          let audioURL = window.URL.createObjectURL(buff)
+          let demo = document.createElement('demo');
+          document.body.appendChild(demo);
+          demo.style = 'display: none';
+          demo.href = audioURL;
+          demo.download = 'demo.wav';
+          demo.click();
+        })
       //window.URL.revokeObjectURL(audioURL);
     }
     else {
@@ -143,7 +158,6 @@ export default class Bot {
       this.isPause = false
       }
     }
-
     if (!this.isPause) {
       if (!this.intervalID) {
         this.isPause = true
@@ -167,6 +181,12 @@ end() {
   this.Speaker.cancel()
   this.audioCtx.close()
 }
+
+
+  emit(eventName){
+    console.log(eventName)
+    return this.document.querySelector('#boxbot').emit(eventName)
+  }
 }
 
 /*

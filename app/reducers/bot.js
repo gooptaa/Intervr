@@ -1,6 +1,7 @@
 /*****
 This will keep track of the bot's interview questions.
 *****/
+
 import axios from 'axios';
 import Promise from 'bluebird'
 
@@ -32,15 +33,9 @@ export default function botReducer (state = initialState, action) {
 
 /* ------------------<   DISPATCHERS   >-------------------- */
 export const getAllQuestions= () => dispatch => {
-  let general = axios.get('api/general')
-  .then((res) => res.data)
-  // .then((question) => console.log('general',question))
-  let intro = axios.get('api/intro')
-  .then((res) => res.data)
-  // .then((question) => console.log('intro',question))
-  let technical = axios.get('api/technical')
-  .then((res) => res.data)
-  // .then((question) => console.log('technical',question))
+  let general = axios.get('api/general').then((res) => res.data),
+   intro = axios.get('api/intro').then((res) => res.data),
+   technical = axios.get('api/technical').then((res) => res.data)
 
   Promise.all([general, intro, technical])
   .spread((general, intro, technical) => dispatch(getQuestions({general, intro, technical})))

@@ -2,9 +2,15 @@
 This will keep track of the simplewebrtc object.
 *****/
 
+/* -------------------<   ACTIONS   >--------------------- */
+
 const ADD_WEBRTC = "ADD_WEBRTC";
 
-const addWebRTC = (webRTC) => ({webRTC, type: ADD_WEBRTC});
+/* ---------------<   ACTION CREATORS   >------------------- */
+
+const setWebRTC = (webRTC) => ({webRTC, type: ADD_WEBRTC});
+
+/* -------------------<   REDUCERS   >--------------------- */
 
 export default function webRTCReducer (state = {}, action) {
   switch(action.type){
@@ -14,6 +20,8 @@ export default function webRTCReducer (state = {}, action) {
   }
 }
 
-export const setWebRTC = webRTC => dispatch => {
-  dispatch(addWebRTC(webRTC));
+/* ------------------<   DISPATCHERS   >-------------------- */
+
+export const updateWebRTC = webRTC => dispatch => {
+  dispatch(setWebRTC(webRTC));
 }
