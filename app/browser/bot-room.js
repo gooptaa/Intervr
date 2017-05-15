@@ -16,10 +16,10 @@ class BotRoomComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state ={
-      isStarted: true
     }
     this.interviewer = null
     this.onClick = this.onClick.bind(this)
+    this.onPause = this.onPause.bind(this)
   }
 
   componentDidMount() {
@@ -50,13 +50,14 @@ class BotRoomComponent extends React.Component {
     }
   }
 
-  onClick(evt) {
-    console.log(evt)
+  onClick() {
     this.interviewer.next(this.interviewer.getNextType())
-    this.setState({isStarted: !this.state.isStarted});
   }
 
-
+  onPause(){
+    console.log('hit pause')
+    this.interviewer.pause();
+  }
 
   render() {
     return (
@@ -135,17 +136,27 @@ class BotRoomComponent extends React.Component {
         </Entity>
 
           <a-entity obj-model="obj: #person-obj; mtl: #person-mtl" position="2.040 -0.025 0.298" rotation="0 -90 0" scale=".5 .5 .5" />
-        {this.state.isStarted ? <Entity text={{value: 'start', align: 'center', color: 'black' }} position={{x: 2.040, y: 1.02, z: .712}} scale="3 3 3" rotation="0 -90 0"/> :
-        <Entity text={{value: 'pause', align: 'center', color: 'black' }} position={{x: 2.040, y: 1.02, z: .712}} scale="3 3 3" rotation="0 -90 0"/>}
+          <Entity text={{value: 'start', align: 'center', color: 'black' }} position={{x: 2.040, y: 1.02, z: -.75}} scale="3 3 3" rotation="0 -90 0"/> :
            <Entity
               primitive="a-plane"
               color="red"
               width=".30"
               height=".21"
-              position={{x: 2.040, y: 1.02, z: .712}}
+              position={{x: 2.040, y: 1.02, z: -.75}}
               rotation="0 -90 0"
               scale="1 1 1"
               events={{click: this.onClick}}>
+          </Entity>
+          <Entity text={{value: 'pause', align: 'center', color: 'black' }} position={{x: 2.040, y: 1.02, z: .712}} scale="3 3 3" rotation="0 -90 0"/> :
+           <Entity
+              primitive="a-plane"
+              color="red"
+              width=".50"
+              height=".21"
+              position={{x: 2.040, y: 1.02, z: .712}}
+              rotation="0 -90 0"
+              scale="1 1 1"
+              events={{click: this.onPause}}>
           </Entity>
           <a-entity camera mouse-cursor look-controls rotation="0 -90 0" position="-1.10 1.00 0">
             <a-cursor color="black"/>
