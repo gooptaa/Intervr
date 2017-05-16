@@ -1,8 +1,10 @@
+/* NB: glossary below */
+
+
 export default class Animator {
   constructor(props = null){
     this.soundLevel = null
     this.props = props
-    this.threshold = null
     this.intervalID = null
     this.source = null
     this.poll = this.poll.bind(this)
@@ -13,11 +15,10 @@ export default class Animator {
     this.isTalking = null
   }
 
-  setup(fftsize = 4096, smoother = 0.65, soundLevel = 100, threshold = 30) {
+  setup(fftsize = 4096, smoother = 0.65, soundLevel = 100) {
     this.analyzer.fftsize = fftsize
     this.analyzer.smoothingTimeConstant = smoother
     this.soundLevel = soundLevel
-    this.threshold = threshold
     return new Promise((res) => {
       window.navigator.getUserMedia({
         audio: true
@@ -64,3 +65,56 @@ export default class Animator {
     }
   }
 }
+
+/*
+GLOSSARY
+
+analyzer: audio node responsible for monitoring amplitude
+
+audioCtx: audio node setting context for all other nodes
+
+clearPoll: resets this.poll() and sets this.intervalID to null
+
+currentQuestion: stores current question immediately prior to
+      asking current question. then resets back to null immediately
+      after asking question. used to control flow in this.pause,
+      this.next, etc.
+
+emit: event emitter to control mouth animation
+
+end(): kills the bot, closes the audio context
+
+fftsize: "fast fourier transform" samples per channel.
+      should be > 2048 and exponent of 2
+
+freq: period (in ms) between calls to analyzer to poll
+      amplitude. should be <200
+
+intervalID: captures setInterval ID for poller so that
+      process can be interrupted later
+
+isTalking: Boolean indicating if user is talking. used
+      to control mouth animation
+
+monitor(avg): receives average amplitude ({avg}) from poll(),
+      and reacts appropriately (incrementing waitCount if
+      soundLevel met, etc)
+
+poll(): once called, recurring function that takes average
+      amplitude of all samples across channels and sends
+      average to monitor(). stores this.intervalID for pausing/
+      ending events
+
+setup(): sets starting values, turns on microphone
+
+smoother: value between 0 and 1 that "smooths out" polled
+      amplitude values from poll to poll. 0.65 seems optimal
+      for this use case; 0.8 is default.
+
+soundLevel: relative amplitude threshold distinguishing
+      silence from talking. VERY PICKY. optimal value varies,
+      but should probably be between 90 and 110
+
+source: audio node capturing media stream
+
+ */
