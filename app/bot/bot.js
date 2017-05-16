@@ -4,7 +4,7 @@ import Speaker from './web-speech';
 /* NB: glossary below */
 
 export default class Bot {
-  constructor(interviewee = '', doc = null){
+  constructor(interviewee = '', doc = null) {
     this.soundLevel = null
     this.document = doc
     this.threshold = null
@@ -17,12 +17,6 @@ export default class Bot {
     this.currentQuestion = null
     this.waitCount = 0
     this.questionsAsked = 0
-    this.getNextType = this.getNextType.bind(this)
-    this.poll = this.poll.bind(this)
-    this.emit = this.emit.bind(this)
-    this.next = this.next.bind(this)
-    this.end = this.end.bind(this)
-    this.pause = this.pause.bind(this)
     this.audioCtx = new window.AudioContext()
     this.analyzer = this.audioCtx.createAnalyser()
     this.dest = this.audioCtx.createMediaStreamDestination()
@@ -35,7 +29,7 @@ export default class Bot {
     }
   }
 
-  setup(questions, fftsize = 4096, smoother = 0.65, soundLevel = 100, threshold = 30) {
+  setup = (questions, fftsize = 4096, smoother = 0.65, soundLevel = 100, threshold = 30) => {
     this.questions = questions
     this.analyzer.fftsize = fftsize
     this.analyzer.smoothingTimeConstant = smoother
@@ -60,7 +54,7 @@ export default class Bot {
       })
   }
 
-  getNextType() {
+  getNextType = () => {
     switch (true) {
       case this.questionsAsked === 0:
         this.recorderNode.start(10)
@@ -74,7 +68,7 @@ export default class Bot {
     }
   }
 
-  getQuestion(type) {
+  getQuestion = (type) => {
     if (type === `first`) { type = `intro` }
     let randomInd = Math.floor(Math.random() * this.questions[type].length)
     let question = this.questions[type].splice(randomInd, 1)
@@ -83,7 +77,7 @@ export default class Bot {
   }
 
 
-  askQuestion(type, question = ''){
+  askQuestion = (type, question = '') => {
     this.currentQuestion = question
     this.emit('talking')
     return new Promise( (res) => {
@@ -95,17 +89,25 @@ export default class Bot {
     })
   }
 
-  next(type){
+  next = (type) => {
+    this.isRunning = true
+    this.Speaker.cancel()
+    if (this.intervalID) {
+      this.clearPoll()
+    }
     if (type === `greet`){
       this.emit('talking')
+      this.currentQuestion = `Welcome, ${this.interviewee}! When you're ready to begin the interview, please press the start button.`
       return new Promise ( (res) => {
         this.Speaker.on(`Welcome, ${this.interviewee}! When you're ready to begin the interview, please press the start button.`, res)
       }).then( () => {
         this.emit('notTalking')
+        this.currentQuestion = null
       })
     }
     else if (type === `last`){
       this.emit('talking')
+      this.currentQuestion = 'Great. That concludes the interview. Feel free to exit and reenter the app to practice some more.'
       return new Promise( (res) => {
         this.Speaker.on('Great. That concludes the interview. Feel free to exit and reenter the app to practice some more.', res)
       }).then( () => this.emit('notTalking'))
@@ -119,12 +121,8 @@ export default class Bot {
           downloadLink.innerHTML = 'Download audio file';
           downloadLink.setAttribute( "download", name);
 		      downloadLink.setAttribute( "name", name);
-
-          // document.body.appendChild(demo);
-          // demo.style = 'display: none';
-          // demo.href = audioURL;
-          // demo.download = 'demo.wav';
-          // demo.click();
+          this.currentQuestion = null
+          this.end()
         })
     }
     else {
@@ -134,7 +132,7 @@ export default class Bot {
     }
   }
 
-  poll(freq = 100) {
+  poll = (freq = 100) => {
     this.intervalID = setInterval(() => {
       let data = new Float32Array(this.analyzer.frequencyBinCount)
       this.analyzer.getFloatFrequencyData(data)
@@ -142,12 +140,11 @@ export default class Bot {
     }, freq)
   }
 
-  monitor(avg) {
+  monitor = (avg) => {
     console.log(avg)
     if (this.waitCount > this.threshold) {
+      this.clearPoll()
       this.waitCount = 0
-      clearInterval(this.intervalID)
-      this.intervalID = null
       this.next(this.getNextType())
     }
     else if (avg > this.soundLevel) {
@@ -158,50 +155,42 @@ export default class Bot {
     }
   }
 
-  pause() {
+  pause = () => {
     if (this.isRunning) {
       if (this.currentQuestion) {
         this.emit('notTalking')
         this.Speaker.cancel()
-        this.isRunning = false
-        clearInterval(this.intervalID)
-
-        this.intervalID = null
       }
-      else {
-        clearInterval(this.intervalID)
-        this.intervalID = null
-        this.isRunning = false
-      }
+      this.isRunning = false
+      this.clearPoll()
     }
     else {
       if (this.currentQuestion){
-      this.emit('talking')
-      this.askQuestion('general', this.currentQuestion)
-      this.isRunning = true
+        this.emit('talking')
+        this.askQuestion('general', this.currentQuestion)
+        this.isRunning = true
       }
       else {
-      this.isRunning = true
-      this.poll()
+        this.isRunning = true
+        this.poll()
       }
     }
   }
 
-end() {
-  this.Speaker.cancel()
-  clearInterval(this.intervalID)
-  this.audioCtx.close()
-  this.intervalID = null
-  this.poll = null
-  this.next = null
-  this.getQuestion = null
-  this.source = null
-}
+  end = () => {
+    this.Speaker.cancel()
+    this.clearPoll()
+    this.audioCtx.close()
+  }
 
-
-  emit(eventName){
+  emit = (eventName) => {
     console.log(eventName)
     return this.document.querySelector('#boxbot').emit(eventName)
+  }
+
+  clearPoll = () => {
+    clearInterval(this.intervalID)
+    this.intervalID = null
   }
 }
 
@@ -214,6 +203,18 @@ askQuestion(): sends utterance and question to Speaker, then
       asynchronously runs this.poll()
 
 audioCtx: audio node setting context for all other nodes
+
+clearPoll: resets this.poll() and sets this.intervalID to null
+
+currentQuestion: stores current question immediately prior to
+      asking current question. then resets back to null immediately
+      after asking question. used to control flow in this.pause,
+      this.next, etc.
+
+document: reference to DOM, passed from React component upon
+      instantiation
+
+emit: event emitter to control mouth animation on bot
 
 end(): kills the bot, closes the audio context, and interrupts
       any queued utterances
@@ -234,13 +235,18 @@ getNextType(): determines next question category (type) based
 intervalID: captures setInterval ID for poller so that
       process can be interrupted later
 
+interviewee: interviewee's user name, sent optionally from loading screen
+
+isRunning: Boolean indicating if Bot is running or paused. used
+      to control flow within this.pause()
+
 monitor(avg): receives average amplitude ({avg}) from poll(),
       and reacts appropriately (incrementing waitCount if
       soundLevel met, etc)
 
 next(): triggers a question event based on current conditions
 
-pause(): pauses the bot
+pause(): pauses bot if isRunning; resumes bot if already paused
 
 poll(): once called, recurring function that takes average
       amplitude of all samples across channels and sends
