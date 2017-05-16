@@ -11,7 +11,7 @@ export default class Bot {
     this.intervalID = null
     this.source = null
     this.recorderNode = null
-    this.isActive = true;
+    this.isRunning = true;
     this.record = []
     this.questions = {}
     this.currentQuestion = null
@@ -22,7 +22,8 @@ export default class Bot {
     this.emit = this.emit.bind(this)
     this.next = this.next.bind(this)
     this.end = this.end.bind(this)
-    this.audioCtx = new (window.AudioContext)()
+    this.pause = this.pause.bind(this)
+    this.audioCtx = new window.AudioContext()
     this.analyzer = this.audioCtx.createAnalyser()
     this.dest = this.audioCtx.createMediaStreamDestination()
     this.interviewee = interviewee
@@ -62,7 +63,7 @@ export default class Bot {
   getNextType() {
     switch (true) {
       case this.questionsAsked === 0:
-        this.recorderNode.start()
+        // this.recorderNode.start()
         return `first`
       case this.questionsAsked === 1:
         return `intro`
@@ -77,12 +78,13 @@ export default class Bot {
     if (type === `first`) { type = `intro` }
     let randomInd = Math.floor(Math.random() * this.questions[type].length)
     let question = this.questions[type].splice(randomInd, 1)
-    this.currentQuestion = question[0].text
-    return this.currentQuestion
+    question = question[0].text
+    return question
   }
 
 
   askQuestion(type, question = ''){
+    this.currentQuestion = question
     this.emit('talking')
     return new Promise( (res) => {
       this.Speaker.on(`${this.utterances[type]} ${question}`, res)
@@ -108,7 +110,7 @@ export default class Bot {
         this.Speaker.on('Great. That concludes the interview. Feel free to exit and reenter the app to practice some more.', res)
       }).then( () => this.emit('notTalking'))
         .then( () => {
-          this.recorderNode.stop()
+          // this.recorderNode.stop()
           let buff = new Blob(this.record, {type: 'audio/webm'})
           let audioURL = window.URL.createObjectURL(buff)
           let demo = document.createElement('demo');
@@ -151,33 +153,33 @@ export default class Bot {
   }
 
   pause() {
-    console.log('hitting pause')
-    if (this.isActive) {
+    if (this.isRunning) {
       if (this.currentQuestion) {
+        this.emit('notTalking')
         this.Speaker.cancel()
-        this.isActive = false
+        this.isRunning = false
+        clearInterval(this.intervalID)
+
+        this.intervalID = null
+      }
+      else {
         clearInterval(this.intervalID)
         this.intervalID = null
-      } else {
-        clearInterval(this.intervalID)
-        this.intervalID = null
-        this.isActive = true
+        this.isRunning = false
       }
     }
     else {
       if (this.currentQuestion){
-      console.log("speaker is paused?")
+      this.emit('talking')
       this.askQuestion('general', this.currentQuestion)
-      this.isActive = false
-    }
+      this.isRunning = true
+      }
       else {
-      console.log("resuming")
+      this.isRunning = true
       this.poll()
-      console.log(this.intervalID)
-      this.isActive = false
       }
     }
-}
+  }
 
 end() {
   this.Speaker.cancel()
