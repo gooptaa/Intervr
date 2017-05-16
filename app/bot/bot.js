@@ -57,7 +57,7 @@ export default class Bot {
   getNextType = () => {
     switch (true) {
       case this.questionsAsked === 0:
-        // this.recorderNode.start()
+        this.recorderNode.start(10)
         return `first`
       case this.questionsAsked === 1:
         return `intro`
@@ -112,15 +112,15 @@ export default class Bot {
         this.Speaker.on('Great. That concludes the interview. Feel free to exit and reenter the app to practice some more.', res)
       }).then( () => this.emit('notTalking'))
         .then( () => {
-          // this.recorderNode.stop()
-          let buff = new Blob(this.record, {type: 'audio/webm'})
-          let audioURL = window.URL.createObjectURL(buff)
-          let demo = document.createElement('demo');
-          document.body.appendChild(demo);
-          demo.style = 'display: none';
-          demo.href = audioURL;
-          demo.download = 'demo.wav';
-          demo.click();
+          this.recorderNode.stop()
+          let blob = new Blob(this.record, {type: 'audio/webm'})
+          let audioURL = window.URL.createObjectURL(blob)
+          downloadLink.href = audioURL;
+          let rand =  Math.floor((Math.random() * 10000000));
+	      	let name  = "audio"+rand+".webm" ;
+          downloadLink.innerHTML = 'Download audio file';
+          downloadLink.setAttribute( "download", name);
+		      downloadLink.setAttribute( "name", name);
           this.currentQuestion = null
           this.end()
         })
