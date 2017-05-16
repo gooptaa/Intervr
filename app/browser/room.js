@@ -28,6 +28,7 @@ class RoomComponent extends React.Component {
       }
     });
     this.cameraNode.setAttribute('position', {x: 0, y: .9, z: 0});
+    this.cameraNode.setAttribute('rotation', {x: 0, y: 180, z: 0});
   }
 
   render() {
