@@ -11,6 +11,7 @@ const SET_ROTATION = "SET_ROTATION";
 
 const setRotation = (data) => ({data, type: SET_ROTATION});
 const setPosition = (data) => ({data, type: SET_POSITION});
+const setAnimation = (data) => ({data, type: SET_ANIMATION})
 
 /* -------------------<   REDUCERS   >--------------------- */
 
