@@ -1,4 +1,4 @@
-import Speak from './web-speech';
+import Speaker from './web-speech';
 
 
 /* NB: glossary below */
@@ -27,7 +27,7 @@ export default class Bot {
     this.analyzer = this.audioCtx.createAnalyser()
     this.dest = this.audioCtx.createMediaStreamDestination()
     this.interviewee = interviewee
-    this.Speaker = new Speak()
+    this.Speaker = new Speaker()
     this.utterances = {
       first: `Great, let's begin. `,
       intro: `Great. `,
