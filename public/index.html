@@ -8,7 +8,17 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+  <style>
+    a#downloadLink {
+      display: block;
+      margin: 0 0 1em 0;
+      min-height: 1.2em;
+    }
+
+    p#data {
+      min-height: 6em;
+    }
+  </style>
   <title>VR Rehearal App</title>
 </head>
 
@@ -17,6 +27,9 @@
     <!-- We will render our React app into a div with an id of 'app' -->
     <!-- We can grab it off the DOM by saing `document.getElementById('app');` -->
   </div>
+    <div>
+    <a id="downloadLink" download="mediarecorder.webm" name="mediarecorder.webm" href></a>
+    </div>
 </body>
 
 
