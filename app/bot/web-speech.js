@@ -22,6 +22,7 @@ export default class Speak {
 //this will cancel the speak function from speech synthesis
   cancel(){
     if(this.utterThis) {
+      this.utterThis.onend = null
       speechSynthesis.cancel(this.utterThis)
       this.utterThis = null
     }

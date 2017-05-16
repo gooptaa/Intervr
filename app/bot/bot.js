@@ -11,9 +11,10 @@ export default class Bot {
     this.intervalID = null
     this.source = null
     this.recorderNode = null
-    this.speakerIsActive = false
+    this.isRunning = true;
     this.record = []
     this.questions = {}
+    this.currentQuestion = null
     this.waitCount = 0
     this.questionsAsked = 0
     this.getNextType = this.getNextType.bind(this)
@@ -21,7 +22,8 @@ export default class Bot {
     this.emit = this.emit.bind(this)
     this.next = this.next.bind(this)
     this.end = this.end.bind(this)
-    this.audioCtx = new (window.AudioContext)()
+    this.pause = this.pause.bind(this)
+    this.audioCtx = new window.AudioContext()
     this.analyzer = this.audioCtx.createAnalyser()
     this.dest = this.audioCtx.createMediaStreamDestination()
     this.interviewee = interviewee
@@ -31,7 +33,6 @@ export default class Bot {
       intro: `Great. `,
       general: `Great. `,
     }
-    this.isPause = false;
   }
 
   setup(questions, fftsize = 4096, smoother = 0.65, soundLevel = 100, threshold = 30) {
@@ -62,7 +63,7 @@ export default class Bot {
   getNextType() {
     switch (true) {
       case this.questionsAsked === 0:
-        this.recorderNode.start()
+        // this.recorderNode.start()
         return `first`
       case this.questionsAsked === 1:
         return `intro`
@@ -83,10 +84,12 @@ export default class Bot {
 
 
   askQuestion(type, question = ''){
+    this.currentQuestion = question
     this.emit('talking')
     return new Promise( (res) => {
       this.Speaker.on(`${this.utterances[type]} ${question}`, res)
     }).then( () => {
+      this.currentQuestion = null
       this.emit('notTalking')
       this.poll()
     })
@@ -107,7 +110,7 @@ export default class Bot {
         this.Speaker.on('Great. That concludes the interview. Feel free to exit and reenter the app to practice some more.', res)
       }).then( () => this.emit('notTalking'))
         .then( () => {
-          this.recorderNode.stop()
+          // this.recorderNode.stop()
           let buff = new Blob(this.record, {type: 'audio/webm'})
           let audioURL = window.URL.createObjectURL(buff)
           let demo = document.createElement('demo');
@@ -117,7 +120,6 @@ export default class Bot {
           demo.download = 'demo.wav';
           demo.click();
         })
-      //window.URL.revokeObjectURL(audioURL);
     }
     else {
       let question = this.getQuestion(type)
@@ -127,14 +129,11 @@ export default class Bot {
   }
 
   poll(freq = 100) {
-    console.log("we're here", this.intervalID, freq)
     this.intervalID = setInterval(() => {
-      console.log("inside set interval")
       let data = new Float32Array(this.analyzer.frequencyBinCount)
       this.analyzer.getFloatFrequencyData(data)
       this.monitor(Math.abs(data.reduce((a, b) => (a + b))) / data.length)
     }, freq)
-    console.log("more stuff", this.intervalID, freq)
   }
 
   monitor(avg) {
@@ -154,43 +153,43 @@ export default class Bot {
   }
 
   pause() {
-    console.log('hitting pause')
-    if (this.isPause) {
-      if (this.speakerIsActive){
-      console.log("speaker is paused?")
-      this.Speaker.resume()
-      this.isPause = false
-      this.speakerIsActive = false
-    }
-      else {
-      console.log("resuming")
-      this.poll()
-      console.log(this.intervalID)
-      this.isPause = false
+    if (this.isRunning) {
+      if (this.currentQuestion) {
+        this.emit('notTalking')
+        this.Speaker.cancel()
+        this.isRunning = false
+        clearInterval(this.intervalID)
+
+        this.intervalID = null
       }
-    }
-    if (!this.isPause) {
-      if (!this.intervalID) {
-        this.isPause = true
-        this.Speaker.pause()
-        this.speakerIsActive = true
-      } else {
+      else {
         clearInterval(this.intervalID)
         this.intervalID = null
-        this.isPause = true
+        this.isRunning = false
       }
     }
-}
+    else {
+      if (this.currentQuestion){
+      this.emit('talking')
+      this.askQuestion('general', this.currentQuestion)
+      this.isRunning = true
+      }
+      else {
+      this.isRunning = true
+      this.poll()
+      }
+    }
+  }
 
 end() {
+  this.Speaker.cancel()
   clearInterval(this.intervalID)
+  this.audioCtx.close()
   this.intervalID = null
   this.poll = null
   this.next = null
   this.getQuestion = null
   this.source = null
-  this.Speaker.cancel()
-  this.audioCtx.close()
 }
 
 
