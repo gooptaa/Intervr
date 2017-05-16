@@ -40,6 +40,10 @@ class RoomComponent extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.webRTC.leaveRoom();
+  }
+
   render() {
     return (
       <Scene >
