@@ -5,15 +5,12 @@ export default class Animator {
     this.threshold = null
     this.intervalID = null
     this.source = null
-    this.poll = this.poll.bind(this)
-    this.emit = this.emit.bind(this)
-    this.end = this.end.bind(this)
     this.audioCtx = new window.AudioContext()
     this.analyzer = this.audioCtx.createAnalyser()
     this.isTalking = null
   }
 
-  setup(fftsize = 4096, smoother = 0.65, soundLevel = 100, threshold = 30) {
+  setup = (fftsize = 4096, smoother = 0.65, soundLevel = 100, threshold = 30) => {
     this.analyzer.fftsize = fftsize
     this.analyzer.smoothingTimeConstant = smoother
     this.soundLevel = soundLevel
@@ -32,7 +29,7 @@ export default class Animator {
       .then(() => this.poll())
   }
 
-  poll(freq = 250) {
+  poll = (freq = 250) => {
     this.intervalID = setInterval(() => {
       let data = new Float32Array(this.analyzer.frequencyBinCount)
       this.analyzer.getFloatFrequencyData(data)
@@ -40,7 +37,7 @@ export default class Animator {
     }, freq)
   }
 
-  monitor(avg) {
+  monitor = (avg) => {
     console.log(avg)
     if (avg < this.soundLevel) {
       this.emit(true)
@@ -50,17 +47,19 @@ export default class Animator {
     }
   }
 
-  end() {
-    clearInterval(this.intervalID)
+  end = () => {
+    this.closePoll()
     this.audioCtx.close()
-    this.intervalID = null
-    this.poll = null
   }
 
-
-  emit(isTalking){
+  emit = (isTalking) => {
     if (this.props.webRTC){
       this.props.webRTC.sendDirectlyToAll(null, null, { animation: isTalking });
     }
+  }
+
+  closePoll = () => {
+    clearInterval(this.intervalID)
+    this.intervalID = null
   }
 }
