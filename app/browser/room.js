@@ -119,16 +119,8 @@ class RoomComponent extends React.Component {
               <a-entity text={`value: ${this.props.peer[key].handle}; align: center; color: blue;`} position="-0.5 3.5 0" scale="8 8 8" rotation="0 180 0" />
             }
 
-            <a-box rotation="0 0 45" scale="0.1 0.1 0.1" position="-0.11 2.6 -0.48">
-              <a-animation attribute="material.color" from="black" to="green" dur="10000" >
-              </a-animation>
-            </a-box>
-
-            <a-box rotation="0 0 45" scale="0.1 0.1 0.1" position="-0.52 2.6 -0.47">
-              <a-animation attribute="material.color" from="black" to="green" dur="10000" >
-              </a-animation>
-            </a-box>
-
+            <a-box rotation="0 0 45" scale="0.1 0.1 0.1" position="-0.11 2.6 -0.48"/>
+            <a-box rotation="0 0 45" scale="0.1 0.1 0.1" position="-0.52 2.6 -0.47"/>
             <a-cone rotation="0 90 90" radius-bottom="2" radius-top="0.9" position="-0.33 2.2 -0.43" color="white">
               <a-animation attribute="scale" from="0.02 0.2 0.12" to="0.07 0.2 0.12" dur="10000" >
               </a-animation>
