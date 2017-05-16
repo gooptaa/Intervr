@@ -10,6 +10,7 @@ export default class Animator {
     this.end = this.end.bind(this)
     this.audioCtx = new window.AudioContext()
     this.analyzer = this.audioCtx.createAnalyser()
+    this.isTalking = null
   }
 
   setup(fftsize = 4096, smoother = 0.65, soundLevel = 100, threshold = 30) {
@@ -31,7 +32,7 @@ export default class Animator {
       .then(() => this.poll())
   }
 
-  poll(freq = 100) {
+  poll(freq = 250) {
     this.intervalID = setInterval(() => {
       let data = new Float32Array(this.analyzer.frequencyBinCount)
       this.analyzer.getFloatFrequencyData(data)
@@ -60,7 +61,6 @@ export default class Animator {
   emit(isTalking){
     if (this.props.webRTC){
       this.props.webRTC.sendDirectlyToAll(null, null, { animation: isTalking });
-      this.props.updateAnimation(isTalking)
     }
   }
 }

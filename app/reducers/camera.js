@@ -6,7 +6,6 @@ This will keep track of the avatar's camera position and rotation.
 
 const SET_POSITION = "SET_POSITION";
 const SET_ROTATION = "SET_ROTATION";
-const SET_ANIMATION = "SET_ANIMATION"
 
 /* ---------------<   ACTION CREATORS   >------------------- */
 
@@ -22,8 +21,6 @@ export default function cameraReducer (state = {position: {x:-2.7, y: -1.7, z: 1
       return Object.assign({}, state, {position: action.data});
     case SET_ROTATION:
       return Object.assign({}, state, {rotation: action.data});
-    case SET_ANIMATION:
-      return Object.assign({}, state, {animation: action.data})
     default: return state;
   }
 }
@@ -36,8 +33,4 @@ export const updateRotation = data => dispatch => {
 
 export const updatePosition = data => dispatch => {
   dispatch(setPosition(data));
-}
-
-export const updateAnimation = data => dispatch => {
-  dispatch(setAnimation(data))
 }
