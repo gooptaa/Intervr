@@ -78,6 +78,8 @@ class RoomComponent extends React.Component {
         <Entity obj-model="obj: #tv-obj; mtl: #tv-mtl" rotation="0 90 0" position="3.4 1.55 0" scale="0.8 0.4 1.2" />
         <Entity obj-model="obj: #paintings-obj; mtl: #paintings-mtl" rotation="0 180 0" position="-2 2.7 6.45" scale="0.5 0.4 0.8" />
 
+        <Entity obj-model="obj: #door-obj" rotation="270 0 0" position="1.5 0 -6.4" scale="0.015 0.015 0.015" />
+
         <Entity primitive="a-light" type="point" intensity="1.4" color="white" position="-1.3 7.7 0" />
         <Entity primitive="a-light" type="ambient" intensity="0.05" color="white" position="-1.3 7.7 0" />
 
