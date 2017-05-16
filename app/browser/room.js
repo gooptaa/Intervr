@@ -38,9 +38,6 @@ class RoomComponent extends React.Component {
     if (this.animator) {
       this.animator.end();
     }
-  }
-
-  componentWillUnmount() {
     this.props.webRTC.leaveRoom();
   }
 
