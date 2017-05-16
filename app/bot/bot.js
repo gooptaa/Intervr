@@ -204,6 +204,18 @@ askQuestion(): sends utterance and question to Speaker, then
 
 audioCtx: audio node setting context for all other nodes
 
+clearPoll: resets this.poll() and sets this.intervalID to null
+
+currentQuestion: stores current question immediately prior to
+      asking current question. then resets back to null immediately
+      after asking question. used to control flow in this.pause,
+      this.next, etc.
+
+document: reference to DOM, passed from React component upon
+      instantiation
+
+emit: event emitter to control mouth animation on bot
+
 end(): kills the bot, closes the audio context, and interrupts
       any queued utterances
 
@@ -223,13 +235,18 @@ getNextType(): determines next question category (type) based
 intervalID: captures setInterval ID for poller so that
       process can be interrupted later
 
+interviewee: interviewee's user name, sent optionally from loading screen
+
+isRunning: Boolean indicating if Bot is running or paused. used
+      to control flow within this.pause()
+
 monitor(avg): receives average amplitude ({avg}) from poll(),
       and reacts appropriately (incrementing waitCount if
       soundLevel met, etc)
 
 next(): triggers a question event based on current conditions
 
-pause(): pauses the bot
+pause(): pauses bot if isRunning; resumes bot if already paused
 
 poll(): once called, recurring function that takes average
       amplitude of all samples across channels and sends
