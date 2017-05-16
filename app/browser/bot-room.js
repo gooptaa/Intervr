@@ -28,13 +28,10 @@ class BotRoomComponent extends React.Component {
 
     let general = axios.get('api/general')
       .then((res) => res.data)
-    // .then((question) => console.log('general',question))
     let intro = axios.get('api/intro')
       .then((res) => res.data)
-    // .then((question) => console.log('intro',question))
     let technical = axios.get('api/technical')
       .then((res) => res.data)
-    // .then((question) => console.log('technical',question))
 
     Promise.all([general, intro, technical])
       .spread((general, intro, technical) => this.interviewer.setup({
