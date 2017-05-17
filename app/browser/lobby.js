@@ -62,14 +62,27 @@ class BotRoomComponent extends React.Component {
           radius=".075" 
           height=".005" 
           position="0 2.5 1.5" 
-          rotation="90 0 0" />
+          rotation="90 0 0" >
+            <Entity 
+            text={{ value: 'Peer', align: 'center', color: 'black' }} 
+            position={{ x: .3, y: -0.1, z: -.05 }} 
+            rotation={{x: 90, y: 180, z: 0}}
+            scale={{x: 3, y: 3, z: 3}} />
+        </a-cylinder>
         <a-cylinder 
           ref={(botButton) => this.botButton = botButton}
           color={this.state.botPress ? 'orange' : 'black'} 
           radius=".075" 
           height=".005" 
           position="0 2 1.5" 
-          rotation="90 0 0" />
+          rotation="90 0 0" >
+            <Entity 
+            text={{ value: 'Bot', align: 'center', color: 'black' }} 
+            position={{ x: .3, y: -0.1, z: -.05 }} 
+            rotation={{x: 90, y: 180, z: 0}}
+            scale={{x: 3, y: 3, z: 3}} />
+        </a-cylinder>
+
 
         <Entity obj-model="obj: #elevator-door" rotation="0 180 0" position="-1.6 0 1.4" scale=".05 .05 .02" />
         <Entity obj-model="obj: #elevator-handle" rotation="0 0 0" position="-1.6 1.7 -4.3" scale=".03 .03 .02" />
