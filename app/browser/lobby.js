@@ -26,7 +26,7 @@ class BotRoomComponent extends React.Component {
       this.setState({peerPress: true, elevatorMove: true});
       setTimeout(() => {
         toPeerRoom();
-      }, 7000);
+      }, 5000);
     });
 
     this.botButton.addEventListener('click', evt => {
@@ -34,7 +34,7 @@ class BotRoomComponent extends React.Component {
       this.setState({botPress: true, elevatorMove: true});
       setTimeout(() => {
         toBotRoom();
-      }, 7000);
+      }, 5000);
     });
   }
 
@@ -49,7 +49,7 @@ class BotRoomComponent extends React.Component {
         <a-box src="#elevatorWall" position="2 0 -1.5" rotation="0 -90 0" height="10" width="6" />
         <a-box src="#elevatorWall" position="-5 0 -1.5" rotation="0 90 0" height="10" width="6" />
         <a-plane src="#floor" repeat="14 14" position="-1.3 5 0.2" rotation="90 0 0" height="10" width="6" scale="1.2 1.4 1" />
-        <a-plane src="#floor" rotation="-90 0 0" position="-1.5 0 0" height="14" width="6" scale="1.2 1 1" />
+        <a-plane src="#floor" rotation="-90 0 0" position="-1.5 0 0" height="10" width="10" scale="1 1 1" />
 
         <Entity primitive="a-light" type="point" intensity=".6" color="white" position="0 4.95 -3" />
         <Entity primitive="a-light" type="point" intensity=".6" color="white" position="0 4.95 0" />
@@ -74,7 +74,7 @@ class BotRoomComponent extends React.Component {
         <Entity obj-model="obj: #elevator-door" rotation="0 180 0" position="-1.6 0 1.4" scale=".05 .05 .02" />
         <Entity obj-model="obj: #elevator-handle" rotation="0 0 0" position="-1.6 1.7 -4.3" scale=".03 .03 .02" />
 
-        <a-entity camera mouse-cursor look-controls rotation="0 180 0" position="-1.50 3.00 0">
+        <a-entity camera mouse-cursor look-controls rotation="0 180 0" position="-1.50 3.00 -1">
           <a-cursor color="black" />
         </a-entity>
 
@@ -83,6 +83,7 @@ class BotRoomComponent extends React.Component {
         <Sound
           url="/music/elevator-move.mp3"
           playStatus={Sound.status.PLAYING}
+          playFromPosition={2000}
         />
         }
       </Scene>
