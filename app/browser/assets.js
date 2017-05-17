@@ -1,7 +1,6 @@
 import React from 'react'
 import aframe from 'aframe';
 import 'aframe-animation-component';
-import 'aframe-particle-system-component';
 import 'babel-polyfill';
 import { Entity, Scene } from 'aframe-react';
 require('aframe-fence-component')

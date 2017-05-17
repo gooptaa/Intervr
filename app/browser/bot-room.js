@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router'
 import aframe from 'aframe';
 import 'aframe-animation-component';
-import 'aframe-particle-system-component';
 import 'babel-polyfill';
 import { Entity, Scene } from 'aframe-react';
 import { connect } from 'react-redux';
@@ -10,14 +9,14 @@ import Bot from '../bot/bot';
 import axios from 'axios';
 import Promise from 'bluebird'
 import Assets from './assets';
-import { toLobby } from '../util';
+import { toElev } from '../util';
 
 class BotRoomComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      interviewer: null
     }
-    this.interviewer = null
     this.onClick = this.onClick.bind(this)
     this.onPause = this.onPause.bind(this)
   }
@@ -34,27 +33,28 @@ class BotRoomComponent extends React.Component {
     Promise.all([general, intro, technical])
       .spread((general, intro, technical) => {
         let username = this.props.self.handle || ''
-        this.interviewer = new Bot(username, document)
-        this.interviewer.setup({
+        const interviewer = new Bot(username, document, this)
+        interviewer.setup({
           general: general,
           intro: intro,
           technical: technical,
         })
+        this.setState({interviewer})
     })
   }
 
   componentWillUnmount() {
-    if (this.interviewer) {
-      this.interviewer.end();
+    if (this.state.interviewer) {
+      this.state.interviewer.end();
     }
   }
 
   onClick() {
-    this.interviewer.next(this.interviewer.getNextType())
+    this.state.interviewer.next(this.state.interviewer.getNextType())
   }
 
   onPause() {
-    this.interviewer.pause();
+    this.state.interviewer.pause();
   }
 
   render() {
@@ -122,7 +122,7 @@ class BotRoomComponent extends React.Component {
           height=".5"
           position={{ x: 2.2, y: 3.7, z: -6.49 }}
           rotation={{ x: 0, y: 0, z: 0 }}
-          events={{ click: toLobby }}>
+          events={{ click: toElev }}>
           <a-animation begin="mouseenter" end="mouseleave" fill="forwards" repeat="0"
             direction="normal" attribute="scale" from="1 1 1"
             to="1.2 1.2 1.2" dur="1000"></a-animation>
@@ -131,9 +131,16 @@ class BotRoomComponent extends React.Component {
             to="1 1 1" dur="1000"></a-animation>
         </Entity>
 
-        <Entity text={{ value: 'start', align: 'center', color: '#17A102' }} position={{ x: 2.040, y: 1.02, z: -.75 }} scale="3 3 3" rotation="0 -90 0" /> 
-        <Entity text={{ value: 'pause', align: 'center', color: '#AD2B02' }} position={{ x: 2.040, y: 1.02, z: .99 }} scale="3 3 3" rotation="0 -90 0" /> 
-        
+        <Entity text={{ value: 'start', align: 'center', color: '#17A102' }} position={{ x: 2.040, y: 1.02, z: -.75 }} scale="3 3 3" rotation="0 -90 0" />
+        {this.state.interviewer &&
+        <Entity
+          text={this.state.interviewer.downloadAvailable ?
+            { value: 'download', align: 'center', color: '#AD2B02' } :
+            { value: 'pause', align: 'center', color: '#AD2B02' }}
+          position={{ x: 2.040, y: 1.02, z: .99 }}
+          scale="3 3 3"
+          rotation="0 -90 0" />}
+
         <a-entity camera mouse-cursor look-controls rotation="0 -90 0" position="-0.03 1.00 0">
           <a-cursor color="black" />
         </a-entity>
