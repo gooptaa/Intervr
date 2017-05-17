@@ -49,7 +49,7 @@ class BotRoomComponent extends React.Component {
         <a-box src="#elevatorWall" position="2 0 -1.5" rotation="0 -90 0" height="10" width="6" />
         <a-box src="#elevatorWall" position="-5 0 -1.5" rotation="0 90 0" height="10" width="6" />
         <a-plane src="#floor" repeat="14 14" position="-1.3 5 0.2" rotation="90 0 0" height="10" width="6" scale="1.2 1.4 1" />
-        <a-plane src="#floor" rotation="-90 0 0" position="-1.5 0 0" height="10" width="10" scale="1 1 1" />
+        <a-plane src="#floor" color="black" rotation="-90 0 0" position="-1.5 0 0" height="10" width="10" scale="1 1 1" />
 
         <Entity primitive="a-light" type="point" intensity=".6" color="white" position="0 4.95 -3" />
         <Entity primitive="a-light" type="point" intensity=".6" color="white" position="0 4.95 0" />
