@@ -5,7 +5,7 @@ import store from './store';
 import { Router, browserHistory, Route, Redirect } from 'react-router';
 
 import Room from './browser/room';
-import Home from './browser/home';
+import Lobby from './browser/lobby';
 import BotRoom from './browser/bot-room';
 import Launch from './browser/launch';
 
@@ -18,7 +18,7 @@ import { getAllQuestions } from './reducers/bot'
 const RoutesComponent = ({onRoomEnter, onPeerRoomEnter, onBotRoomEnter}) => (
   <Router history={browserHistory}>
     <Route path="/" component={Launch} />
-    <Route path="/lobby" component={Home} />
+    <Route path="/lobby" component={Lobby} />
     <Route path="/peer-room" component={Room} onEnter={onPeerRoomEnter} />
     <Route path="/bot-room" component={BotRoom} onEnter={onBotRoomEnter} />
   </Router>
