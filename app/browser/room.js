@@ -10,11 +10,12 @@ require('aframe-fence-component')
 import { connect } from 'react-redux';
 import { toLobby } from '../util';
 import Assets from './assets';
-
+import Animator from './animator'
 
 class RoomComponent extends React.Component {
   constructor(props) {
     super(props);
+    this.animator = null
   }
   componentDidMount() {
     // add listener to camera
@@ -27,6 +28,17 @@ class RoomComponent extends React.Component {
         this.props.updateRotation(evt.detail.newData);
       }
     });
+    this.animator = new Animator(this.props)
+    this.animator.setup()
+    this.cameraNode.setAttribute('position', {x: 0, y: .9, z: 0});
+    this.cameraNode.setAttribute('rotation', {x: 0, y: 180, z: 0});
+  }
+
+  componentWillUnmount() {
+    if (this.animator) {
+      this.animator.end();
+    }
+    this.props.webRTC.leaveRoom();
   }
 
   render() {
@@ -35,7 +47,7 @@ class RoomComponent extends React.Component {
         <Assets />
 
         {/* Planes */}
-        <a-box color="#fff" repeat="14 14" position="-1.45 0 -7" rotation="0 0 0" height="10" width="14" scale="0.8 1 1" />
+        <a-box color="#fff" repeat="14 14" position="-1.45 0 -7" rotation="0 0 0" height="10" width="14" scale="0.8 1 1"/>
         <a-box color="#fff" repeat="14 14" position="-1.7 0.12 7" rotation="0 180 0" height="10" width="14" scale="0.8 1 1" />
         <a-box color="#fff" repeat="14 14" position="4 0 0" rotation="0 -90 0" height="10" width="14" />
         <a-box color="#fff" repeat="14 14" position="-7 0 -0.35" rotation="0 90 0" height="10" width="14" scale="1 1 1" />
@@ -98,15 +110,13 @@ class RoomComponent extends React.Component {
             direction="normal" attribute="scale"
             to="1 1 1" dur="1000"></a-animation>
         </Entity>
-
-        <Entity>
+        <Entity position={{x: 2, y: 0, z: -5}} rotation={{x:0, y: 0, z: 0}}>
           <a-camera
+            fence="width: 7; depth: 10; x0: -2.5; z0: 5"
             ref={(cameraNode) => this.cameraNode = cameraNode}
-            position={this.camera && this.props.camera.position} rotation={this.camera && this.props.camera.rotation}
-            id="camera"
-            fence="width: 6; depth: 10">
-            <Entity primitive="a-cursor" animation__click={{ property: 'scale', startEvents: 'click', from: '0.1 0.1 0.1', to: '1 1 1', dur: 150 }} />
-            <a-entity obj-model="obj: #person-obj; mtl: #person-mtl" position="0 -1.6 .5" />
+            id="camera">
+          <Entity primitive="a-cursor" animation__click={{ property: 'scale', startEvents: 'click', from: '0.1 0.1 0.1', to: '1 1 1', dur: 150 }} />
+            <a-entity obj-model="obj: #person-obj; mtl: #person-mtl" position=".3 -2.5 .5"/>
           </a-camera>
         </Entity>
 
@@ -121,10 +131,14 @@ class RoomComponent extends React.Component {
 
             <a-box rotation="0 0 45" scale="0.1 0.1 0.1" position="-0.11 2.6 -0.48"/>
             <a-box rotation="0 0 45" scale="0.1 0.1 0.1" position="-0.52 2.6 -0.47"/>
-            <a-cone rotation="0 90 90" radius-bottom="2" radius-top="0.9" position="-0.33 2.2 -0.43" color="white">
-              <a-animation attribute="scale" from="0.02 0.2 0.12" to="0.07 0.2 0.12" dur="10000" >
-              </a-animation>
+
+            <a-cone id="boxbot" rotation="0 90 90" radius-bottom="2" radius-top="0.9" position="-0.33 2.2 -0.43" color="white" scale={
+              this.props.peer[key].animation ?
+              "0.07 0.2 0.12" :
+              "0.02 0.2 0.12"
+            }>
             </a-cone>
+
           </Entity>
         ))}
 
@@ -133,10 +147,10 @@ class RoomComponent extends React.Component {
   }
 }
 
-import { updateRotation, updatePosition } from '../reducers/camera';
+import { updateRotation, updatePosition, updateAnimation } from '../reducers/camera';
 
 export default connect(
   ({ webRTC, peer, camera }) => ({ webRTC, peer, camera }),
-  ({ updateRotation, updatePosition }))
+  ({ updateRotation, updatePosition, updateAnimation }))
   (RoomComponent);
 

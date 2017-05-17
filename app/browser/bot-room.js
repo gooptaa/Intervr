@@ -23,25 +23,24 @@ class BotRoomComponent extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props)
-    this.interviewer = new Bot('', document);
 
     let general = axios.get('api/general')
       .then((res) => res.data)
-    // .then((question) => console.log('general',question))
     let intro = axios.get('api/intro')
       .then((res) => res.data)
-    // .then((question) => console.log('intro',question))
     let technical = axios.get('api/technical')
       .then((res) => res.data)
-    // .then((question) => console.log('technical',question))
 
     Promise.all([general, intro, technical])
-      .spread((general, intro, technical) => this.interviewer.setup({
-        general: general,
-        intro: intro,
-        technical: technical,
-      }))
+      .spread((general, intro, technical) => {
+        let username = this.props.self.handle || ''
+        this.interviewer = new Bot(username, document)
+        this.interviewer.setup({
+          general: general,
+          intro: intro,
+          technical: technical,
+        })
+    })
   }
 
   componentWillUnmount() {
@@ -171,4 +170,6 @@ class BotRoomComponent extends React.Component {
 
 import { getAllQuestions } from '../reducers/bot';
 
-export default connect(({ bot }) => ({ bot }), ({ getAllQuestions }))(BotRoomComponent);
+export default connect(({ bot, self }) => ({ bot, self }), ({ getAllQuestions }))(BotRoomComponent);
+
+

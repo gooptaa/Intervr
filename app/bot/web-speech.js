@@ -1,6 +1,6 @@
 //This is using Web Speech API Speech Synthesis. It will convert the text to speech on the client's browser.
 
-export default class Speak {
+export default class Speaker {
   constructor(){
     this.utterThis = null;
     this.selectedOption = 'Alex';
