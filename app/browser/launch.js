@@ -12,7 +12,7 @@ class LaunchComponent extends React.Component {
     evt.preventDefault();
     this.props.updateHandle(evt.target.name.value);
     if(evt.target.room.value) this.props.updateRoom(evt.target.room.value);
-    browserHistory.push('/lobby');
+    browserHistory.push('/elev');
   }
 
   render(){
