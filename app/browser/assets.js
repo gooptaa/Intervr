@@ -41,6 +41,7 @@ export default () => (
 
   <a-asset-item id="door-obj" src="objects/door.obj" />
   <a-asset-item id="elevator-handle" src="objects/elevator-handle.obj" />
+  <a-asset-item id="elevator-door" src="objects/elevator-door.obj" />
 
 </a-assets>
 )

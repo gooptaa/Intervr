@@ -45,7 +45,7 @@ class BotRoomComponent extends React.Component {
 
         {/* Planes */}
         <a-box src="#elevatorWall" position="-1.5 0 -5" rotation="0 0 0" height="10" width="6" scale="1 1 1" />
-        <a-box src="#elevatorWall" position="-1.5 0 2" rotation="0 180 0" height="10" width="6" scale="1 1 1" />
+        <a-box color="grey" position="-1.5 0 2" rotation="0 180 0" height="10" width="6" scale="1 1 1" />
         <a-box src="#elevatorWall" position="2 0 -1.5" rotation="0 -90 0" height="10" width="6" />
         <a-box src="#elevatorWall" position="-5 0 -1.5" rotation="0 90 0" height="10" width="6" />
         <a-plane src="#floor" repeat="14 14" position="-1.3 5 0.2" rotation="90 0 0" height="10" width="6" scale="1.2 1.4 1" />
@@ -61,16 +61,17 @@ class BotRoomComponent extends React.Component {
           color={this.state.peerPress ? 'orange' : 'black'} 
           radius=".075" 
           height=".005" 
-          position="-0.5 2 1.5" 
+          position="0 2.5 1.5" 
           rotation="90 0 0" />
         <a-cylinder 
           ref={(botButton) => this.botButton = botButton}
           color={this.state.botPress ? 'orange' : 'black'} 
           radius=".075" 
           height=".005" 
-          position="-0.5 1.5 1.5" 
+          position="0 2 1.5" 
           rotation="90 0 0" />
 
+        <Entity obj-model="obj: #elevator-door" rotation="0 180 0" position="-1.6 0 1.4" scale=".05 .05 .02" />
         <Entity obj-model="obj: #elevator-handle" rotation="0 0 0" position="-1.6 1.7 -4.3" scale=".03 .03 .02" />
 
         <a-entity camera mouse-cursor look-controls rotation="0 180 0" position="-1.50 3.00 0">
