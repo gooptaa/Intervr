@@ -49,7 +49,7 @@ class BotRoomComponent extends React.Component {
         <a-box src="#elevatorWall" position="2 0 -1.5" rotation="0 -90 0" height="10" width="6" />
         <a-box src="#elevatorWall" position="-5 0 -1.5" rotation="0 90 0" height="10" width="6" />
         <a-plane src="#floor" repeat="14 14" position="-1.3 5 0.2" rotation="90 0 0" height="10" width="6" scale="1.2 1.4 1" />
-        <a-plane src="#floor" rotation="-90 0 0" position="-1.5 0 0" height="10" width="10" scale="1 1 1" />
+        <a-plane src="#floor" color="black" rotation="-90 0 0" position="-1.5 0 0" height="10" width="10" scale="1 1 1" />
 
         <Entity primitive="a-light" type="point" intensity=".6" color="white" position="0 4.95 -3" />
         <Entity primitive="a-light" type="point" intensity=".6" color="white" position="0 4.95 0" />
@@ -64,8 +64,8 @@ class BotRoomComponent extends React.Component {
           position="0 2.5 1.5" 
           rotation="90 0 0" >
             <Entity 
-            text={{ value: 'Peer', align: 'center', color: 'black' }} 
-            position={{ x: .3, y: -0.1, z: -.05 }} 
+            text={{ value: 'Peer Room', align: 'center', color: 'black' }} 
+            position={{ x: .45, y: -0.1, z: -.05 }} 
             rotation={{x: 90, y: 180, z: 0}}
             scale={{x: 3, y: 3, z: 3}} />
         </a-cylinder>
@@ -77,8 +77,8 @@ class BotRoomComponent extends React.Component {
           position="0 2 1.5" 
           rotation="90 0 0" >
             <Entity 
-            text={{ value: 'Bot', align: 'center', color: 'black' }} 
-            position={{ x: .3, y: -0.1, z: -.05 }} 
+            text={{ value: 'Bot Room', align: 'center', color: 'black' }} 
+            position={{ x: .42, y: -0.1, z: -.05 }} 
             rotation={{x: 90, y: 180, z: 0}}
             scale={{x: 3, y: 3, z: 3}} />
         </a-cylinder>
