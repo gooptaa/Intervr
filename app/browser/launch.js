@@ -45,7 +45,7 @@ class LaunchComponent extends React.Component {
                     </div>
                     <div className="card-action right-align">
                       <a className="activator">Instructions</a>
-                      <button className="btn waves-effect waves-light">Enter Lobby</button>
+                      <button className="btn waves-effect waves-light">Enter Elevator</button>
                     </div>
                   </form>
                 </div>
