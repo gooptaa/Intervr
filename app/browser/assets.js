@@ -13,6 +13,8 @@ export default () => (
   <img id="skyTexture" src="https://cdn.aframe.io/a-painter/images/sky.jpg" />
   <img id="brick" src="https://ucarecdn.com/9ea05677-13be-42d3-b7a0-6c365b105dab/" />
   <img id="exit" src="https://ucarecdn.com/16957305-3e65-412d-83f7-87e3a5d54fa9/" />
+  <img id="elevatorWall" src="images/elevator-wall.jpg" />
+  <img id="elevatorFloor" src="images/elevator-floor.jpg" />
 
   <img id="floor" src="https://ucarecdn.com/df577b67-1d2b-49d8-885c-13ca40216737/" />
   <a-asset-item id="person-obj" src="objects/person.obj" />
@@ -39,5 +41,8 @@ export default () => (
   <a-asset-item id="paintings-mtl" src="objects/oil-paintings-with-frame.mtl" />
 
   <a-asset-item id="door-obj" src="objects/door.obj" />
+  <a-asset-item id="elevator-handle" src="objects/elevator-handle.obj" />
+  <a-asset-item id="elevator-door" src="objects/elevator-door.obj" />
+
 </a-assets>
 )
