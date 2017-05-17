@@ -1,6 +1,5 @@
 import 'aframe';
 import 'aframe-animation-component';
-import 'aframe-particle-system-component';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
@@ -8,7 +7,7 @@ import 'babel-polyfill';
 import { Entity, Scene } from 'aframe-react';
 require('aframe-fence-component')
 import { connect } from 'react-redux';
-import { toLobby } from '../util';
+import { toElev } from '../util';
 import Assets from './assets';
 import Animator from './animator'
 
@@ -102,7 +101,7 @@ class RoomComponent extends React.Component {
           height=".5"
           position={{ x: 2.2, y: 3.7, z: -6.49 }}
           rotation={{ x: 0, y: 0, z: 0 }}
-          events={{ click: toLobby }}>
+          events={{ click: toElev }}>
           <a-animation begin="mouseenter" end="mouseleave" fill="forwards" repeat="0"
             direction="normal" attribute="scale" from="1 1 1"
             to="1.2 1.2 1.2" dur="1000"></a-animation>

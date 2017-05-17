@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router'
 import aframe from 'aframe';
 import 'aframe-animation-component';
-import 'aframe-particle-system-component';
 import 'babel-polyfill';
 import { Entity, Scene } from 'aframe-react';
 import { connect } from 'react-redux';
@@ -10,7 +9,7 @@ import Assets from './assets';
 import { toPeerRoom, toBotRoom } from '../util';
 import Sound from 'react-sound';
 
-class BotRoomComponent extends React.Component {
+class ElevComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -105,4 +104,4 @@ class BotRoomComponent extends React.Component {
 
 
 
-export default connect(null, null)(BotRoomComponent);
+export default connect(null, null)(ElevComponent);

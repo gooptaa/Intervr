@@ -10,8 +10,8 @@ export function randomName() {
 
 import { browserHistory } from 'react-router';
 
-export function toLobby() {
-  browserHistory.push('/lobby');
+export function toElev() {
+  browserHistory.push('/elev');
 }
 
 export function toPeerRoom(){

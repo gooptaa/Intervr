@@ -5,7 +5,7 @@ import store from './store';
 import { Router, browserHistory, Route, Redirect } from 'react-router';
 
 import Room from './browser/room';
-import Lobby from './browser/lobby';
+import Elev from './browser/elev';
 import BotRoom from './browser/bot-room';
 import Launch from './browser/launch';
 
@@ -18,7 +18,7 @@ import { getAllQuestions } from './reducers/bot'
 const RoutesComponent = ({onRoomEnter, onPeerRoomEnter, onBotRoomEnter}) => (
   <Router history={browserHistory}>
     <Route path="/" component={Launch} />
-    <Route path="/lobby" component={Lobby} />
+    <Route path="/elev" component={Elev} />
     <Route path="/peer-room" component={Room} onEnter={onPeerRoomEnter} />
     <Route path="/bot-room" component={BotRoom} onEnter={onBotRoomEnter} />
   </Router>
@@ -52,6 +52,3 @@ ReactDOM.render(
   document.getElementById('app')
 );
 
-
-    // <Redirect path="/peer-room" to={`/peer-room/${store.getState().self.room}`} />
-    // <Route path="/peer-room/:roomName" component={Room} onEnter={onRoomEnter}/>
