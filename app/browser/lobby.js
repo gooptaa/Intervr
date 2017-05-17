@@ -64,7 +64,7 @@ class BotRoomComponent extends React.Component {
           position="0 2.5 1.5" 
           rotation="90 0 0" >
             <Entity 
-            text={{ value: 'Peer', align: 'center', color: 'black' }} 
+            text={{ value: 'Peer Room', align: 'center', color: 'black' }} 
             position={{ x: .3, y: -0.1, z: -.05 }} 
             rotation={{x: 90, y: 180, z: 0}}
             scale={{x: 3, y: 3, z: 3}} />
@@ -77,7 +77,7 @@ class BotRoomComponent extends React.Component {
           position="0 2 1.5" 
           rotation="90 0 0" >
             <Entity 
-            text={{ value: 'Bot', align: 'center', color: 'black' }} 
+            text={{ value: 'Bot Room', align: 'center', color: 'black' }} 
             position={{ x: .3, y: -0.1, z: -.05 }} 
             rotation={{x: 90, y: 180, z: 0}}
             scale={{x: 3, y: 3, z: 3}} />
