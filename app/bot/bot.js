@@ -92,6 +92,7 @@ export default class Bot {
   next = (type) => {
     this.isRunning = true
     this.Speaker.cancel()
+
     if (this.intervalID) {
       this.clearPoll()
     }
@@ -181,6 +182,8 @@ export default class Bot {
     this.Speaker.cancel()
     this.clearPoll()
     this.audioCtx.close()
+    this.next = null
+    this.pause = null
   }
 
   emit = (eventName) => {
@@ -217,7 +220,8 @@ document: reference to DOM, passed from React component upon
 emit: event emitter to control mouth animation on bot
 
 end(): kills the bot, closes the audio context, and interrupts
-      any queued utterances
+      any queued utterances. also disconnects start and pause buttons
+      by setting respective functions to null
 
 fftsize: "fast fourier transform" samples per channel.
       should be > 2048 and exponent of 2
