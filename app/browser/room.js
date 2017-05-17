@@ -98,9 +98,9 @@ class RoomComponent extends React.Component {
         <Entity
           primitive="a-plane"
           src="#exit"
-          width=".5"
-          height=".25"
-          position={{ x: 2, y: 4, z: -6.49 }}
+          width="1.5"
+          height=".5"
+          position={{ x: 2.2, y: 3.7, z: -6.49 }}
           rotation={{ x: 0, y: 0, z: 0 }}
           events={{ click: toLobby }}>
           <a-animation begin="mouseenter" end="mouseleave" fill="forwards" repeat="0"
@@ -129,15 +129,8 @@ class RoomComponent extends React.Component {
               <a-entity text={`value: ${this.props.peer[key].handle}; align: center; color: blue;`} position="-0.5 3.5 0" scale="8 8 8" rotation="0 180 0" />
             }
 
-            <a-box rotation="0 0 45" scale="0.1 0.1 0.1" position="-0.11 2.6 -0.48">
-              <a-animation attribute="material.color" from="black" to="green" dur="10000" >
-              </a-animation>
-            </a-box>
-
-            <a-box rotation="0 0 45" scale="0.1 0.1 0.1" position="-0.52 2.6 -0.47">
-              <a-animation attribute="material.color" from="black" to="green" dur="10000" >
-              </a-animation>
-            </a-box>
+            <a-box rotation="0 0 45" scale="0.1 0.1 0.1" position="-0.11 2.6 -0.48"/>
+            <a-box rotation="0 0 45" scale="0.1 0.1 0.1" position="-0.52 2.6 -0.47"/>
 
             <a-cone id="boxbot" rotation="0 90 90" radius-bottom="2" radius-top="0.9" position="-0.33 2.2 -0.43" color="white" scale={
               this.props.peer[key].animation ?
@@ -145,6 +138,7 @@ class RoomComponent extends React.Component {
               "0.02 0.2 0.12"
             }>
             </a-cone>
+
           </Entity>
         ))}
 

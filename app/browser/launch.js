@@ -26,7 +26,9 @@ class LaunchComponent extends React.Component {
               <div className="card hoverable" style={{background: 'rgba(0, 0, 0, 0.75)'}}>
                 <div className="card-image valign-wrapper center-align">
                   <div className="valign" style={{width:'100%'}}>
-                    <h1 className="white-text center-align" style={{fontFamily: "'Monoton', cursive", fontSize: '600%'}}>InterVR</h1>
+                    <h1 className="white-text center-align" 
+                      style={{fontFamily: "'Monoton', cursive", fontSize: '500%'}}>InterVR
+                    </h1>
                   </div>
                 </div>
                 <div className="card-content">

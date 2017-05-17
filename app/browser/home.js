@@ -18,7 +18,7 @@ class HomeComponent extends React.Component {
   render() {
     return (
       <Scene>
-
+      
         <a-assets>
           <img id="peerRoomTexture" src="images/peer-room.png" />
           <img id="botRoomTexture" src="images/bot-room.png" />
@@ -72,3 +72,4 @@ class HomeComponent extends React.Component {
 }
 
 export default connect(null, null)(HomeComponent);
+
