@@ -37,6 +37,7 @@ export default () => (
   <a-asset-item id="cup-mtl" src="objects/cup.mtl" />
   <a-asset-item id="paintings-obj" src="objects/oil-paintings-with-frame.obj" />
   <a-asset-item id="paintings-mtl" src="objects/oil-paintings-with-frame.mtl" />
+  <a-asset-item id="socket-obj" src="objects/socket.obj" />
 
   <a-asset-item id="door-obj" src="objects/door.obj" />
 </a-assets>

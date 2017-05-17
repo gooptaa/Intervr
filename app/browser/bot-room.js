@@ -64,8 +64,8 @@ class BotRoomComponent extends React.Component {
         <Assets />
 
         {/* Cups */}
-        <Entity obj-model="obj: #cup-obj; mtl: #cup-mtl" position="1.5 0.85 -0.34" scale="0.08 0.08 0.08" rotation="0 90 0" />
-        <Entity obj-model="obj: #cup-obj; mtl: #cup-mtl" position="0.4 0.85 0.25" scale="0.05 0.05 0.05" rotation="0 -90 0" />
+        <Entity obj-model="obj: #cup-obj; mtl: #cup-mtl" position="1.13 0.85 -0.24" scale="0.08 0.08 0.08" rotation="0 90 0" />
+        <Entity obj-model="obj: #cup-obj; mtl: #cup-mtl" position="0.4 0.85 0.2" scale="0.05 0.05 0.05" rotation="0 -90 0" />
 
         {/* Resume */}
         <a-box color="black" depth="0.76" height="0.12" width="0.53" position="1.45 0.7 0.15"></a-box>
@@ -85,6 +85,11 @@ class BotRoomComponent extends React.Component {
         {/* Single Objects */}
         <Entity obj-model="obj: #couch-obj; mtl: #couch-mtl" position="-3 0.14 -6" scale="1 1 1" />
         <Entity obj-model="obj: #table-obj; mtl: #table-mtl" position="2 0.97 -0.66" scale="0.0018 0.0015 0.0025" />
+        <Entity obj-model="obj: #tv-obj; mtl: #tv-mtl" rotation="0 90 0" position="3.4 1.55 0.35" scale="0.8 0.4 1.2" />
+        <Entity obj-model="obj: #paintings-obj; mtl: #paintings-mtl" rotation="0 180 0" position="-2 2.7 6.45" scale="0.5 0.4 0.8" />
+        <Entity obj-model="obj: #door-obj" rotation="270 0 0" position="1.5 0 -6.4" scale="0.015 0.015 0.015" />
+        <Entity obj-model="obj: #socket-obj" rotation="0 -90 0" position="2.075 0.89 -0.75" scale="0.004 0.002 0.002" />
+        <Entity obj-model="obj: #socket-obj" rotation="0 -90 0" position="2.075 0.89 1" scale="0.004 0.002 0.002" />
 
         {/* Desks */}
         <Entity obj-model="obj: #desk-obj; mtl: #desk-mtl" position="-5.8 0 -3" scale="1.5 1.6 1.5" />
@@ -107,11 +112,7 @@ class BotRoomComponent extends React.Component {
         <Entity obj-model="obj: #desktop-computer-obj; mtl: #desktop-computer-mtl" rotation="0 -90 0" position="-5.6 1.17 -2.75" scale="0.4 0.3 0.4" />
         <Entity obj-model="obj: #desktop-computer-obj; mtl: #desktop-computer-mtl" rotation="0 180 0" position="-5.8 1.17 1.66" scale="0.4 0.3 0.4" />
 
-        <Entity obj-model="obj: #tv-obj; mtl: #tv-mtl" rotation="0 90 0" position="3.4 1.55 0" scale="0.8 0.4 1.2" />
-        <Entity obj-model="obj: #paintings-obj; mtl: #paintings-mtl" rotation="0 180 0" position="-2 2.7 6.45" scale="0.5 0.4 0.8" />
-
-        <Entity obj-model="obj: #door-obj" rotation="270 0 0" position="1.5 0 -6.4" scale="0.015 0.015 0.015" />
-
+        {/* Light */}
         <Entity primitive="a-light" type="point" intensity="1.4" color="white" position="-1.3 7.7 0" />
 
         <Entity
@@ -130,7 +131,7 @@ class BotRoomComponent extends React.Component {
             to="1 1 1" dur="1000"></a-animation>
         </Entity>
 
-        <Entity text={{ value: 'start', align: 'center', color: 'black' }} position={{ x: 2.040, y: 1.02, z: -.75 }} scale="3 3 3" rotation="0 -90 0" /> :
+        <Entity text={{ value: 'start', align: 'center', color: '#17A102' }} position={{ x: 2.040, y: 1.02, z: -.75 }} scale="3 3 3" rotation="0 -90 0" /> :
           <Entity
           primitive="a-plane"
           color="red"
@@ -141,15 +142,15 @@ class BotRoomComponent extends React.Component {
           scale="1 1 1"
           events={{ click: this.onClick }}>
           </Entity>
-        <Entity text={{ value: 'pause', align: 'center', color: 'black' }} position={{ x: 2.040, y: 1.02, z: .712 }} scale="3 3 3" rotation="0 -90 0" /> :
+        <Entity text={{ value: 'pause', align: 'center', color: '#AD2B02' }} position={{ x: 2.040, y: 1.02, z: .99 }} scale="3 3 3" rotation="0 -90 0" /> :
            <Entity
           primitive="a-plane"
           color="red"
           width=".50"
           height=".21"
-          position={{ x: 2.040, y: 1.02, z: .712 }}
+          position={{ x: 2.1, y: 1, z: 1 }}
           rotation="0 -90 0"
-          scale="1 1 1"
+          scale="0.8 0.8 0.8"
           events={{ click: this.onPause }}>
           </Entity>
         <a-entity camera mouse-cursor look-controls rotation="0 -90 0" position="-0.03 1.00 0">

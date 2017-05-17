@@ -86,9 +86,9 @@ class RoomComponent extends React.Component {
         <Entity
           primitive="a-plane"
           src="#exit"
-          width=".5"
-          height=".25"
-          position={{ x: 2, y: 4, z: -6.49 }}
+          width="1.5"
+          height=".5"
+          position={{ x: 2.2, y: 3.7, z: -6.49 }}
           rotation={{ x: 0, y: 0, z: 0 }}
           events={{ click: toLobby }}>
           <a-animation begin="mouseenter" end="mouseleave" fill="forwards" repeat="0"
