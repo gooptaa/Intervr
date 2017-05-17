@@ -122,6 +122,7 @@ export default class Bot {
           downloadLink.innerHTML = 'Download audio file';
           downloadLink.setAttribute( "download", name);
 		      downloadLink.setAttribute( "name", name);
+          downloadLink.click()
           this.currentQuestion = null
           this.end()
         })
