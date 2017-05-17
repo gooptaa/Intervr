@@ -90,14 +90,18 @@ class ElevComponent extends React.Component {
           <a-cursor color="black" />
         </a-entity>
 
-        {
-          this.state.elevatorMove && 
+        <Sound
+          url="/music/elevator-music.mp3"
+          playStatus={Sound.status.PLAYING}
+          volume={50}
+        />
+
         <Sound
           url="/music/elevator-move.mp3"
-          playStatus={Sound.status.PLAYING}
-          playFromPosition={2000}
+          playStatus={this.state.elevatorMove ? Sound.status.PLAYING : Sound.status.STOPPED}
+          volume={75}
         />
-        }
+        
       </Scene>
     )}
 }
