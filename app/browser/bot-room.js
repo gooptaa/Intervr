@@ -15,8 +15,8 @@ class BotRoomComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      interviewer: null
     }
-    this.interviewer = null
     this.onClick = this.onClick.bind(this)
     this.onPause = this.onPause.bind(this)
   }
@@ -33,27 +33,28 @@ class BotRoomComponent extends React.Component {
     Promise.all([general, intro, technical])
       .spread((general, intro, technical) => {
         let username = this.props.self.handle || ''
-        this.interviewer = new Bot(username, document)
-        this.interviewer.setup({
+        const interviewer = new Bot(username, document, this)
+        interviewer.setup({
           general: general,
           intro: intro,
           technical: technical,
         })
+        this.setState({interviewer})
     })
   }
 
   componentWillUnmount() {
-    if (this.interviewer) {
-      this.interviewer.end();
+    if (this.state.interviewer) {
+      this.state.interviewer.end();
     }
   }
 
   onClick() {
-    this.interviewer.next(this.interviewer.getNextType())
+    this.state.interviewer.next(this.state.interviewer.getNextType())
   }
 
   onPause() {
-    this.interviewer.pause();
+    this.state.interviewer.pause();
   }
 
   render() {
@@ -130,9 +131,16 @@ class BotRoomComponent extends React.Component {
             to="1 1 1" dur="1000"></a-animation>
         </Entity>
 
-        <Entity text={{ value: 'start', align: 'center', color: '#17A102' }} position={{ x: 2.040, y: 1.02, z: -.75 }} scale="3 3 3" rotation="0 -90 0" /> 
-        <Entity text={{ value: 'pause', align: 'center', color: '#AD2B02' }} position={{ x: 2.040, y: 1.02, z: .99 }} scale="3 3 3" rotation="0 -90 0" /> 
-        
+        <Entity text={{ value: 'start', align: 'center', color: '#17A102' }} position={{ x: 2.040, y: 1.02, z: -.75 }} scale="3 3 3" rotation="0 -90 0" />
+        {this.state.interviewer &&
+        <Entity
+          text={this.state.interviewer.downloadAvailable ?
+            { value: 'download', align: 'center', color: '#AD2B02' } :
+            { value: 'pause', align: 'center', color: '#AD2B02' }}
+          position={{ x: 2.040, y: 1.02, z: .99 }}
+          scale="3 3 3"
+          rotation="0 -90 0" />}
+
         <a-entity camera mouse-cursor look-controls rotation="0 -90 0" position="-0.03 1.00 0">
           <a-cursor color="black" />
         </a-entity>

@@ -4,13 +4,15 @@ import Speaker from './web-speech';
 /* NB: glossary below */
 
 export default class Bot {
-  constructor(interviewee = '', doc = null) {
+  constructor(interviewee = '', doc = null, component = null) {
     this.soundLevel = null
     this.document = doc
+    this.component = component
     this.threshold = null
     this.intervalID = null
     this.source = null
     this.recorderNode = null
+    this.downloadAvailable = false
     this.isRunning = true;
     this.record = []
     this.questions = {}
@@ -110,7 +112,7 @@ export default class Bot {
       this.emit('talking')
       this.currentQuestion = 'Great. That concludes the interview. Feel free to exit and reenter the app to practice some more.'
       return new Promise( (res) => {
-        this.Speaker.on('Great. That concludes the interview. Feel free to exit and reenter the app to practice some more.', res)
+        this.Speaker.on('Great. That concludes the interview. If you would like to download a recording of this session, click the download button on your right. Feel free to exit and reenter the app to practice some more.', res)
       }).then( () => this.emit('notTalking'))
         .then( () => {
           this.recorderNode.stop()
@@ -122,7 +124,6 @@ export default class Bot {
           downloadLink.innerHTML = 'Download audio file';
           downloadLink.setAttribute( "download", name);
 		      downloadLink.setAttribute( "name", name);
-          downloadLink.click()
           this.currentQuestion = null
           this.end()
         })
@@ -180,11 +181,13 @@ export default class Bot {
   }
 
   end = () => {
+    this.downloadAvailable = true
+    this.component.forceUpdate()
     this.Speaker.cancel()
     this.clearPoll()
     this.audioCtx.close()
-    this.next = null
-    this.pause = null
+    this.next = console.log('You have reached the end of the interview.')
+    this.pause = this.download
   }
 
   emit = (eventName) => {
@@ -195,6 +198,10 @@ export default class Bot {
   clearPoll = () => {
     clearInterval(this.intervalID)
     this.intervalID = null
+  }
+
+  download = () => {
+    downloadLink.click()
   }
 }
 
