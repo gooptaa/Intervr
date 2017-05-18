@@ -88,8 +88,8 @@ class BotRoomComponent extends React.Component {
         <Entity obj-model="obj: #paintings-obj; mtl: #paintings-mtl" rotation="0 180 0" position="-2 2.7 6.45" scale="0.5 0.4 0.8" />
         <Entity obj-model="obj: #door-obj" rotation="270 0 0" position="1.5 0 -6.4" scale="0.015 0.015 0.015" />
 
-        <Entity obj-model="obj: #socket-obj" rotation="0 -90 0" position="2.075 0.89 -0.75" scale="0.004 0.002 0.002" events={{ click: this.onClick }} />
-        <Entity obj-model="obj: #socket-obj" rotation="0 -90 0" position="2.075 0.89 1" scale="0.004 0.002 0.002" events={{ click: this.onPause }} />
+        <Entity obj-model="obj: #socket-obj" rotation="0 -90 0" position="2.075 0.89 -0.75" scale="0.006 0.002 0.002" events={{ click: this.onClick }} />
+        <Entity obj-model="obj: #socket-obj" rotation="0 -90 0" position="2.075 0.89 1" scale="0.006 0.002 0.002" events={{ click: this.onPause }} />
 
         {/* Desks */}
         <Entity obj-model="obj: #desk-obj; mtl: #desk-mtl" position="-5.8 0 -3" scale="1.5 1.6 1.5" />

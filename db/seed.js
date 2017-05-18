@@ -18,7 +18,6 @@ const introQ =
 [ {text: "Tell me a little about yourself."},
   {text: "How did you become interested in this field?"},
   {text: "How did you become interested in this job?"},
-  {text: "What questions do you have for me?"},
   {text: "What motivates you?"},
   {text: "What do you like to do outside of work?"} ]
 
