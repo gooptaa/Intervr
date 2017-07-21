@@ -1,5 +1,7 @@
 # InterVR
 
+## Resume Version:
+
 ### Deployed version: (https://intervr.herokuapp.com/)
 
 InterVR is a virtual reality app for rehearsing and conducting interviews. In the rehearsal room, an automated bot prompts the user with generic interview questions in a random order and paces those questions by monitoring user input for silence. Afterwards, the user can download a recording of their performance. In the live room, users can see, hear, and interact with each other in the immersive context of virtual reality.
