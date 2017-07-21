@@ -1,6 +1,9 @@
 # InterVR
 
-## Resume Version:
+## Resume Version: While InterVR was a team project and we share responsibility for the app as a whole, I can identify the following lines of code as exclusively or near-exclusively authored by me:
+app/bot/bot.js: lines 1-116, 131-end
+app/browser/animator.js: all
+db: all code of all files
 
 ### Deployed version: (https://intervr.herokuapp.com/)
 
